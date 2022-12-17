@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33122.133
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "D365-ConfigurableEntityCloner", "D365-ConfigurableEntityCloner.csproj", "{6FCF1198-A8A3-480C-AE38-99809F37425F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "D365-ConfigurableEntityCloner.Test", "..\D365-ConfigurableEntityCloner.Test\D365-ConfigurableEntityCloner.Test.csproj", "{E3C72F4A-7DFC-4CF3-93CB-E3A99EC1DF51}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6FCF1198-A8A3-480C-AE38-99809F37425F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FCF1198-A8A3-480C-AE38-99809F37425F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FCF1198-A8A3-480C-AE38-99809F37425F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FCF1198-A8A3-480C-AE38-99809F37425F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3C72F4A-7DFC-4CF3-93CB-E3A99EC1DF51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3C72F4A-7DFC-4CF3-93CB-E3A99EC1DF51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3C72F4A-7DFC-4CF3-93CB-E3A99EC1DF51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3C72F4A-7DFC-4CF3-93CB-E3A99EC1DF51}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {18D76A52-B4D2-4A83-8F47-AA1DE6B9B27A}
+	EndGlobalSection
+EndGlobal
