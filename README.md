@@ -22,7 +22,7 @@ Dynamics 365 v9.2+
 
 ### Install
 
-Download the managed solution and import it in your environment.
+Download the managed or unmanaged solution and import it in your environment.
 
 ### Configure
 
@@ -95,10 +95,6 @@ Technically the solution should allow an unlimited number of levels for link-ent
 ### Acknowledgements
 
 Thanks to all who helped inspire this solution.
-
-### To-do
-
-[ ] Release of the unmanaged solution
 
 ### License
 
