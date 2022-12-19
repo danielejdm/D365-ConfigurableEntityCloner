@@ -98,4 +98,4 @@ Thanks to all who helped inspire this solution.
 
 ### License
 
-This project is licensed under the.
+This project is licensed under the [GPLv3](https://www.gnu.org/licenses/gpl-3.0.html).
