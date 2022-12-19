@@ -98,4 +98,4 @@ Thanks to all who helped inspire this solution.
 
 ### License
 
-This project is licensed under the [The Unlicense](LICENSE.md).
+This project is licensed under the.
