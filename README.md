@@ -1,6 +1,6 @@
 # D365 Configurable Entity/Record Cloner
 
-This solution allows for configurable cloning of entities/records and link-entities/records (child entities/records) at any depth level, in Dynamics 365.
+This solution allows for configurable cloning of entities/records and link-entities/records (child) at any depth level, in Dynamics 365.
 
 
 ## Description
