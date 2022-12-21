@@ -33,19 +33,19 @@ Download the managed or unmanaged solution and import it in your environment.
 - Provide a meaningful name.
 - Provide the FetchXml which represents the entity(/entities) and fields that need to be cloned. I recommend to use [FetchXml Builder](https://www.xrmtoolbox.com/plugins/Cinteros.Xrm.FetchXmlBuilder) to build the fetch query.
 - The value for the Guid of the root entity in the fetch query must be '<b>@id</b>' (placeholder).
-- The root entity <b>cannot be</b> an intersect-entity (entity for the N:N relations).
+- The root entity <b>cannot be</b> an intersect-entity (entity for the <i>n:m relations</i>).
 - Set the flag <i>Clone Status?</i> to yes if the cloned entity(/entities) need to have the same status of the record to clone from.
     - The action sets the status for the clones of the entity(/entities) which have both <i>statecode</i> and <i>statuscode</i> in the list of attributes on the FetchXml.
 - The FetchXml <b>cannot</b> contains readonly attributes (i.e.: <i>createdon</i>, <i>createdby</i>, etc.).
 - The attribute <i>link-type</i> in the FetchXml has no effect:
   - The action always applies an <i>outer join</i>.
-- The <i>N:N relations</i> in the Fetch must be modified according to the following template:
+- The <i>n:m relations</i> in the Fetch (portion with the <i>intersect-entity</i>) must be modified according to the following template:
     ~~~ xml
     <fetch>
         ...
         <link-entity name='<intersect-entity-name>' from='<record1-id-attribute>' to='<record1-id-attribute>' intersect='true'>
-          <attribute name='<record1-id-attribute>' />
-          <attribute name='<record2-id-attributee>' />
+          <attribute name='<record1-id-attribute>'/>    <!-- Necessary -->
+          <attribute name='<record2-id-attributee>'/>   <!-- Necessary -->
           <to-entity name='<record2-entity-logical-name>' entityid-field='<record2-id-field-name>'>
             <attribute name='<attribute1>' />
             ...
@@ -64,11 +64,11 @@ Download the managed or unmanaged solution and import it in your environment.
     <filter>
       <condition attribute='accountid' operator='eq' value='@id' />
     </filter>
-    <link-entity name='new_new_ddentity_account' from='accountid' to='accountid' intersect='true'>
+    <link-entity name='jdm_jdm_myentity_account' from='accountid' to='accountid' intersect='true'>
       <attribute name='accountid' />
-      <attribute name='new_ddentityid' />
-      <to-entity name='new_ddentity' entityid-field='new_ddentityid'>
-        <attribute name='new_name' />
+      <attribute name='jdm_myentityid' />
+      <to-entity name='jdm_myentity' entityid-field='jdm_myentityid'>
+        <attribute name='jdm_name' />
       </to-entity>
     </link-entity>
     <link-entity name='contact' from='parentcustomerid' to='accountid' link-type='outer' >
