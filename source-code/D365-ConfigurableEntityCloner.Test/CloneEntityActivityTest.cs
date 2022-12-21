@@ -93,9 +93,9 @@ namespace ConfigurableEntityCloner.Test
                                         "<link-entity name='jdm_jdm_myentity_account' from='accountid' to='accountid' intersect='true'>" +
                                           "<attribute name='accountid' />" +
                                           "<attribute name='jdm_myentityid' />" +
-                                          "<to-entity name='jdm_myentity'>" +
-                                            "<attribute name='jdm_name' />" +
-                                          "</to-entity>" +
+                                          "<associate-entity name='jdm_myentity'>" +
+                                            "<attribute name='jdm_name'/>" +
+                                          "</associate-entity>" +
                                         "</link-entity>" +
                                         "<link-entity name='contact' from='parentcustomerid' to='accountid' link-type='outer' >" +
                                           "<attribute name='address1_composite' />" +

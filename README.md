@@ -46,10 +46,10 @@ Download the managed or unmanaged solution and import it in your environment.
         <link-entity name='<intersect-entity-name>' from='<record1-id-attribute>' to='<record1-id-attribute>' intersect='true'>
           <attribute name='<record1-id-attribute>'/>    <!-- Necessary -->
           <attribute name='<record2-id-attributee>'/>   <!-- Necessary -->
-          <to-entity name='<record2-entity-logical-name>'>
+          <associate-entity name='<record2-entity-logical-name>'>
             <attribute name='<attribute1>'/>
             ...
-          </to-entity>
+          </associate-entity>
         </link-entity>
         ...
     </fetch>
@@ -67,9 +67,9 @@ Download the managed or unmanaged solution and import it in your environment.
     <link-entity name='jdm_jdm_myentity_account' from='accountid' to='accountid' intersect='true'>
       <attribute name='accountid'/>
       <attribute name='jdm_myentityid'/>
-      <to-entity name='jdm_myentity'>
+      <associate-entity name='jdm_myentity'>
         <attribute name='jdm_name'/>
-      </to-entity>
+      </associate-entity>
     </link-entity>
     <link-entity name='contact' from='parentcustomerid' to='accountid' link-type='outer'>
       <attribute name='address1_composite'/>

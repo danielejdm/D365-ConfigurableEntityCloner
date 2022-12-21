@@ -197,13 +197,13 @@ namespace ConfigurableEntityCloner
         {
             var queryClone = XElement.Parse(element.ToString());
             queryClone.Descendants().Where(x => x.Name == "link-entity").Remove();
-            var queryAssociated = XElement.Parse(queryClone.ToString()).Descendants("to-entity").First();
+            var queryAssociated = XElement.Parse(queryClone.ToString()).Descendants("associate-entity").First();
 
             var columnsList = from a in queryAssociated.Descendants() where a.Name == "attribute" select a.Attribute("name").Value;
 
             var columns = new ColumnSet(columnsList.ToArray());
 
-            queryClone.Descendants().Where(x => x.Name == "to-entity").Remove();
+            queryClone.Descendants().Where(x => x.Name == "associate-entity").Remove();
 
             var from = queryClone.Attribute("from").Value;
             var relationName = queryClone.Attribute("name").Value;
