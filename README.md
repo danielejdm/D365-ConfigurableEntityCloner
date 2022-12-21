@@ -38,38 +38,55 @@ Download the managed or unmanaged solution and import it in your environment.
 - The FetchXml <b>cannot</b> contains readonly attributes (i.e.: <i>createdon</i>, <i>createdby</i>, etc.).
 - The attribute <i>link-type</i> in the FetchXml has no effect:
   - The action always applies an <i>outer join</i>.
-- In case of associations (intersect-entity), the FetchXml has to be modified:
+- The <i>N:N relations</i> in the Fetch must be modified as per following template:
+~~~ xml
+<fetch>
+...
+<link-entity name='<intersect-entity-name>' from='<recordid>' to='<recordid>' intersect='true'>
+  <attribute name='<record1id>' />
+  <attribute name='<record2id>' />
+  <to-entity name='<record2.LogicalName>' entityid-field='<record2idFieldName>'>
+    <attribute name='<attribute1>' />
+    ...
+  </to-entity>
+</link-entity>
+...
+</fetch>
+~~~
  
 #### Sample FetchXml
 ~~~ xml
 <fetch>
-  <entity name="account" >
-    <attribute name="name" />
-    <attribute name="accountnumber" />
-    <attribute name="primarycontactid" />
-    <attribute name="telephone1" />
+  <entity name='account' >
+    <attribute name='name' />
+    <attribute name='accountnumber' />
     <filter>
-      <condition attribute="accountid" operator="eq" value="@id" />
+      <condition attribute='accountid' operator='eq' value='@id' />
     </filter>
-    <link-entity name="contact" from="parentcustomerid" to="accountid" >
-      <attribute name="firstname" />
-      <attribute name="lastname" />
-      <attribute name="telephone1" />
-      <attribute name="statecode" />
-      <attribute name="statuscode" />
-      <link-entity name="annotation" from="objectid" to="contactid" >
-        <attribute name="filename" />
-        <attribute name="filesize" />
-        <attribute name="mimetype" />
-        <attribute name="documentbody" />
-        <attribute name="notetext" />
-        <attribute name="isdocument" />
-        <filter>
-          <condition attribute='statecode' operator='eq' value='0' />
-        </filter>
+    <link-entity name='new_new_ddentity_account' from='accountid' to='accountid' intersect='true'>
+      <attribute name='accountid' />
+      <attribute name='new_ddentityid' />
+      <to-entity name='new_ddentity' entityid-field='new_ddentityid'>
+        <attribute name='new_name' />
+      </to-entity>
+    </link-entity>
+    <link-entity name='contact' from='parentcustomerid' to='accountid' link-type='outer' >
+      <attribute name='address1_composite' />
+      <attribute name='fullname' />
+      <attribute name='firstname' />
+      <attribute name='lastname' />
+      <attribute name='statecode' />
+      <attribute name='statuscode' />
+      <link-entity name='annotation' from='objectid' to='contactid' link-type='outer' >
+        <attribute name='filename' />
+        <attribute name='filesize' />
+        <attribute name='mimetype' />
+        <attribute name='documentbody' />
+        <attribute name='notetext' />
+        <attribute name='isdocument' />
       </link-entity>
     </link-entity>
-    <link-entity name='phonecall' from='regardingobjectid' to='accountid' >
+    <link-entity name='phonecall' from='regardingobjectid' to='accountid' link-type='outer' >
       <attribute name='subject' />
     </link-entity>
   </entity>

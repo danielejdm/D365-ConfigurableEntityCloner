@@ -121,7 +121,12 @@ namespace ConfigurableEntityCloner
                 CloneAssociateEntity(element, parentid, parentclonedid);
             }
         }
-
+        /// <summary>
+        /// Clone normal link-entity (1:N || N:1 relationships)
+        /// </summary>
+        /// <param name="element">Current linked entity</param>
+        /// <param name="parentid">Id of the parent</param>
+        /// <param name="parentclonedid">Id of the cloned parent</param>
         private void CloneLinkEntity(XElement element, EntityReference parentid, EntityReference parentclonedid)
         {
             var queryClone = XElement.Parse(element.ToString());
@@ -182,6 +187,12 @@ namespace ConfigurableEntityCloner
             }
         }
 
+        /// <summary>
+        /// Clone link-entity to intersect-entity (N:N relationships)
+        /// </summary>
+        /// <param name="element">Current linked entity</param>
+        /// <param name="parentid">Id of the parent</param>
+        /// <param name="parentclonedid">Id of the cloned parent</param>
         private void CloneAssociateEntity(XElement element, EntityReference parentid, EntityReference parentclonedid)
         {
             var queryClone = XElement.Parse(element.ToString());
@@ -241,8 +252,10 @@ namespace ConfigurableEntityCloner
                     tracingService.Trace($"Successfully cloned status '{clone.LogicalName}: {clone.Id}'");
                 }
 
-                var entityReferenceCollection = new EntityReferenceCollection();
-                entityReferenceCollection.Add(parentid);
+                var entityReferenceCollection = new EntityReferenceCollection
+                {
+                    parentclonedid
+                };
 
                 this.orgService.Associate(toEntity, cloneId, new Relationship(relationName), entityReferenceCollection);
 
