@@ -43,10 +43,10 @@ Download the managed or unmanaged solution and import it in your environment.
     ~~~ xml
     <fetch>
         ...
-        <link-entity name='<intersect-entity-name>' from='<recordid>' to='<recordid>' intersect='true'>
-          <attribute name='<record1id>' />
-          <attribute name='<record2id>' />
-          <to-entity name='<record2.LogicalName>' entityid-field='<record2idFieldName>'>
+        <link-entity name='<intersect-entity-name>' from='<record1-id-attribute>' to='<record1-id-attribute>' intersect='true'>
+          <attribute name='<record1-id-attribute>' />
+          <attribute name='<record2-id-attributee>' />
+          <to-entity name='<record2-entity-logical-name>' entityid-field='<record2-id-field-name>'>
             <attribute name='<attribute1>' />
             ...
           </to-entity>
