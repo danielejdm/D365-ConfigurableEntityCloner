@@ -38,6 +38,7 @@ Download the managed or unmanaged solution and import it in your environment.
 - The FetchXml <b>cannot</b> contains readonly attributes (i.e.: <i>createdon</i>, <i>createdby</i>, etc.).
 - The attribute <i>link-type</i> in the FetchXml has no effect:
   - The action always applies an <i>outer join</i>.
+- In case of associations (intersect-entity), the FetchXml has to be modified:
  
 #### Sample FetchXml
 ~~~ xml

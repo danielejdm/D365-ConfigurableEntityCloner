@@ -1,8 +1,10 @@
 ﻿using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 using Microsoft.Xrm.Sdk.Workflow;
+using System;
 using System.Activities;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Xml.Linq;
 
 namespace ConfigurableEntityCloner
@@ -90,9 +92,11 @@ namespace ConfigurableEntityCloner
                 tracingService.Trace($"Successfully cloned status '{clone.LogicalName}: {clone.Id}'");
             }
 
-            foreach (var el in element.Descendants().Where(e => e.Name == "link-entity" && e.Parent.Name == "entity"))
+            var linkEntities = element.Descendants().Where(e => e.Name == "link-entity" &&
+                        e.Parent.Name == "entity");
+            foreach (var el in linkEntities)
             {
-                CloneLinkedEntity(el, record.ToEntityReference(), new EntityReference(record.LogicalName, cloneId));
+                CloneChildren(el, record.ToEntityReference(), new EntityReference(record.LogicalName, cloneId));
             }
 
             return cloneId.ToString();
@@ -104,65 +108,151 @@ namespace ConfigurableEntityCloner
         /// <param name="element">Current linked entity</param>
         /// <param name="parentid">Id of the parent</param>
         /// <param name="parentclonedid">Id of the cloned parent</param>
-        private void CloneLinkedEntity(XElement element, EntityReference parentid = null, EntityReference parentclonedid = null)
+        private void CloneChildren(XElement element, EntityReference parentid = null, EntityReference parentclonedid = null)
         {
-            if (element.Name == "link-entity")
+            if (element.Name == "link-entity" &&
+                    (element.Attribute("intersect") == null || element.Attribute("intersect").Value != "true"))
             {
-                var queryClone = XElement.Parse(element.ToString());
-                queryClone.Descendants().Where(x => x.Name == "link-entity").Remove();
+                CloneLinkEntity(element, parentid, parentclonedid);
+            }
+            else if (element.Name == "link-entity" &&
+                    (element.Attribute("intersect") != null || element.Attribute("intersect").Value == "true"))
+            {
+                CloneAssociateEntity(element, parentid, parentclonedid);
+            }
+        }
 
-                var from = queryClone.Attribute("from").Value;
-                var to = queryClone.Attribute("to").Value;
-                var name = queryClone.Attribute("name").Value;
+        private void CloneLinkEntity(XElement element, EntityReference parentid, EntityReference parentclonedid)
+        {
+            var queryClone = XElement.Parse(element.ToString());
+            queryClone.Descendants().Where(x => x.Name == "link-entity").Remove();
 
-                var sfilter = $"<filter><condition attribute='{from}' operator='eq' value='{parentid.Id}'/></filter>";
-                var linkentityQuery = XElement.Parse($"<fetch><entity name='{name}'>{sfilter}</entity></fetch>");
+            var from = queryClone.Attribute("from").Value;
+            var to = queryClone.Attribute("to").Value;
+            var name = queryClone.Attribute("name").Value;
 
-                linkentityQuery.Element("entity").AddFirst(queryClone.Elements());
+            var sfilter = $"<filter><condition attribute='{from}' operator='eq' value='{parentid.Id}'/></filter>";
+            var linkentityQuery = XElement.Parse($"<fetch><entity name='{name}'>{sfilter}</entity></fetch>");
 
-                var fields = from a in linkentityQuery.Descendants() where a.Name == "attribute" select a.Attribute("name");
-                var records = this.orgService.RetrieveMultiple(new FetchExpression(linkentityQuery.ToString())).Entities;
+            linkentityQuery.Element("entity").AddFirst(queryClone.Elements());
 
-                foreach (var record in records)
+            var fields = from a in queryClone.Descendants() where a.Name == "attribute" select a.Attribute("name");
+            var records = this.orgService.RetrieveMultiple(new FetchExpression(linkentityQuery.ToString())).Entities;
+
+            foreach (var record in records)
+            {
+                tracingService.Trace($"Start cloning link-entity '{record.LogicalName}: {record.Id}'");
+                var clone = new Entity();
+                clone.LogicalName = record.LogicalName;
+                foreach (var f in fields.Where(f => f.Value != "statecode" && f.Value != "statuscode"))
                 {
-                    tracingService.Trace($"Start cloning link-entity '{record.LogicalName}: {record.Id}'");
-                    var clone = new Entity();
-                    clone.LogicalName = record.LogicalName;
-                    foreach (var f in fields.Where(f => f.Value != "statecode" && f.Value != "statuscode"))
+                    if (record.Contains(f.Value))
                     {
-                        if (record.Contains(f.Value))
-                        {
-                            clone.Attributes.Add(f.Value, record[f.Value]);
-                        }
+                        clone.Attributes.Add(f.Value, record[f.Value]);
                     }
-                    clone.Attributes.Add(from, parentclonedid);
+                }
+                clone.Attributes.Add(from, parentclonedid);
 
-                    var cloneId = this.orgService.Create(clone);
+                var cloneId = this.orgService.Create(clone);
 
-                    if (this.configuration.GetAttributeValue<bool>("jdm_clonestatus") == true &&
-                        record.Contains("statecode") && record.Contains("statuscode"))
+                if (this.configuration.GetAttributeValue<bool>("jdm_clonestatus") == true &&
+                    record.Contains("statecode") && record.Contains("statuscode"))
+                {
+                    tracingService.Trace($"Start cloning status '{clone.LogicalName}: {clone.Id}'");
+
+                    var upClone = new Entity(clone.LogicalName)
                     {
-                        tracingService.Trace($"Start cloning status '{clone.LogicalName}: {clone.Id}'");
+                        Id = cloneId,
+                        ["statecode"] = record["statecode"],
+                        ["statuscode"] = record["statuscode"],
+                    };
+                    this.orgService.Update(upClone);
 
-                        var upClone = new Entity(clone.LogicalName)
-                        {
-                            Id = cloneId,
-                            ["statecode"] = record["statecode"],
-                            ["statuscode"] = record["statuscode"],
-                        };
-                        this.orgService.Update(upClone);
+                    tracingService.Trace($"Successfully cloned status '{clone.LogicalName}: {clone.Id}'");
+                }
 
-                        tracingService.Trace($"Successfully cloned status '{clone.LogicalName}: {clone.Id}'");
-                    }
+                tracingService.Trace($"Successfully cloned link-entity '{clone.LogicalName}: {clone.Id}'");
 
-                    tracingService.Trace($"Successfully cloned link-entity '{clone.LogicalName}: {clone.Id}'");
+                var linkentities = element.Elements().Where(d => d.Name == "link-entity");
 
-                    var linkentities = element.Elements().Where(d => d.Name == "link-entity");
+                foreach (var le in linkentities)
+                {
+                    CloneChildren(le, record.ToEntityReference(), new EntityReference(record.LogicalName, cloneId));
+                }
+            }
+        }
 
-                    foreach (var le in linkentities)
+        private void CloneAssociateEntity(XElement element, EntityReference parentid, EntityReference parentclonedid)
+        {
+            var queryClone = XElement.Parse(element.ToString());
+            queryClone.Descendants().Where(x => x.Name == "link-entity").Remove();
+            var queryAssociated = XElement.Parse(queryClone.ToString()).Descendants("to-entity").First();
+
+            var columnsList = from a in queryAssociated.Descendants() where a.Name == "attribute" select a.Attribute("name").Value;
+
+            var columns = new ColumnSet(columnsList.ToArray());
+
+            queryClone.Descendants().Where(x => x.Name == "to-entity").Remove();
+
+            var from = queryClone.Attribute("from").Value;
+            var relationName = queryClone.Attribute("name").Value;
+            var toEntity = queryAssociated.Attribute("name").Value;
+            var toEntityIdField = queryAssociated.Attribute("entityid-field").Value;
+            
+            //var sfilter = $"<filter><condition attribute='{from}' operator='eq' value='{parentid.Id}'/></filter>";
+            var associatedEntityQuery = XElement.Parse($"<fetch><entity name='{relationName}'></entity></fetch>");
+
+            associatedEntityQuery.Element("entity").AddFirst(queryClone.Elements());
+
+            //var fields = from a in queryClone.Descendants() where a.Name == "attribute" select a.Attribute("name");
+            var associations = this.orgService.RetrieveMultiple(new FetchExpression(associatedEntityQuery.ToString())).Entities;
+
+            
+            foreach (var association in associations)
+            {
+                tracingService.Trace($"Start cloning association '{association.LogicalName}'");
+
+                var record = this.orgService.Retrieve(toEntity, association.GetAttributeValue<Guid>(toEntityIdField), columns);
+
+                var clone = new Entity();
+                clone.LogicalName = toEntity;
+                foreach (var f in columns.Columns.Where(f => f != "statecode" && f != "statuscode"))
+                {
+                    if (record.Contains(f))
                     {
-                        CloneLinkedEntity(le, record.ToEntityReference(), new EntityReference(record.LogicalName, cloneId));
+                        clone.Attributes.Add(f, record[f]);
                     }
+                }
+                var cloneId = this.orgService.Create(clone);
+  
+                if (this.configuration.GetAttributeValue<bool>("jdm_clonestatus") == true &&
+                    record.Contains("statecode") && record.Contains("statuscode"))
+                {
+                    tracingService.Trace($"Start cloning status '{clone.LogicalName}: {clone.Id}'");
+
+                    var upClone = new Entity(clone.LogicalName)
+                    {
+                        Id = cloneId,
+                        ["statecode"] = record["statecode"],
+                        ["statuscode"] = record["statuscode"],
+                    };
+                    this.orgService.Update(upClone);
+
+                    tracingService.Trace($"Successfully cloned status '{clone.LogicalName}: {clone.Id}'");
+                }
+
+                var entityReferenceCollection = new EntityReferenceCollection();
+                entityReferenceCollection.Add(parentid);
+
+                this.orgService.Associate(toEntity, cloneId, new Relationship(relationName), entityReferenceCollection);
+
+                tracingService.Trace($"Successfully clone association '{association.LogicalName}'");
+
+                var linkentities = element.Elements().Where(d => d.Name == "link-entity");
+
+                foreach (var le in linkentities)
+                {
+                    CloneChildren(le, association.ToEntityReference(), new EntityReference(association.LogicalName, cloneId));
                 }
             }
         }
