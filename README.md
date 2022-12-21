@@ -33,12 +33,13 @@ Download the managed or unmanaged solution and import it in your environment.
 - Provide a meaningful name.
 - Provide the FetchXml which represents the entity(/entities) and fields that need to be cloned. I recommend to use [FetchXml Builder](https://www.xrmtoolbox.com/plugins/Cinteros.Xrm.FetchXmlBuilder) to build the fetch query.
 - The value for the Guid of the root entity in the fetch query must be '<b>@id</b>' (placeholder).
+- The root entity <b>cannot be</b> an intersect-entity (entity for the N:N relations).
 - Set the flag <i>Clone Status?</i> to yes if the cloned entity(/entities) need to have the same status of the record to clone from.
     - The action sets the status for the clones of the entity(/entities) which have both <i>statecode</i> and <i>statuscode</i> in the list of attributes on the FetchXml.
 - The FetchXml <b>cannot</b> contains readonly attributes (i.e.: <i>createdon</i>, <i>createdby</i>, etc.).
 - The attribute <i>link-type</i> in the FetchXml has no effect:
   - The action always applies an <i>outer join</i>.
-- The <i>N:N relations</i> in the Fetch must be modified as per following template:
+- The <i>N:N relations</i> in the Fetch must be modified as per the following template:
     ~~~ xml
     <fetch>
         ...
