@@ -188,7 +188,7 @@ namespace ConfigurableEntityCloner
         }
 
         /// <summary>
-        /// Clone link-entity to intersect-entity (N:N relationships)
+        /// Clone link-entity with intersect-entity (N:N relationships)
         /// </summary>
         /// <param name="element">Current linked entity</param>
         /// <param name="parentid">Id of the parent</param>
