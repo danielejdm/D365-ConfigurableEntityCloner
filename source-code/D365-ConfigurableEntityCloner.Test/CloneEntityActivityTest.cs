@@ -66,17 +66,17 @@ namespace ConfigurableEntityCloner.Test
                 ["subject"] = "Test Phonecall"
             };
 
-            var ddEntity = new Entity("new_ddentity")
+            var jdm_myentity = new Entity("jdm_myentity")
             {
                 Id = Guid.NewGuid(),
-                ["new_name"] = "Test DD"
+                ["jdm_name"] = "Test DD"
             };
 
-            var ddentity_account = new Entity("new_new_ddentity_account")
+            var jdm_jdm_myentity_account = new Entity("jdm_jdm_myentity_account")
             {
                 Id = Guid.NewGuid(),
                 ["accountid"] = account.Id,
-                ["new_ddentityid"] = ddEntity.Id,
+                ["jdm_myentityid"] = jdm_myentity.Id,
             };
 
             var config = new Entity("jdm_configuration")
@@ -90,11 +90,11 @@ namespace ConfigurableEntityCloner.Test
                                         "<filter>" +
                                           "<condition attribute='accountid' operator='eq' value='@id' />" +
                                         "</filter>" +
-                                        "<link-entity name='new_new_ddentity_account' from='accountid' to='accountid' intersect='true'>" +
+                                        "<link-entity name='jdm_jdm_myentity_account' from='accountid' to='accountid' intersect='true'>" +
                                           "<attribute name='accountid' />" +
-                                          "<attribute name='new_ddentityid' />" +
-                                          "<to-entity name='new_ddentity' entityid-field='new_ddentityid'>" +
-                                            "<attribute name='new_name' />" +
+                                          "<attribute name='jdm_myentityid' />" +
+                                          "<to-entity name='jdm_myentity'>" +
+                                            "<attribute name='jdm_name' />" +
                                           "</to-entity>" +
                                         "</link-entity>" +
                                         "<link-entity name='contact' from='parentcustomerid' to='accountid' link-type='outer' >" +
@@ -121,15 +121,15 @@ namespace ConfigurableEntityCloner.Test
             };
 
 #pragma warning disable CS0618 // Type or member is obsolete
-            fakedContext.Initialize(new List<Entity>() { account, contact, contact2, note, phonecall, config, ddEntity, ddentity_account });
+            fakedContext.Initialize(new List<Entity>() { account, contact, contact2, note, phonecall, config, jdm_myentity, jdm_jdm_myentity_account });
 #pragma warning restore CS0618 // Type or member is obsolete
-            fakedContext.AddRelationship("new_new_ddentity_account", new XrmFakedRelationship
+            fakedContext.AddRelationship("jdm_jdm_myentity_account", new XrmFakedRelationship
             {
-                IntersectEntity = "new_new_ddentity_account",
-                Entity1LogicalName = ddEntity.LogicalName,
-                Entity1Attribute = "new_ddentityid",
-                Entity2LogicalName = account.LogicalName,
-                Entity2Attribute = "accountid"
+                IntersectEntity = "jdm_jdm_myentity_account",
+                Entity1LogicalName = account.LogicalName,
+                Entity1Attribute = "accountid",
+                Entity2LogicalName = jdm_myentity.LogicalName,
+                Entity2Attribute = "jdm_myentityid"
             });
 
             //Inputs
@@ -171,7 +171,7 @@ namespace ConfigurableEntityCloner.Test
             Assert.IsTrue(fakedContext.CreateQuery("phonecall").Any(e => e.Id != phonecall.Id &&
                     e["subject"].Equals(phonecall["subject"])));
 
-            Assert.IsTrue(fakedContext.CreateQuery("new_new_ddentity_account").Any(e => e.Id != ddentity_account.Id));
+            Assert.IsTrue(fakedContext.CreateQuery("jdm_jdm_myentity_account").Any(e => e.Id != jdm_jdm_myentity_account.Id));
         }
     }
 }

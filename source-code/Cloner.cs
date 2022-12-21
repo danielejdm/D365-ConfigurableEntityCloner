@@ -208,17 +208,14 @@ namespace ConfigurableEntityCloner
             var from = queryClone.Attribute("from").Value;
             var relationName = queryClone.Attribute("name").Value;
             var toEntity = queryAssociated.Attribute("name").Value;
-            var toEntityIdField = queryAssociated.Attribute("entityid-field").Value;
+            var toEntityIdField = toEntity + "id";
             
-            //var sfilter = $"<filter><condition attribute='{from}' operator='eq' value='{parentid.Id}'/></filter>";
             var associatedEntityQuery = XElement.Parse($"<fetch><entity name='{relationName}'></entity></fetch>");
 
             associatedEntityQuery.Element("entity").AddFirst(queryClone.Elements());
 
-            //var fields = from a in queryClone.Descendants() where a.Name == "attribute" select a.Attribute("name");
             var associations = this.orgService.RetrieveMultiple(new FetchExpression(associatedEntityQuery.ToString())).Entities;
 
-            
             foreach (var association in associations)
             {
                 tracingService.Trace($"Start cloning association '{association.LogicalName}'");

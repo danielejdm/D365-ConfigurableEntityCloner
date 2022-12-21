@@ -46,8 +46,8 @@ Download the managed or unmanaged solution and import it in your environment.
         <link-entity name='<intersect-entity-name>' from='<record1-id-attribute>' to='<record1-id-attribute>' intersect='true'>
           <attribute name='<record1-id-attribute>'/>    <!-- Necessary -->
           <attribute name='<record2-id-attributee>'/>   <!-- Necessary -->
-          <to-entity name='<record2-entity-logical-name>' entityid-field='<record2-id-field-name>'>
-            <attribute name='<attribute1>' />
+          <to-entity name='<record2-entity-logical-name>'>
+            <attribute name='<attribute1>'/>
             ...
           </to-entity>
         </link-entity>
@@ -58,37 +58,37 @@ Download the managed or unmanaged solution and import it in your environment.
 #### Sample FetchXml
 ~~~ xml
 <fetch>
-  <entity name='account' >
-    <attribute name='name' />
-    <attribute name='accountnumber' />
+  <entity name='account'>
+    <attribute name='name'/>
+    <attribute name='accountnumber'/>
     <filter>
-      <condition attribute='accountid' operator='eq' value='@id' />
+      <condition attribute='accountid' operator='eq' value='@id'/>
     </filter>
     <link-entity name='jdm_jdm_myentity_account' from='accountid' to='accountid' intersect='true'>
-      <attribute name='accountid' />
-      <attribute name='jdm_myentityid' />
-      <to-entity name='jdm_myentity' entityid-field='jdm_myentityid'>
-        <attribute name='jdm_name' />
+      <attribute name='accountid'/>
+      <attribute name='jdm_myentityid'/>
+      <to-entity name='jdm_myentity'>
+        <attribute name='jdm_name'/>
       </to-entity>
     </link-entity>
-    <link-entity name='contact' from='parentcustomerid' to='accountid' link-type='outer' >
-      <attribute name='address1_composite' />
-      <attribute name='fullname' />
-      <attribute name='firstname' />
-      <attribute name='lastname' />
-      <attribute name='statecode' />
-      <attribute name='statuscode' />
-      <link-entity name='annotation' from='objectid' to='contactid' link-type='outer' >
-        <attribute name='filename' />
-        <attribute name='filesize' />
-        <attribute name='mimetype' />
-        <attribute name='documentbody' />
-        <attribute name='notetext' />
-        <attribute name='isdocument' />
+    <link-entity name='contact' from='parentcustomerid' to='accountid' link-type='outer'>
+      <attribute name='address1_composite'/>
+      <attribute name='fullname'/>
+      <attribute name='firstname'/>
+      <attribute name='lastname'/>
+      <attribute name='statecode'/>
+      <attribute name='statuscode'/>
+      <link-entity name='annotation' from='objectid' to='contactid' link-type='outer'>
+        <attribute name='filename'/>
+        <attribute name='filesize'/>
+        <attribute name='mimetype'/>
+        <attribute name='documentbody'/>
+        <attribute name='notetext'/>
+        <attribute name='isdocument'/>
       </link-entity>
     </link-entity>
-    <link-entity name='phonecall' from='regardingobjectid' to='accountid' link-type='outer' >
-      <attribute name='subject' />
+    <link-entity name='phonecall' from='regardingobjectid' to='accountid' link-type='outer'>
+      <attribute name='subject'/>
     </link-entity>
   </entity>
 </fetch>
