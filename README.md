@@ -41,16 +41,16 @@ Download the managed or unmanaged solution and import it in your environment.
 - The <i>N:N relations</i> in the Fetch must be modified as per following template:
 ~~~ xml
 <fetch>
-...
-<link-entity name='<intersect-entity-name>' from='<recordid>' to='<recordid>' intersect='true'>
-  <attribute name='<record1id>' />
-  <attribute name='<record2id>' />
-  <to-entity name='<record2.LogicalName>' entityid-field='<record2idFieldName>'>
-    <attribute name='<attribute1>' />
     ...
-  </to-entity>
-</link-entity>
-...
+    <link-entity name='<intersect-entity-name>' from='<recordid>' to='<recordid>' intersect='true'>
+      <attribute name='<record1id>' />
+      <attribute name='<record2id>' />
+      <to-entity name='<record2.LogicalName>' entityid-field='<record2idFieldName>'>
+        <attribute name='<attribute1>' />
+        ...
+      </to-entity>
+    </link-entity>
+    ...
 </fetch>
 ~~~
  
