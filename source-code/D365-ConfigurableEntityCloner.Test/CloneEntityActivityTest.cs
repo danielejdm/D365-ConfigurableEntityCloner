@@ -28,7 +28,7 @@ namespace ConfigurableEntityCloner.Test
             {
                 Id = Guid.NewGuid(),
                 ["name"] = "Account",
-                ["accountnumber"] = "Acc-1234"
+                ["accountnumber"] = "Acc-1234",
             };
 
             var contact = new Entity("contact")
@@ -88,16 +88,18 @@ namespace ConfigurableEntityCloner.Test
                 Id = Guid.NewGuid(),
                 ["jdm_clonestatus"] = true,
                 ["jdm_configvalue"] = "<fetch>" +
-                                      "<entity name='account' >" +
+                                      "<entity name='account' exclude-attributes='false' >" +
                                         "<attribute name='name' />" +
                                         "<attribute name='accountnumber' />" +
+                                        "<attribute name='statecode' original-new-value='1' />" +
+                                        "<attribute name='statuscode' original-new-value='2' />" +
                                         "<filter>" +
                                           "<condition attribute='accountid' operator='eq' value='@id' />" +
                                         "</filter>" +
                                         "<link-entity name='jdm_jdm_myentity_account' from='accountid' to='accountid' intersect='true'>" +
                                           "<attribute name='accountid' />" +
                                           "<attribute name='jdm_myentityid' />" +
-                                          "<associate-entity name='jdm_myentity'>" +
+                                          "<associate-entity exclude-attributes='false' name='jdm_myentity'>" +
                                             "<attribute name='jdm_name'/>" +
                                           "</associate-entity>" +
                                         "</link-entity>" +
@@ -144,7 +146,7 @@ namespace ConfigurableEntityCloner.Test
 
             var result = this.xrmFakedContext.ExecuteCodeActivity<CloneEntityActivity>(inputs);
 
-            Assert.IsTrue(fakedContext.CreateQuery("account").Any(e => e.Id == new Guid((string)result["RootCloneId"])));
+            Assert.IsTrue(this.xrmFakedContext.CreateQuery("account").Any(e => e.Id == new Guid((string)result["RootCloneId"])));
 
             Assert.IsTrue(this.xrmFakedContext.CreateQuery("contact").Any(e => e.Id != contact.Id &&
                     e["firstname"].Equals(contact["firstname"]) &&
@@ -181,7 +183,35 @@ namespace ConfigurableEntityCloner.Test
         [TestMethod]
         public void Should_Clone_Connections()
         {
+            var account = new Entity("account")
+            {
+                Id = Guid.NewGuid(),
+                ["name"] = "Account",
+                ["accountnumber"] = "Acc-1234"
+            };
 
+            var contact = new Entity("contact")
+            {
+                Id = Guid.NewGuid(),
+                ["firstname"] = "Mario",
+                ["lastname"] = "Rossi",
+                ["parentcustomerid"] = account.ToEntityReference(),
+                ["fullname"] = "Mario Rossi",
+                ["address1_composite"] = "Musterstr. 1, 11111 Musterstadt"
+            };
+
+            var connectionrole1 = new Entity("connectionrole")
+            {
+                Id = Guid.NewGuid(),
+                ["name"] = "Connection 1"
+            };
+
+            var connection1 = new Entity("connection")
+            {
+                Id = Guid.NewGuid(),
+                ["record1id"] = account.Id,
+                ["record2id"] = contact.Id,
+            };
         }
     }
 }

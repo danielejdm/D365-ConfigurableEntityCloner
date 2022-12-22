@@ -101,6 +101,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AttributeInfo.cs" />
     <Compile Include="CloneEntityActivity.cs" />
     <Compile Include="Cloner.cs" />
     <Compile Include="Helper.cs" />

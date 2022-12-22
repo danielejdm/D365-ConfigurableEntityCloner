@@ -3,6 +3,7 @@ using Microsoft.Xrm.Sdk.Metadata.Query;
 using Microsoft.Xrm.Sdk.Query;
 using Microsoft.Xrm.Sdk;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace ConfigurableEntityCloner
 {
@@ -18,7 +19,12 @@ namespace ConfigurableEntityCloner
             return id;
         }
 
-        //Find the Logical Name from the entity type code - this needs a reference to the Organization Service to look up metadata
+        /// <summary>
+        /// Find the Logical Name from the entity type code
+        /// </summary>
+        /// <param name="service">Organization service</param>
+        /// <param name="entityTypeCode">Entity type code</param>
+        /// <returns></returns>
         public static string GetEntityLogicalName(IOrganizationService service, int entityTypeCode)
         {
             var entityFilter = new MetadataFilterExpression(LogicalOperator.And);
@@ -43,6 +49,27 @@ namespace ConfigurableEntityCloner
                 return response.EntityMetadata[0].LogicalName;
             }
             return null;
+        }
+
+        public static bool CheckIfAttributeIsCustom(string attributename)
+        {
+            var pattern = "^.*_";
+            Regex rg = new Regex(pattern);
+
+            return rg.IsMatch(attributename);
+        }
+        /// <summary>
+        /// Check if the attribute has to be copied
+        /// </summary>
+        /// <param name="exclude_attributes">Attribute in the fetch to indicate weather the list of attribute are to copy or to ignore (black/white list)</param>
+        /// <param name="record">The original record</param>
+        /// <param name="attributename">The original record attribute</param>
+        /// <returns></returns>
+        public static bool CopyAttribute(bool exclude_attributes, Entity record, string attributename)
+        {
+            var blacklist = new string[] { record.LogicalName + "id", "statecode", "statuscode" };
+            return exclude_attributes != true && record.Contains(attributename)
+                && !blacklist.Contains(attributename);
         }
     }
 }
