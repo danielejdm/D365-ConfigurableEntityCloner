@@ -4,6 +4,7 @@ using Microsoft.Xrm.Sdk.Query;
 using Microsoft.Xrm.Sdk;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System;
 
 namespace ConfigurableEntityCloner
 {
@@ -70,6 +71,33 @@ namespace ConfigurableEntityCloner
             var blacklist = new string[] { record.LogicalName + "id", "statecode", "statuscode" };
             return exclude_attributes != true && record.Contains(attributename)
                 && !blacklist.Contains(attributename);
+        }
+
+        public static void SetAttributeValue(ref Entity recordToUpdate, Entity record, string fieldName, string newValue)
+        {
+            if(!record.Contains(fieldName))
+            {
+                return;
+            }
+            var attr = record[fieldName];
+
+            if (attr is string)
+            {
+                recordToUpdate.Attributes.Add(fieldName, newValue);
+            }
+            else if (attr is int)
+            {
+                recordToUpdate[fieldName] = int.Parse(newValue);
+            } else if(attr is OptionSetValue)
+            {
+                recordToUpdate[fieldName] = new OptionSetValue(int.Parse(newValue));
+            } else if (attr is decimal)
+            {
+                recordToUpdate[fieldName] = decimal.Parse(newValue);
+            } else if (attr is bool)
+            {
+                recordToUpdate[fieldName] = bool.Parse(newValue);
+            }
         }
     }
 }

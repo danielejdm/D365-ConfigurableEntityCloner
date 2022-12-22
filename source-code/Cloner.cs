@@ -82,7 +82,7 @@ namespace ConfigurableEntityCloner
             var clone = new Entity();
             clone.LogicalName = record.LogicalName;
 
-            var originalRecord = new Entity(record.LogicalName) { Id= record.Id };
+            var recordToUpdate = new Entity(record.LogicalName) { Id= record.Id };
             var updateRecord = false;
 
             foreach (var f in fields)
@@ -95,14 +95,14 @@ namespace ConfigurableEntityCloner
                 if(f.OriginalNewValue != null)
                 {
                     updateRecord= true;
-                    originalRecord.Attributes.Add(f.Name, f.OriginalNewValue);
+                    Helper.SetAttributeValue(ref recordToUpdate, record, f.Name, f.OriginalNewValue);
                 }
             }
             var cloneId = this.orgService.Create(clone);
 
             if (updateRecord)
             {
-                this.orgService.Update(originalRecord);
+                this.orgService.Update(recordToUpdate);
             }
 
             tracingService.Trace($"Successfully cloned root entity '{clone.LogicalName} : {clone.Id}'");
@@ -162,17 +162,9 @@ namespace ConfigurableEntityCloner
             var name = queryClone.Attribute("name").Value;
 
             var sfilter = $"<filter><condition attribute='{from}' operator='eq' value='{parentid.Id}'/></filter>";
-            var linkentityQuery = XElement.Parse($"<fetch><entity name='{name}'>{sfilter}</entity></fetch>");
+            var linkentityQuery = XElement.Parse($"<fetch><entity name='{name}'><all-attributes/>{sfilter}</entity></fetch>");
 
-            var queryCloneAllAttributes = XElement.Parse(queryClone.ToString());
-            var exclude_attributes = queryCloneAllAttributes.Elements().Attributes().Where(x => x.Name == "exclude-attributes").First().Value == "true";
-            queryCloneAllAttributes.Elements().Attributes().Where(x => x.Name == "exclude-attributes").Remove();
-
-            //var ignore_system_attributes = queryCloneAllAttributes.Elements().Attributes().Where(x => x.Name == "ignore-system-attributes").First().Value == "true";
-            //queryCloneAllAttributes.Elements().Attributes().Where(x => x.Name == "ignore-system-attributes").Remove(); 
-
-            queryCloneAllAttributes.Descendants().Where(x => x.Name == "attribute").Remove();
-            queryCloneAllAttributes.Descendants("entity").FirstOrDefault().AddFirst("<all-attribute/>");
+            var exclude_attributes = queryClone.Attributes().Where(x => x.Name == "exclude-attributes").First().Value == "true";
 
             var fields = from a in queryClone.Descendants()
                          where a.Name == "attribute"
@@ -241,18 +233,12 @@ namespace ConfigurableEntityCloner
            
             queryCloneAllAttributes.Attributes().Where(x => x.Name == "exclude-attributes").Remove();
 
-            //var ignore_system_attributes = queryCloneAllAttributes.Elements().Attributes().Where(x => x.Name == "ignore-system-attributes").First().Value == "true";
-            //queryCloneAllAttributes.Elements().Attributes().Where(x => x.Name == "ignore-system-attributes").Remove(); 
-
             var columnsList = from a in queryCloneAllAttributes.Descendants()
                               where a.Name == "attribute"
                               select new AttributeInfo(a);
 
             queryCloneAllAttributes.Descendants("entity").Where(x => x.Name == "attribute").Remove();
-            queryCloneAllAttributes.Descendants().FirstOrDefault().AddFirst("<all-attribute/>");
-
-            //var columnsList = from a in queryAssociated.Descendants() where a.Name == "attribute" select a.Attribute("name").Value;
-
+            queryCloneAllAttributes.Descendants().FirstOrDefault().AddFirst("<all-attributes/>");
             queryClone.Descendants().Where(x => x.Name == "associate-entity").Remove();
 
             var from = queryClone.Attribute("from").Value;
