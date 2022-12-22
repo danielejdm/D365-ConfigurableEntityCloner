@@ -27,7 +27,7 @@ Download the managed or unmanaged solution and import it in your environment.
 ### Configure
 
 - Create a configuration record for each needed cloning functionality.
-![image](https://user-images.githubusercontent.com/34159960/208450207-1b69370c-6243-4deb-b04f-d8dfd26b4524.png)
+![image](https://user-images.githubusercontent.com/34159960/209194476-d0b724c6-9ac3-4c79-9c86-8a57c8bd0fc6.png)
 
   
 - Provide a meaningful name.
