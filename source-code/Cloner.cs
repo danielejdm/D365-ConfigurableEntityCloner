@@ -4,7 +4,6 @@ using Microsoft.Xrm.Sdk.Workflow;
 using System;
 using System.Activities;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Xml.Linq;
 
 namespace ConfigurableEntityCloner
@@ -56,6 +55,13 @@ namespace ConfigurableEntityCloner
             XElement element = XElement.Parse(fetchXml);
 
             var queryClone = XElement.Parse(element.ToString());
+
+            if(queryClone.Attributes().Where(x => x.Name == "entity").First().Value == "connection")
+            {
+                CloneEntityConnections(queryClone);
+            }
+
+
             queryClone.Descendants().Where(x => x.Name == "link-entity").Remove();
 
             var record = this.orgService.RetrieveMultiple(new FetchExpression(queryClone.ToString())).Entities.FirstOrDefault();
@@ -110,15 +116,22 @@ namespace ConfigurableEntityCloner
         /// <param name="parentclonedid">Id of the cloned parent</param>
         private void CloneChildren(XElement element, EntityReference parentid = null, EntityReference parentclonedid = null)
         {
-            if (element.Name == "link-entity" &&
-                    (element.Attribute("intersect") == null || element.Attribute("intersect").Value != "true"))
+            if(element.Name != "link-entity")
+            {
+                return;
+            }
+
+            if (element.Attribute("intersect") == null || element.Attribute("intersect").Value != "true")
             {
                 CloneLinkEntity(element, parentid, parentclonedid);
             }
-            else if (element.Name == "link-entity" &&
-                    (element.Attribute("intersect") != null || element.Attribute("intersect").Value == "true"))
+            else if (element.Attribute("intersect") != null || element.Attribute("intersect").Value == "true")
             {
                 CloneAssociateEntity(element, parentid, parentclonedid);
+            }
+            else if (element.Attributes().Where(x => x.Name == "link-entity").First().Value == "connection")
+            {
+                CloneEntityConnections(element);
             }
         }
         /// <summary>
@@ -209,7 +222,7 @@ namespace ConfigurableEntityCloner
             var relationName = queryClone.Attribute("name").Value;
             var toEntity = queryAssociated.Attribute("name").Value;
             var toEntityIdField = toEntity + "id";
-            
+
             var associatedEntityQuery = XElement.Parse($"<fetch><entity name='{relationName}'></entity></fetch>");
 
             associatedEntityQuery.Element("entity").AddFirst(queryClone.Elements());
@@ -232,7 +245,7 @@ namespace ConfigurableEntityCloner
                     }
                 }
                 var cloneId = this.orgService.Create(clone);
-  
+
                 if (this.configuration.GetAttributeValue<bool>("jdm_clonestatus") == true &&
                     record.Contains("statecode") && record.Contains("statuscode"))
                 {
@@ -265,6 +278,69 @@ namespace ConfigurableEntityCloner
                     CloneChildren(le, association.ToEntityReference(), new EntityReference(association.LogicalName, cloneId));
                 }
             }
+        }
+        private void CloneEntityConnections(XElement element)
+        {
+            var queryClone = XElement.Parse(element.ToString());
+
+            queryClone.Descendants().Where(x => x.Name == "link-entity").Remove();
+
+            var connections = this.orgService.RetrieveMultiple(new FetchExpression(queryClone.ToString())).Entities;
+
+            var record1id = connections.FirstOrDefault().GetAttributeValue<Guid>("record1id");
+            var record2id = connections.FirstOrDefault().GetAttributeValue<Guid>("record2id");
+            var record1roleid = connections.FirstOrDefault().GetAttributeValue<Guid>("record1roleid");
+            var record2roleid = connections.FirstOrDefault().GetAttributeValue<Guid>("record2roleid");
+            var record1objecttypecode = connections.FirstOrDefault().GetAttributeValue<int>("record1objecttypecode");
+            var record2objecttypecode = connections.FirstOrDefault().GetAttributeValue<int>("record2objecttypecode");
+            var record1entityname = Helper.GetEntityLogicalName(this.orgService, record1objecttypecode);
+            var record2entityname = Helper.GetEntityLogicalName(this.orgService, record2objecttypecode);
+
+            var entity1Query = element.Descendants("link-entity").Where(x => x.Attribute("name").Value == record1entityname).FirstOrDefault();
+            var entity2Query = element.Descendants("link-entity").Where(x => x.Attribute("name").Value == record2entityname).FirstOrDefault();
+
+            var fieldsEntity1 = from a in entity1Query.Descendants() where a.Name == "attribute" select a.Attribute("name").Value;
+            var fieldsEntity2 = from a in entity2Query.Descendants() where a.Name == "attribute" select a.Attribute("name").Value;
+
+            foreach(var c in connections)
+            {
+                var entity1 = this.orgService.Retrieve(record1entityname, record1id, new ColumnSet(fieldsEntity1.ToArray()));
+                var entity2 = this.orgService.Retrieve(record2entityname, record2id, new ColumnSet(fieldsEntity2.ToArray()));
+
+                var clone1 = new Entity();
+                clone1.LogicalName = record1entityname;
+                foreach (var f in fieldsEntity1.Where(f => f != "statecode" && f != "statuscode"))
+                {
+                    if (entity1.Contains(f))
+                    {
+                        clone1.Attributes.Add(f, entity1[f]);
+                    }
+                }
+                var clone1Id = this.orgService.Create(clone1);
+
+                var clone2 = new Entity();
+                clone1.LogicalName = record2entityname;
+                foreach (var f in fieldsEntity2.Where(f => f != "statecode" && f != "statuscode"))
+                {
+                    if (entity1.Contains(f))
+                    {
+                        clone1.Attributes.Add(f, entity2[f]);
+                    }
+                }
+                var clone2Id = this.orgService.Create(clone1);
+
+                var cloneConnection = new Entity("connection")
+                {
+                    ["record1id"] = clone1Id,
+                    ["record2id"] = clone2Id,
+                    ["record1roleid"] = record1roleid,
+                    ["record2roleid"] = record2roleid,
+                };
+
+                this.orgService.Create(cloneConnection);
+            }
+
+            //tracingService.Trace($"Start cloning root entity '{record.LogicalName}: {record.Id}'");
         }
     }
 }

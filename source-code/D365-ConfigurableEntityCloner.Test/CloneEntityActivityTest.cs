@@ -11,15 +11,19 @@ namespace ConfigurableEntityCloner.Test
     [TestClass]
     public class CloneEntityActivityTest
     {
+        private XrmFakedContext xrmFakedContext;
+        private IOrganizationService orgService;
+
+        [TestInitialize]
+        public void Initialize()
+        {
+            this.xrmFakedContext = new XrmFakedContext();
+            this.orgService = xrmFakedContext.GetOrganizationService();
+        }
+
         [TestMethod]
         public void Should_Clone_Account_Contact_Notes()
         {
-#pragma warning disable CS0618 // Type or member is obsolete
-            var fakedContext = new XrmFakedContext();
-#pragma warning restore CS0618 // Type or member is obsolete
-
-            var service = fakedContext.GetOrganizationService();
-
             var account = new Entity("account")
             {
                 Id = Guid.NewGuid(),
@@ -121,9 +125,9 @@ namespace ConfigurableEntityCloner.Test
             };
 
 #pragma warning disable CS0618 // Type or member is obsolete
-            fakedContext.Initialize(new List<Entity>() { account, contact, contact2, note, phonecall, config, jdm_myentity, jdm_jdm_myentity_account });
+            this.xrmFakedContext.Initialize(new List<Entity>() { account, contact, contact2, note, phonecall, config, jdm_myentity, jdm_jdm_myentity_account });
 #pragma warning restore CS0618 // Type or member is obsolete
-            fakedContext.AddRelationship("jdm_jdm_myentity_account", new XrmFakedRelationship
+            this.xrmFakedContext.AddRelationship("jdm_jdm_myentity_account", new XrmFakedRelationship
             {
                 IntersectEntity = "jdm_jdm_myentity_account",
                 Entity1LogicalName = account.LogicalName,
@@ -138,23 +142,23 @@ namespace ConfigurableEntityCloner.Test
                 { "ConfigurationId", config.ToEntityReference() }
             };
 
-            var result = fakedContext.ExecuteCodeActivity<CloneEntityActivity>(inputs);
+            var result = this.xrmFakedContext.ExecuteCodeActivity<CloneEntityActivity>(inputs);
 
             Assert.IsTrue(fakedContext.CreateQuery("account").Any(e => e.Id == new Guid((string)result["RootCloneId"])));
 
-            Assert.IsTrue(fakedContext.CreateQuery("contact").Any(e => e.Id != contact.Id &&
+            Assert.IsTrue(this.xrmFakedContext.CreateQuery("contact").Any(e => e.Id != contact.Id &&
                     e["firstname"].Equals(contact["firstname"]) &&
                     e["lastname"].Equals(contact["lastname"]) &&
                     e["fullname"].Equals(contact["fullname"]) &&
                     e["address1_composite"].Equals(contact["address1_composite"])));
 
-            Assert.IsTrue(fakedContext.CreateQuery("contact").Any(e => e.Id != contact.Id &&
+            Assert.IsTrue(this.xrmFakedContext.CreateQuery("contact").Any(e => e.Id != contact.Id &&
                     e["firstname"].Equals(contact["firstname"]) &&
                     e["lastname"].Equals(contact["lastname"]) &&
                     e["fullname"].Equals(contact["fullname"]) &&
                     e["address1_composite"].Equals(contact["address1_composite"])));
 
-            Assert.IsTrue(fakedContext.CreateQuery("contact").Any(e => e.Id != contact2.Id &&
+            Assert.IsTrue(this.xrmFakedContext.CreateQuery("contact").Any(e => e.Id != contact2.Id &&
                     e["firstname"].Equals(contact2["firstname"]) &&
                     e["lastname"].Equals(contact2["lastname"]) &&
                     e["fullname"].Equals(contact2["fullname"]) &&
@@ -162,16 +166,22 @@ namespace ConfigurableEntityCloner.Test
                     e["statuscode"].Equals(contact2["statuscode"]) &&
                     e["address1_composite"].Equals(contact2["address1_composite"])));
 
-            Assert.IsTrue(fakedContext.CreateQuery("annotation").Any(e => e.Id != note.Id &&
+            Assert.IsTrue(this.xrmFakedContext.CreateQuery("annotation").Any(e => e.Id != note.Id &&
                     e["filename"].Equals(note["filename"]) &&
                     e["documentbody"].Equals(note["documentbody"]) &&
                     e["isdocument"].Equals(note["isdocument"]) &&
                     e["mimetype"].Equals(note["mimetype"])));
 
-            Assert.IsTrue(fakedContext.CreateQuery("phonecall").Any(e => e.Id != phonecall.Id &&
+            Assert.IsTrue(this.xrmFakedContext.CreateQuery("phonecall").Any(e => e.Id != phonecall.Id &&
                     e["subject"].Equals(phonecall["subject"])));
 
-            Assert.IsTrue(fakedContext.CreateQuery("jdm_jdm_myentity_account").Any(e => e.Id != jdm_jdm_myentity_account.Id));
+            Assert.IsTrue(this.xrmFakedContext.CreateQuery("jdm_jdm_myentity_account").Any(e => e.Id != jdm_jdm_myentity_account.Id));
+        }
+
+        [TestMethod]
+        public void Should_Clone_Connections()
+        {
+
         }
     }
 }
