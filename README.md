@@ -89,7 +89,7 @@ Download the managed or unmanaged solution and import it in your environment.
   - true -> all the fields of the entity are copied, except the ones listed in the Xml
 - <i>original-new-value</i> (optional): when set, the cloner updates the field of the originating entity after cloning
 - the associations (n:m relationships) are represented with the following xml-block:
-~~~ xml
+- ~~~ xml
     <link-entity name='jdm_jdm_myentity_account' from='accountid' to='accountid' intersect='true'>
       <attribute name='accountid' />
       <attribute name='jdm_myentityid' />
@@ -100,7 +100,7 @@ Download the managed or unmanaged solution and import it in your environment.
     </link-entity>
 ~~~
 
-- <i>associate-entity</i>: represent the associated entity with the attributes <i>name</i> and <i>exclude-attributes</i> like in the other xml-block for the "normal entities".
+  - <i>associate-entity</i>: represent the associated entity with the attributes <i>name</i> and <i>exclude-attributes</i> like in the other xml-block for the "normal entities".
 
 - the connections (entity <i>connection</i>) are represented with the following xml-block:
 ~~~ xml
