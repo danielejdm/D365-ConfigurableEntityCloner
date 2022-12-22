@@ -100,7 +100,7 @@ Download the managed or unmanaged solution and import it in your environment.
     </link-entity>
 ~~~
 
-  - associate-entity: represent the associated entity with the attributes <i>name</i> and <i>exclude-attributes</i> like in the other xml-block for the "normal entities".
+  - <i>associate-entity</i>: represent the associated entity with the attributes <i>name</i> and <i>exclude-attributes</i> like in the other xml-block for the "normal entities".
 - the connections (entity <i>connection</i>) are represented with the following xml-block:
 ~~~ xml
     <fetch>
@@ -127,7 +127,7 @@ Download the managed or unmanaged solution and import it in your environment.
       </entity>
     </fetch>
 ~~~
-  - the attributes for the <i>connection</i> entity are all required
+  - the attributes for the <i>connection</i> entity are all required 
     - <i>record1roleid</i>
     - <i>record2roleid</i>
     - <i>record2id</i>
