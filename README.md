@@ -13,6 +13,9 @@ The idea behind this solution came about as a result of some requirements that c
 ### Features
 
 - Configurable cloning of entities and sub-entities (child entities) in Dynamics 365.
+- Configurable cloning of associations (n:m relationships).
+- Configurable cloning of connections and connected records.
+- Configurable value to be set for an attribute on the "originaing entity", the entity from which we are cloning. 
 
 ## Getting started
 
@@ -31,74 +34,115 @@ Download the managed or unmanaged solution and import it in your environment.
 
   
 - Provide a meaningful name.
-- Provide the FetchXml which represents the entity(/entities) and fields that need to be cloned. I recommend to use [FetchXml Builder](https://www.xrmtoolbox.com/plugins/Cinteros.Xrm.FetchXmlBuilder) to build the fetch query.
+- Provide the Config Xml which represents the entity(/entities) and fields that need to be cloned plus other information for the cloning. 
+  - I recommend to use [FetchXml Builder](https://www.xrmtoolbox.com/plugins/Cinteros.Xrm.FetchXmlBuilder) to build the a base FetchXml.
 - The value for the Guid of the root entity in the fetch query must be '<b>@id</b>' (placeholder).
 - The root entity <b>cannot be</b> an intersect-entity (entity for the <i>n:m relations</i>).
-- Set the flag <i>Clone Status?</i> to yes if the cloned entity(/entities) need to have the same status of the record to clone from.
-    - The action sets the status for the clones of the entity(/entities) which have both <i>statecode</i> and <i>statuscode</i> in the list of attributes on the FetchXml.
-- The FetchXml <b>cannot</b> contains readonly attributes (i.e.: <i>createdon</i>, <i>createdby</i>, etc.).
 - The attribute <i>link-type</i> in the FetchXml has no effect:
   - The action always applies an <i>outer join</i>.
-- The <i>n:m relations</i> in the Fetch (portion with the <i>intersect-entity</i>) must be modified according to the following template:
-    ~~~ xml
-    <fetch>
-        ...
-        <link-entity name='<intersect-entity-name>' from='<record1-id-attribute>' to='<record1-id-attribute>' intersect='true'>
-          <attribute name='<record1-id-attribute>'/>    <!-- Necessary -->
-          <attribute name='<record2-id-attributee>'/>   <!-- Necessary -->
-          <associate-entity name='<record2-entity-logical-name>'>
-            <attribute name='<attribute1>'/>
-            ...
-          </associate-entity>
-        </link-entity>
-        ...
-    </fetch>
-    ~~~
  
-#### Sample FetchXml
+### Sample Config Xml
 ~~~ xml
 <fetch>
-  <entity name='account'>
-    <attribute name='name'/>
-    <attribute name='accountnumber'/>
+  <entity name='account' exclude-attributes='false' >
+    <attribute name='name' />
+    <attribute name='accountnumber' />
+    <attribute name='statecode' original-new-value='1' />
+    <attribute name='statuscode' original-new-value='2' />
     <filter>
-      <condition attribute='accountid' operator='eq' value='@id'/>
+      <condition attribute='accountid' operator='eq' value='@id' />
     </filter>
     <link-entity name='jdm_jdm_myentity_account' from='accountid' to='accountid' intersect='true'>
-      <attribute name='accountid'/>
-      <attribute name='jdm_myentityid'/>
-      <associate-entity name='jdm_myentity'>
+      <attribute name='accountid' />
+      <attribute name='jdm_myentityid' />
+      <associate-entity exclude-attributes='false' name='jdm_myentity'>
         <attribute name='jdm_name'/>
+        ...
       </associate-entity>
     </link-entity>
-    <link-entity name='contact' from='parentcustomerid' to='accountid' link-type='outer'>
-      <attribute name='address1_composite'/>
-      <attribute name='fullname'/>
-      <attribute name='firstname'/>
-      <attribute name='lastname'/>
-      <attribute name='statecode'/>
-      <attribute name='statuscode'/>
-      <link-entity name='annotation' from='objectid' to='contactid' link-type='outer'>
-        <attribute name='filename'/>
-        <attribute name='filesize'/>
-        <attribute name='mimetype'/>
-        <attribute name='documentbody'/>
-        <attribute name='notetext'/>
-        <attribute name='isdocument'/>
+    <link-entity exclude-attributes='false' name='contact' from='parentcustomerid' to='accountid' link-type='outer' >
+      <attribute name='address1_composite' />
+      <attribute name='fullname' />
+      <attribute name='firstname' />
+      <attribute name='lastname' />
+      <attribute name='statecode' />
+      <attribute name='statuscode' />
+      <link-entity exclude-attributes='false' name='annotation' from='objectid' to='contactid' link-type='outer' >
+        <attribute name='filename' />
+        <attribute name='filesize' />
+        <attribute name='mimetype' />
+        <attribute name='documentbody' />
+        <attribute name='notetext' />
+        <attribute name='isdocument' />
       </link-entity>
     </link-entity>
-    <link-entity name='phonecall' from='regardingobjectid' to='accountid' link-type='outer'>
-      <attribute name='subject'/>
+    <link-entity exclude-attributes='false' name='phonecall' from='regardingobjectid' to='accountid' link-type='outer' >
+      <attribute name='subject' />
     </link-entity>
   </entity>
 </fetch>
 ~~~
 
+#### Config Xml - Special Configurations
+- <i>exclude-attributes</i> (required): true/false
+  - false -> only the fields in the list of attributes are copied
+  - true -> all the fields of the entity are copied, except the ones listed in the Xml
+- original-new-value (optional): when set, the cloner update the field of the originating entity after cloning
+- the associations (n:m relationships) are represented with the following xml-block:
+~~~ xml
+    <link-entity name='jdm_jdm_myentity_account' from='accountid' to='accountid' intersect='true'>
+      <attribute name='accountid' />
+      <attribute name='jdm_myentityid' />
+      <associate-entity exclude-attributes='false' name='jdm_myentity'>
+        <attribute name='jdm_name'/>
+        ...
+      </associate-entity>
+    </link-entity>
+~~~
+  - associate-entity: represent the associated entity with the attributes <i>name</i> and <i>exclude-attributes</i> like in the other xml-block for the "normal entities".
+- the connections (entity <i>connection</i>) are represented with the following xml-block:
+~~~ xml
+    <fetch>
+      <entity name="connection">
+        <attribute name="record1roleid" />
+        <attribute name="record2roleid" />
+        <attribute name="record2id" />
+        <attribute name="record1id" />
+        <attribute name="record2objecttypecode" />
+        <attribute name="record1objecttypecode" />
+        <filter>
+          [<condition attribute="record1roleid" operator="eq" value="<Id of the Role1>" />]
+          [<condition attribute="record2roleid" operator="eq" value="<Id of the Role2>" />]
+        </filter>
+        <link-entity name="contact" from="contactid" to="record2id" alias="contact">
+          <attribute name="address1_composite" />
+          <attribute name="firstname" />
+          <attribute name="fullname" />
+        </link-entity>
+        <link-entity name="account" from="accountid" to="record1id" alias="ac">
+          <attribute name="address1_composite" />
+          <attribute name="name" />
+        </link-entity>
+      </entity>
+    </fetch>
+~~~
+  - the attributes for the <i>connection</i> entity are all required
+    - <i>record1roleid</i>
+    - <i>record2roleid</i>
+    - <i>record2id</i>
+    - <i>record1id</i>
+    - <i>record2objecttypecode</i>
+    - <i>record1objecttypecode</i>
+  - the two linked entities are necessary for providing information of the entities that are connected and will be cloned
+  - in the filter for the <i>connection</i> entity we can insert the id of the role1 and role2 for which we want to look
+  - the associated entities (xml-blocks for <i>record1</i> and <i>record1</i>) do not support filters (for the moment) 
+  - connections do not support link-entity (for the moment): a connection is always the leaf of a branch in the xml
+
 ### Usage
 
 - Integrate the action <i>CloneEntityFromFetch</i> where you want to trigger it (Workflow, Javascript function, etc.).
 - Configure the parameters:
-    - RootRecordUrl: url of the root entity (in Workflows is the parameter <i>Record Url (Dynamic)</i>).
+    - RootRecordUrl: url of the root entity (parameter <i>Record Url (Dynamic)</i> in Workflow configuration).
     - Configuration: EntityReference to the configuration record.
 
 ![image](https://user-images.githubusercontent.com/34159960/207928348-7b96b22c-001c-4874-b995-5bae46bff558.png)
@@ -106,7 +150,10 @@ Download the managed or unmanaged solution and import it in your environment.
 
 ### Note
 
-Technically the solution should allow an unlimited number of levels for link-entities, however always consider the 2-minute limit for running Plugins/CWAs. Analyze the amount of data involved in fetching.
+- This solution is <i>work in progress</i>:
+  - it will be update frequently
+  - it is not fully tested: if you find any bug, please open an issue or push a fix on a new branch
+- Technically the solution should allow an unlimited number of levels for link-entities, however always consider the 2-minute limit for running Plugins/CWAs. Analyze the amount of data involved in fetching.
 
 
 ## Back matter
