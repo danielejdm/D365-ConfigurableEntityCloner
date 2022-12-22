@@ -87,7 +87,7 @@ Download the managed or unmanaged solution and import it in your environment.
 - <i>exclude-attributes</i> (required): true/false
   - false -> only the fields in the list of attributes are copied
   - true -> all the fields of the entity are copied, except the ones listed in the Xml
-- <i>original-new-value</i> (optional): when set, the cloner update the field of the originating entity after cloning
+- <i>original-new-value</i> (optional): when set, the cloner updates the field of the originating entity after cloning
 - the associations (n:m relationships) are represented with the following xml-block:
 ~~~ xml
     <link-entity name='jdm_jdm_myentity_account' from='accountid' to='accountid' intersect='true'>
