@@ -1,10 +1,4 @@
-﻿using Microsoft.Crm.Sdk.Messages;
-using System;
-using System.Activities.Statements;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Xml.Linq;
 
 namespace ConfigurableEntityCloner

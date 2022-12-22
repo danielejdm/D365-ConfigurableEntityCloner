@@ -67,9 +67,6 @@ namespace ConfigurableEntityCloner
             var exclude_attributes = queryCloneAllAttributes.Elements().Attributes().Where(x => x.Name == "exclude-attributes").First().Value == "true";
             queryCloneAllAttributes.Elements().Attributes().Where(x => x.Name == "exclude-attributes").Remove();
 
-            //var ignore_system_attributes = queryCloneAllAttributes.Elements().Attributes().Where(x => x.Name == "ignore-system-attributes").First().Value == "true";
-            //queryCloneAllAttributes.Elements().Attributes().Where(x => x.Name == "ignore-system-attributes").Remove(); 
-
             queryCloneAllAttributes.Descendants().Where(x => x.Name == "attribute").Remove();
             queryCloneAllAttributes.Descendants("entity").FirstOrDefault().AddFirst("<all-attribute/>");
 
@@ -116,8 +113,6 @@ namespace ConfigurableEntityCloner
 
             return cloneId.ToString();
         }
-
-
 
         /// <summary>
         /// Recursively clone all the linked entity
@@ -177,7 +172,7 @@ namespace ConfigurableEntityCloner
                 tracingService.Trace($"Start cloning link-entity '{record.LogicalName}: {record.Id}'");
                 var clone = new Entity();
                 clone.LogicalName = record.LogicalName;
-                var originalRecord = new Entity(record.LogicalName) { Id = record.Id };
+                var recordToUpdate = new Entity(record.LogicalName) { Id = record.Id };
                 var updateRecord = false;
 
                 foreach (var f in fields)
@@ -190,7 +185,7 @@ namespace ConfigurableEntityCloner
                     if (f.OriginalNewValue != null)
                     {
                         updateRecord = true;
-                        originalRecord.Attributes.Add(f.Name, f.OriginalNewValue);
+                        Helper.SetAttributeValue(ref recordToUpdate, record, f.Name, f.OriginalNewValue);
                     }
                 }
 
@@ -200,7 +195,7 @@ namespace ConfigurableEntityCloner
 
                 if (updateRecord)
                 {
-                    this.orgService.Update(originalRecord);
+                    this.orgService.Update(recordToUpdate);
                 }
 
                 tracingService.Trace($"Successfully cloned link-entity '{clone.LogicalName}: {clone.Id}'");
@@ -260,7 +255,7 @@ namespace ConfigurableEntityCloner
 
                 var clone = new Entity();
                 clone.LogicalName = toEntity;
-                var originalRecord = new Entity(record.LogicalName) { Id = record.Id };
+                var recordToUpdate = new Entity(record.LogicalName) { Id = record.Id };
                 var updateRecord = false;
 
                 foreach (var f in columnsList)
@@ -273,14 +268,14 @@ namespace ConfigurableEntityCloner
                     if (f.OriginalNewValue != null)
                     {
                         updateRecord = true;
-                        originalRecord.Attributes.Add(f.Name, f.OriginalNewValue);
+                        Helper.SetAttributeValue(ref recordToUpdate, record, f.Name, f.OriginalNewValue);
                     }
                 }
                 var cloneId = this.orgService.Create(clone);
 
                 if (updateRecord)
                 {
-                    this.orgService.Update(originalRecord);
+                    this.orgService.Update(recordToUpdate);
                 }
 
                 var entityReferenceCollection = new EntityReferenceCollection
@@ -342,7 +337,7 @@ namespace ConfigurableEntityCloner
 
                 var exclude_attributes_e1 = entity1Query.Elements().Attributes().Where(x => x.Name == "exclude-attributes").First().Value == "true";
 
-                var originalRecord = new Entity(entity1.LogicalName) { Id = entity1.Id };
+                var recordToUpdate = new Entity(entity1.LogicalName) { Id = entity1.Id };
                 var updateRecord = false;
 
                 foreach (var f in fieldsEntity1)
@@ -355,7 +350,7 @@ namespace ConfigurableEntityCloner
                     if (f.OriginalNewValue != null)
                     {
                         updateRecord = true;
-                        originalRecord.Attributes.Add(f.Name, f.OriginalNewValue);
+                        Helper.SetAttributeValue(ref recordToUpdate, entity1, f.Name, f.OriginalNewValue);
                     }
                 }
 
@@ -363,14 +358,14 @@ namespace ConfigurableEntityCloner
 
                 if (updateRecord)
                 {
-                    this.orgService.Update(originalRecord);
+                    this.orgService.Update(recordToUpdate);
                 }
 
                 var clone2 = new Entity();
                 clone2.LogicalName = record2entityname;
                 var exclude_attributes_e2 = entity1Query.Elements().Attributes().Where(x => x.Name == "exclude-attributes").First().Value == "true";
 
-                originalRecord = new Entity(entity1.LogicalName) { Id = entity1.Id };
+                recordToUpdate = new Entity(entity2.LogicalName) { Id = entity1.Id };
                 updateRecord = false;
 
                 foreach (var f in fieldsEntity2)
@@ -383,7 +378,7 @@ namespace ConfigurableEntityCloner
                     if (f.OriginalNewValue != null)
                     {
                         updateRecord = true;
-                        originalRecord.Attributes.Add(f.Name, f.OriginalNewValue);
+                        Helper.SetAttributeValue(ref recordToUpdate, entity2, f.Name, f.OriginalNewValue);
                     }
                 }
 

@@ -97,6 +97,21 @@ namespace ConfigurableEntityCloner
             } else if (attr is bool)
             {
                 recordToUpdate[fieldName] = bool.Parse(newValue);
+            } else if (attr is EntityReference)
+            {
+                recordToUpdate[fieldName] = new EntityReference((attr as EntityReference).LogicalName, new Guid(newValue));
+            }
+            else if (attr is Guid)
+            {
+                recordToUpdate[fieldName] = new Guid(newValue);
+            } 
+            else if (attr is Money)
+            {
+                recordToUpdate[fieldName] = new Money(decimal.Parse(newValue));
+            }
+            else if (attr is DateTime)
+            {
+                recordToUpdate[fieldName] = DateTime.Parse(newValue);
             }
         }
     }
