@@ -137,7 +137,7 @@ Download the managed or unmanaged solution and import it in your environment.
     - <i>record1objecttypecode</i>
   - the two linked entities are necessary for providing information of the entities that are connected and will be cloned
   - in the filter for the <i>connection</i> entity we can insert the id of the role1 and role2 for which we want to look
-  - the associated entities (xml-blocks for <i>record1</i> and <i>record1</i>) do not support filters (for the moment) 
+  - the associated entities (xml-blocks for <i>record1</i> and <i>record2</i>) do not support filters (for the moment) 
   - connections do not support link-entity (for the moment): a connection is always the leaf of a branch in the xml
 
 ### Usage
