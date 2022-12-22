@@ -12,10 +12,10 @@ The idea behind this solution came about as a result of some requirements that c
 
 ### Features
 
-- Configurable cloning of entities and sub-entities (child entities) in Dynamics 365.
+- Configurable cloning of entities and sub-entities (child entities).
 - Configurable cloning of associations (n:m relationships).
 - Configurable cloning of connections and connected records.
-- Configurable value to be set for an attribute on the "originaing entity", the entity from which we are cloning. 
+- Configurable value to be set for any attribute on the "originating entity". 
 
 ## Getting started
 
@@ -34,7 +34,7 @@ Download the managed or unmanaged solution and import it in your environment.
 
   
 - Provide a meaningful name.
-- Provide the Config Xml which represents the entity(/entities) and fields that need to be cloned plus other information for the cloning. 
+- Provide the xml representing entities, filters, relationships, attributes, etc. for cloning.
   - I recommend to use [FetchXml Builder](https://www.xrmtoolbox.com/plugins/Cinteros.Xrm.FetchXmlBuilder) to build a base FetchXml.
 - The value for the Guid of the root entity in the fetch must be '<b>@id</b>' (placeholder).
 - The root entity <b>cannot be</b> an intersect-entity (entity for the <i>n:m relations</i>).
