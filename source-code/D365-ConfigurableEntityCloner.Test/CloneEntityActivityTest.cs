@@ -3,13 +3,12 @@ using FakeXrmEasy;
 using FakeXrmEasy.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Metadata;
 using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ConfigurableEntityCloner;
-using System.Security.Principal;
 
 namespace ConfigurableEntityCloner.Test
 {
@@ -62,6 +61,12 @@ namespace ConfigurableEntityCloner.Test
                         IsValidForCreate= false,
                     }
                 };
+            Mock<IClonerService> chk = new Mock<IClonerService>();
+
+            chk.Setup(x => x.GetEntityAttributesMetadata(new Entity() { LogicalName = "account", Id = Guid.NewGuid() })).Returns(
+                attributesMetadata
+            );
+
             this.xrmFakedContext = new XrmFakedContext();
             this.orgService = xrmFakedContext.GetOrganizationService();
 
@@ -71,6 +76,7 @@ namespace ConfigurableEntityCloner.Test
                 LogicalName = "account"
             };
             accountMetadata.SetAttributeCollection(attributesMetadata);
+            accountMetadata.SetSealedPropertyValue("ObjectTypeCode", 1);
             this.xrmFakedContext.SetEntityMetadata(accountMetadata);
 
             EntityMetadata contactMetadata = new EntityMetadata()
@@ -79,12 +85,13 @@ namespace ConfigurableEntityCloner.Test
                 LogicalName = "contact"
             };
             contactMetadata.SetAttributeCollection(attributesMetadata);
+            contactMetadata.SetSealedPropertyValue("ObjectTypeCode", 2);
             this.xrmFakedContext.SetEntityMetadata(contactMetadata);
 
             EntityMetadata noteMetadata = new EntityMetadata()
             {
-                SchemaName = "annotations",
-                LogicalName = "annotations"
+                SchemaName = "annotation",
+                LogicalName = "annotation"
             };
             noteMetadata.SetAttributeCollection(attributesMetadata);
             this.xrmFakedContext.SetEntityMetadata(noteMetadata);
@@ -125,12 +132,6 @@ namespace ConfigurableEntityCloner.Test
         [TestMethod]
         public void Should_Clone_Account_Contact_Notes()
         {
-            Mock<IClonerService> chk = new Mock<IClonerService>();
-            
-            chk.Setup(x => x.GetEntityAttributesMetadata(new Entity() { LogicalName = "account", Id = Guid.NewGuid() })).Returns(
-                attributesMetadata
-            );
-
             var account = new Entity("account")
             {
                 Id = Guid.NewGuid(),
@@ -240,7 +241,7 @@ namespace ConfigurableEntityCloner.Test
             };
 
 #pragma warning disable CS0618 // Type or member is obsolete
-            this.xrmFakedContext.Initialize(new List<Entity>() { account, contact, note, phonecall, config, jdm_myentity, jdm_jdm_myentity_account });
+            this.xrmFakedContext.Initialize(new List<Entity>() { account, contact, contact2, note, phonecall, config, jdm_myentity, jdm_jdm_myentity_account });
 #pragma warning restore CS0618 // Type or member is obsolete
             this.xrmFakedContext.AddRelationship("jdm_jdm_myentity_account", new XrmFakedRelationship
             {
@@ -260,7 +261,7 @@ namespace ConfigurableEntityCloner.Test
 
             var result = this.xrmFakedContext.ExecuteCodeActivity<CloneEntityActivity>(inputs);
 
-            Assert.IsTrue(this.xrmFakedContext.CreateQuery("account").Any(e => e.Id == new Guid((string)result["RootCloneId"]) && !e.Contains("statecode")));
+            Assert.IsTrue(this.xrmFakedContext.CreateQuery("account").Any(e => e.Id == new Guid((string)result["RootCloneId"]) && !e.Contains("accountnumber")));
 
             Assert.IsTrue(this.xrmFakedContext.CreateQuery("contact").Any(e => e.Id != contact.Id &&
                     e["firstname"].Equals(contact["firstname"]) &&
@@ -347,22 +348,6 @@ namespace ConfigurableEntityCloner.Test
                                       "</entity>" +
                                     "</fetch>"
             };
-
-            this.xrmFakedContext.Initialize(new List<Entity>() { account, contact, connectionrole1, connection1, config });
-
-            var accountMetadata = new EntityMetadata()
-            {
-                LogicalName = "account",
-            };
-            accountMetadata.SetSealedPropertyValue("ObjectTypeCode", 1);
-
-            var contactMetadata = new EntityMetadata()
-            {
-                LogicalName = "contact",
-            };
-            contactMetadata.SetSealedPropertyValue("ObjectTypeCode", 2);
-
-            this.xrmFakedContext.InitializeMetadata(new List<EntityMetadata>() { accountMetadata, contactMetadata });
 
             //Inputs
             var inputs = new Dictionary<string, object>() {
