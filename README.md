@@ -1,6 +1,6 @@
 # D365 Configurable Entity/Record Cloner
 
-This solution allows for configurable cloning of entities/records and link-entities/records (child) at any depth level, in Dynamics 365.
+This solution allows for configurable cloning of entities/records, link-entities (child), relations, associations, connections, attributes, in Dynamics 365.
 
 
 ## Description
@@ -12,7 +12,7 @@ The idea behind this solution came about as a result of some requirements that c
 
 ### Features
 
-- Configurable cloning of entities and sub-entities (child entities) in Dynamics 365.
+- Configurable cloning of entities and sub-entities (child entities).
 - Configurable cloning of associations (n:m relationships).
 - Configurable cloning of connections and connected records.
 
@@ -33,7 +33,7 @@ Download the managed or unmanaged solution and import it in your environment.
 
   
 - Provide a meaningful name.
-- Provide the Config Xml which represents the entity(/entities) and fields that need to be cloned plus other information for the cloning. 
+- Provide the xml representing entities, filters, relationships, attributes, etc. for cloning.
   - I recommend to use [FetchXml Builder](https://www.xrmtoolbox.com/plugins/Cinteros.Xrm.FetchXmlBuilder) to build a base FetchXml.
 - The value for the Guid of the root entity in the fetch must be '<b>@id</b>' (placeholder).
 - The root entity <b>cannot be</b> an intersect-entity (entity for the <i>n:m relations</i>).
@@ -135,7 +135,7 @@ Download the managed or unmanaged solution and import it in your environment.
     - <i>record1objecttypecode</i>
   - the two linked entities are necessary for providing information of the entities that are connected and will be cloned
   - in the filter for the <i>connection</i> entity we can insert the id of the role1 and role2 for which we want to look
-  - the associated entities (xml-blocks for <i>record1</i> and <i>record1</i>) do not support filters (for the moment) 
+  - the associated entities (xml-blocks for <i>record1</i> and <i>record2</i>) do not support filters (for the moment) 
   - connections do not support link-entity (for the moment): a connection is always the leaf of a branch in the xml
 
 ### Usage
