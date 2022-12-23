@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Metadata;
 using Microsoft.Xrm.Sdk.Query;
 using Microsoft.Xrm.Sdk.Workflow;
 using System;
@@ -71,23 +72,27 @@ namespace ConfigurableEntityCloner
             queryCloneAllAttributes.Elements().Attributes().Where(x => x.Name == "exclude-attributes").Remove();
 
             queryCloneAllAttributes.Descendants().Where(x => x.Name == "attribute").Remove();
-            queryCloneAllAttributes.Descendants("entity").FirstOrDefault().AddFirst("<all-attribute/>");
 
-            var record = this.orgService.RetrieveMultiple(new FetchExpression(queryClone.ToString())).Entities.FirstOrDefault();
-            var fields = from a in queryClone.Descendants() where a.Name == "attribute"
-                         select new AttributeInfo(a);
+            queryCloneAllAttributes.Descendants("entity").FirstOrDefault().AddFirst(new XElement("all-attributes"));
+
+            var record = this.orgService.RetrieveMultiple(new FetchExpression(queryCloneAllAttributes.ToString())).Entities.FirstOrDefault();
+            var fetchFields = from a in queryClone.Descendants()
+                              where a.Name == "attribute"
+                              select a.Attribute("name").Value;
 
             tracingService.Trace($"Start cloning root entity '{record.LogicalName}: {record.Id}'");
 
             var clone = new Entity();
             clone.LogicalName = record.LogicalName;
 
-            var attributeBlackList = clonerService.GetEntityAttributesMetadata(record).Where(a => a.IsValidForCreate == false);
-            foreach (var f in fields)
+            var attributeBlackList = clonerService.GetEntityAttributesMetadata(record).Where(a => a.IsValidForCreate == false).Select(a => a.LogicalName);
+
+
+            foreach (var f in record.Attributes.Where(a => a.Value != null))
             {
-                if (Helper.CanCopyAttribute(exclude_attributes, record, f.Name, attributeBlackList))
+                if (Helper.CanCopyAttribute(exclude_attributes, record, f.Key, attributeBlackList, fetchFields))
                 {
-                    clone.Attributes.Add(f.Name, record[f.Name]);
+                    clone.Attributes.Add(f.Key, record[f.Key]);
                 }
             }
             var cloneId = this.orgService.Create(clone);
@@ -151,9 +156,9 @@ namespace ConfigurableEntityCloner
 
             var exclude_attributes = queryClone.Attributes().Where(x => x.Name == "exclude-attributes").First().Value == "true";
 
-            var fields = from a in queryClone.Descendants()
+            var fetchFields = from a in queryClone.Descendants()
                          where a.Name == "attribute"
-                         select new AttributeInfo(a);
+                         select a.Attribute("name").Value;
 
             var records = this.orgService.RetrieveMultiple(new FetchExpression(linkentityQuery.ToString())).Entities;
 
@@ -163,12 +168,12 @@ namespace ConfigurableEntityCloner
                 var clone = new Entity();
                 clone.LogicalName = record.LogicalName;
 
-                var attributeBlackList = clonerService.GetEntityAttributesMetadata(record).Where(a => a.IsValidForCreate == false);
-                foreach (var f in fields)
+                var attributeBlackList = clonerService.GetEntityAttributesMetadata(record).Where(a => a.IsValidForCreate == false).Select(a => a.LogicalName);
+                foreach (var f in record.Attributes.Where(a => a.Value != null && a.Key != from))
                 {
-                    if (Helper.CanCopyAttribute(exclude_attributes, record, f.Name, attributeBlackList))
+                    if (Helper.CanCopyAttribute(exclude_attributes, record, f.Key, attributeBlackList, fetchFields))
                     {
-                        clone.Attributes.Add(f.Name, record[f.Name]);
+                        clone.Attributes.Add(f.Key, record[f.Key]);
                     }
                 }
 
@@ -208,10 +213,11 @@ namespace ConfigurableEntityCloner
 
             var columnsList = from a in queryCloneAllAttributes.Descendants()
                               where a.Name == "attribute"
-                              select new AttributeInfo(a);
+                              select a.Attribute("name").Value;
 
-            queryCloneAllAttributes.Descendants("entity").Where(x => x.Name == "attribute").Remove();
-            queryCloneAllAttributes.Descendants().FirstOrDefault().AddFirst("<all-attributes/>");
+            queryCloneAllAttributes.Elements().Where(x => x.Name == "attribute").Remove();
+            queryCloneAllAttributes.AddFirst(new XElement("all-attributes"));
+
             queryClone.Descendants().Where(x => x.Name == "associate-entity").Remove();
 
             var from = queryClone.Attribute("from").Value;
@@ -234,12 +240,12 @@ namespace ConfigurableEntityCloner
                 var clone = new Entity();
                 clone.LogicalName = toEntity;
 
-                var attributeBlackList = clonerService.GetEntityAttributesMetadata(record).Where(a => a.IsValidForCreate == false);
-                foreach (var f in columnsList)
+                var attributeBlackList = clonerService.GetEntityAttributesMetadata(record).Where(a => a.IsValidForCreate == false).Select(a => a.LogicalName);
+                foreach (var f in association.Attributes.Where(a => a.Value != null))
                 {
-                    if (Helper.CanCopyAttribute(exclude_attributes, record, f.Name, attributeBlackList))
+                    if (Helper.CanCopyAttribute(exclude_attributes, record, f.Key, attributeBlackList, columnsList))
                     {
-                        clone.Attributes.Add(f.Name, record[f.Name]);
+                        clone.Attributes.Add(f.Key, record[f.Key]);
                     }
                 }
                 var cloneId = this.orgService.Create(clone);
@@ -287,11 +293,11 @@ namespace ConfigurableEntityCloner
 
             var fieldsEntityFrom = from a in entityFromQuery.Descendants()
                                    where a.Name == "attribute"
-                                   select new AttributeInfo(a);
+                                   select a.Attribute("name").Value;
 
             var fieldsEntityTo = from a in entityToQuery.Descendants()
                                  where a.Name == "attribute"
-                                 select new AttributeInfo(a);
+                                 select a.Attribute("name").Value;
 
             foreach (var c in connections)
             {
@@ -303,12 +309,12 @@ namespace ConfigurableEntityCloner
 
                 var exclude_attributes_efrom = entityFromQuery.Elements().Attributes().Where(x => x.Name == "exclude-attributes").First().Value == "true";
 
-                var attributeBlackListEfrom = clonerService.GetEntityAttributesMetadata(entityFrom).Where(a => a.IsValidForCreate == false);
-                foreach (var f in fieldsEntityFrom)
+                var attributeBlackListEfrom = clonerService.GetEntityAttributesMetadata(entityFrom).Where(a => a.IsValidForCreate == false).Select(a => a.LogicalName);
+                foreach (var f in entityFrom.Attributes.Where(a => a.Value != null))
                 {
-                    if (Helper.CanCopyAttribute(exclude_attributes_efrom, entityFrom, f.Name, attributeBlackListEfrom))
+                    if (Helper.CanCopyAttribute(exclude_attributes_efrom, entityFrom, f.Key, attributeBlackListEfrom, fieldsEntityFrom))
                     {
-                        cloneEntityFrom.Attributes.Add(f.Name, entityFrom[f.Name]);
+                        cloneEntityFrom.Attributes.Add(f.Key, entityFrom[f.Key]);
                     }
                 }
 
@@ -318,12 +324,12 @@ namespace ConfigurableEntityCloner
                 cloneEntityTo.LogicalName = record2entityname;
                 var exclude_attributes_eto = entityFromQuery.Elements().Attributes().Where(x => x.Name == "exclude-attributes").First().Value == "true";
 
-                var attributeBlackListEto = clonerService.GetEntityAttributesMetadata(entityTo).Where(a => a.IsValidForCreate == false);
-                foreach (var f in fieldsEntityTo)
+                var attributeBlackListEto = clonerService.GetEntityAttributesMetadata(entityTo).Where(a => a.IsValidForCreate == false).Select(a => a.LogicalName);
+                foreach (var f in entityTo.Attributes.Where(a => a.Value != null))
                 {
-                    if (Helper.CanCopyAttribute(exclude_attributes_eto, entityTo, f.Name, attributeBlackListEto))
+                    if (Helper.CanCopyAttribute(exclude_attributes_eto, entityTo, f.Key, attributeBlackListEto, fieldsEntityTo))
                     {
-                        cloneEntityTo.Attributes.Add(f.Name, entityFrom[f.Name]);
+                        cloneEntityTo.Attributes.Add(f.Key, entityFrom[f.Key]);
                     }
                 }
 

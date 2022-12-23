@@ -4,9 +4,12 @@ using FakeXrmEasy.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Metadata;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ConfigurableEntityCloner;
+using System.Security.Principal;
 
 namespace ConfigurableEntityCloner.Test
 {
@@ -16,24 +19,135 @@ namespace ConfigurableEntityCloner.Test
         private XrmFakedContext xrmFakedContext;
         private IOrganizationService orgService;
         private Entity config = new Entity("jdm_configuration");
+        private List<AttributeMetadata> attributesMetadata;
 
         [TestInitialize]
         public void Initialize()
         {
+            attributesMetadata = new List<AttributeMetadata>()
+                {
+                    new AttributeMetadata()
+                    {
+                        LogicalName = "ownerid",
+                        IsValidForCreate= false,
+                    },
+                    new AttributeMetadata()
+                    {
+                        LogicalName = "createdon",
+                        IsValidForCreate= false,
+                    },
+                    new AttributeMetadata()
+                    {
+                        LogicalName = "createdby",
+                        IsValidForCreate= false,
+                    },
+                    new AttributeMetadata()
+                    {
+                        LogicalName = "modifiedby",
+                        IsValidForCreate= false,
+                    },
+                    new AttributeMetadata()
+                    {
+                        LogicalName = "modifiedon",
+                        IsValidForCreate= false,
+                    },
+                    new AttributeMetadata()
+                    {
+                        LogicalName = "statecode",
+                        IsValidForCreate= false,
+                    },
+                    new AttributeMetadata()
+                    {
+                        LogicalName = "statuscode",
+                        IsValidForCreate= false,
+                    }
+                };
             this.xrmFakedContext = new XrmFakedContext();
             this.orgService = xrmFakedContext.GetOrganizationService();
+
+            EntityMetadata accountMetadata = new EntityMetadata()
+            {
+                SchemaName = "account",
+                LogicalName = "account"
+            };
+            accountMetadata.SetAttributeCollection(attributesMetadata);
+            this.xrmFakedContext.SetEntityMetadata(accountMetadata);
+
+            EntityMetadata contactMetadata = new EntityMetadata()
+            {
+                SchemaName = "contact",
+                LogicalName = "contact"
+            };
+            contactMetadata.SetAttributeCollection(attributesMetadata);
+            this.xrmFakedContext.SetEntityMetadata(contactMetadata);
+
+            EntityMetadata noteMetadata = new EntityMetadata()
+            {
+                SchemaName = "annotations",
+                LogicalName = "annotations"
+            };
+            noteMetadata.SetAttributeCollection(attributesMetadata);
+            this.xrmFakedContext.SetEntityMetadata(noteMetadata);
+
+            EntityMetadata phonecallMetadata = new EntityMetadata()
+            {
+                SchemaName = "phonecall",
+                LogicalName = "phonecall"
+            };
+            phonecallMetadata.SetAttributeCollection(attributesMetadata);
+            this.xrmFakedContext.SetEntityMetadata(phonecallMetadata);
+
+            EntityMetadata jdm_myentityMetadata = new EntityMetadata()
+            {
+                SchemaName = "jdm_myentity",
+                LogicalName = "jdm_myentity"
+            };
+            jdm_myentityMetadata.SetAttributeCollection(attributesMetadata);
+            this.xrmFakedContext.SetEntityMetadata(jdm_myentityMetadata);
+
+            EntityMetadata jdm_myentity_accountMetadata = new EntityMetadata()
+            {
+                SchemaName = "jdm_jdm_myentity_account",
+                LogicalName = "jdm_jdm_myentity_account"
+            };
+            jdm_myentity_accountMetadata.SetAttributeCollection(attributesMetadata);
+            this.xrmFakedContext.SetEntityMetadata(jdm_myentity_accountMetadata);
+
+            EntityMetadata jdm_configurationMetadata = new EntityMetadata()
+            {
+                SchemaName = "jdm_configuration",
+                LogicalName = "jdm_configuration"
+            };
+            jdm_configurationMetadata.SetAttributeCollection(attributesMetadata);
+            this.xrmFakedContext.SetEntityMetadata(jdm_configurationMetadata);
         }
 
         [TestMethod]
         public void Should_Clone_Account_Contact_Notes()
         {
+            Mock<IClonerService> chk = new Mock<IClonerService>();
+            
+            chk.Setup(x => x.GetEntityAttributesMetadata(new Entity() { LogicalName = "account", Id = Guid.NewGuid() })).Returns(
+                attributesMetadata
+            );
+
             var account = new Entity("account")
             {
                 Id = Guid.NewGuid(),
                 ["name"] = "Account",
                 ["accountnumber"] = "Acc-1234",
                 ["statecode"] = new OptionSetValue(0),
-                ["statuscode"] = new OptionSetValue(1)
+                ["statuscode"] = new OptionSetValue(1),
+                ["ownerid"] = new EntityReference("systemuser", Guid.NewGuid()),
+                ["createdby"] = new EntityReference("systemuser", Guid.NewGuid()),
+                ["createdon"] = DateTime.Now,
+                ["address1_city"] = "abc",
+                ["address1_country"] = "abc",
+                ["address1_county"] = "abc",
+                ["address1_fax"] = "abc",
+                ["address1_line1"] = "abc",
+                ["address1_line2"] = "abc",
+                ["address1_line3"] = "abc",
             };
 
             var contact = new Entity("contact")
@@ -90,11 +204,8 @@ namespace ConfigurableEntityCloner.Test
             {
                 Id = Guid.NewGuid(),
                 ["jdm_configvalue"] = "<fetch>" +
-                                      "<entity name='account' exclude-attributes='false' >" +
-                                        "<attribute name='name' />" +
+                                      "<entity name='account' exclude-attributes='true' >" +
                                         "<attribute name='accountnumber' />" +
-                                        "<attribute name='statecode' original-new-value='1' />" +
-                                        "<attribute name='statuscode' original-new-value='2' />" +
                                         "<filter>" +
                                           "<condition attribute='accountid' operator='eq' value='@id' />" +
                                         "</filter>" +
@@ -129,7 +240,7 @@ namespace ConfigurableEntityCloner.Test
             };
 
 #pragma warning disable CS0618 // Type or member is obsolete
-            this.xrmFakedContext.Initialize(new List<Entity>() { account, contact, contact2, note, phonecall, config, jdm_myentity, jdm_jdm_myentity_account });
+            this.xrmFakedContext.Initialize(new List<Entity>() { account, contact, note, phonecall, config, jdm_myentity, jdm_jdm_myentity_account });
 #pragma warning restore CS0618 // Type or member is obsolete
             this.xrmFakedContext.AddRelationship("jdm_jdm_myentity_account", new XrmFakedRelationship
             {
@@ -140,6 +251,7 @@ namespace ConfigurableEntityCloner.Test
                 Entity2Attribute = "jdm_myentityid"
             });
 
+
             //Inputs
             var inputs = new Dictionary<string, object>() {
                 { "RootRecordUrl", "https://myorg.crm.dynamics.com/main.aspx?appid=f8a69fd7-e37a-ed11-81ad-0022486f4310&pagetype=entityrecord&etn=account&id=" + account.Id.ToString() },
@@ -148,9 +260,7 @@ namespace ConfigurableEntityCloner.Test
 
             var result = this.xrmFakedContext.ExecuteCodeActivity<CloneEntityActivity>(inputs);
 
-            Assert.IsTrue(this.xrmFakedContext.CreateQuery("account").Any(e => e.Id == new Guid((string)result["RootCloneId"])));
-            Assert.IsTrue(this.xrmFakedContext.CreateQuery("account").Any(e => e.Id == account.Id && 
-                    e.GetAttributeValue<OptionSetValue>("statecode").Value == 1 && e.GetAttributeValue<OptionSetValue>("statuscode").Value == 2));
+            Assert.IsTrue(this.xrmFakedContext.CreateQuery("account").Any(e => e.Id == new Guid((string)result["RootCloneId"]) && !e.Contains("statecode")));
 
             Assert.IsTrue(this.xrmFakedContext.CreateQuery("contact").Any(e => e.Id != contact.Id &&
                     e["firstname"].Equals(contact["firstname"]) &&

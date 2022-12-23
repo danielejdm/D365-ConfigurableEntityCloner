@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ConfigurableEntityCloner
 {
-    public class ClonerService
+    public class ClonerService : IClonerService
     {
         private IOrganizationService organizationService;
 

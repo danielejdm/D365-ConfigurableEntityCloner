@@ -25,10 +25,21 @@ namespace ConfigurableEntityCloner
         /// <param name="record">The original record</param>
         /// <param name="attributename">The original record attribute</param>
         /// <returns>true/false</returns>
-        public static bool CanCopyAttribute(bool exclude_attributes, Entity record, string attributename, IEnumerable<AttributeMetadata> attributeBlackList = null)
+        public static bool CanCopyAttribute(bool exclude_attributes, Entity record, string attributename, IEnumerable<string> attributeBlackList, IEnumerable<string> fetchFields)
         {
-            return exclude_attributes != true && record.Contains(attributename)
-                && (attributeBlackList == null || attributeBlackList.Count() == 0 || !attributeBlackList.Any(a => a.LogicalName == attributename));
+            var canCopy = false;
+            if(attributeBlackList.Any(a => a == attributename) || attributename == record.LogicalName + "id") {
+                return false;
+            } 
+            if (!exclude_attributes)
+            {
+                canCopy = record.Contains(attributename);
+            } else
+            {
+                canCopy = !fetchFields.Any(a => a == attributename);
+            }
+
+            return canCopy;
         }
 
         public static void SetAttributeValue(ref Entity recordToUpdate, Entity record, string fieldName, string newValue)
