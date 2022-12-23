@@ -15,7 +15,6 @@ The idea behind this solution came about as a result of some requirements that c
 - Configurable cloning of entities and sub-entities (child entities) in Dynamics 365.
 - Configurable cloning of associations (n:m relationships).
 - Configurable cloning of connections and connected records.
-- Configurable value to be set for an attribute on the "originaing entity", the entity from which we are cloning. 
 
 ## Getting started
 
@@ -47,8 +46,8 @@ Download the managed or unmanaged solution and import it in your environment.
   <entity name='account' exclude-attributes='false' >
     <attribute name='name' />
     <attribute name='accountnumber' />
-    <attribute name='statecode' original-new-value='1' />
-    <attribute name='statuscode' original-new-value='2' />
+    <attribute name='statecode' />
+    <attribute name='statuscode' />
     <filter>
       <condition attribute='accountid' operator='eq' value='@id' />
     </filter>
@@ -87,7 +86,6 @@ Download the managed or unmanaged solution and import it in your environment.
 - <i>exclude-attributes</i> (required): true/false
   - false -> only the fields in the list of attributes are copied
   - true -> all the fields of the entity are copied, except the ones listed in the Xml
-- <i>original-new-value</i> (optional): when set, the cloner updates the field of the originating entity after cloning
 - the associations (n:m relationships) are represented with the following xml-block:
 ~~~ xml
     <link-entity name='jdm_jdm_myentity_account' from='accountid' to='accountid' intersect='true'>

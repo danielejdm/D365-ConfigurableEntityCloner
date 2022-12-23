@@ -18,6 +18,7 @@ namespace ConfigurableEntityCloner
         private ITracingService tracingService;
         private Entity configuration;
         private string rootRecordId;
+        private ClonerService clonerService;
 
         /// <summary>
         /// Constructor
@@ -29,6 +30,7 @@ namespace ConfigurableEntityCloner
             this.tracingService = activityContext.GetExtension<ITracingService>();
             IOrganizationServiceFactory serviceFactory = activityContext.GetExtension<IOrganizationServiceFactory>();
             this.orgService = serviceFactory.CreateOrganizationService(wfContext.UserId);
+            this.clonerService = new ClonerService(orgService);
         }
 
         /// <summary>
@@ -43,6 +45,23 @@ namespace ConfigurableEntityCloner
             this.rootRecordId = rootRecordId;
             return CloneRoot();
         }
+
+        /// <summary>
+        /// Check if the attribute has to be copied
+        /// </summary>
+        /// <param name="exclude_attributes">Attribute in the fetch to indicate weather the list of attribute are to copy or to ignore (black/white list)</param>
+        /// <param name="record">The original record</param>
+        /// <param name="attributename">The original record attribute</param>
+        /// <returns>true/false</returns>
+        private bool CanCopyAttribute(bool exclude_attributes, Entity record, string attributename)
+        {
+            var metadata = clonerService.GetEntityAttributesMetadata(record);
+            var blacklist = metadata.Where(m => m.IsValidForCreate == false);
+
+            return exclude_attributes != true && record.Contains(attributename)
+                && !blacklist.Any(a => a.LogicalName == attributename);
+        }
+
         /// <summary>
         /// Clone the root entity
         /// </summary>
@@ -79,28 +98,14 @@ namespace ConfigurableEntityCloner
             var clone = new Entity();
             clone.LogicalName = record.LogicalName;
 
-            var recordToUpdate = new Entity(record.LogicalName) { Id= record.Id };
-            var updateRecord = false;
-
             foreach (var f in fields)
             {
-                if (Helper.CopyAttribute(exclude_attributes, record, f.Name))
+                if (CanCopyAttribute(exclude_attributes, record, f.Name))
                 {
                     clone.Attributes.Add(f.Name, record[f.Name]);
                 }
-
-                if(f.OriginalNewValue != null)
-                {
-                    updateRecord= true;
-                    Helper.SetAttributeValue(ref recordToUpdate, record, f.Name, f.OriginalNewValue);
-                }
             }
             var cloneId = this.orgService.Create(clone);
-
-            if (updateRecord)
-            {
-                this.orgService.Update(recordToUpdate);
-            }
 
             tracingService.Trace($"Successfully cloned root entity '{clone.LogicalName} : {clone.Id}'");
 
@@ -172,31 +177,18 @@ namespace ConfigurableEntityCloner
                 tracingService.Trace($"Start cloning link-entity '{record.LogicalName}: {record.Id}'");
                 var clone = new Entity();
                 clone.LogicalName = record.LogicalName;
-                var recordToUpdate = new Entity(record.LogicalName) { Id = record.Id };
-                var updateRecord = false;
 
                 foreach (var f in fields)
                 {
-                    if (Helper.CopyAttribute(exclude_attributes, record, f.Name))
+                    if (CanCopyAttribute(exclude_attributes, record, f.Name))
                     {
                         clone.Attributes.Add(f.Name, record[f.Name]);
-                    }
-
-                    if (f.OriginalNewValue != null)
-                    {
-                        updateRecord = true;
-                        Helper.SetAttributeValue(ref recordToUpdate, record, f.Name, f.OriginalNewValue);
                     }
                 }
 
                 clone.Attributes.Add(from, parentclonedid);
 
                 var cloneId = this.orgService.Create(clone);
-
-                if (updateRecord)
-                {
-                    this.orgService.Update(recordToUpdate);
-                }
 
                 tracingService.Trace($"Successfully cloned link-entity '{clone.LogicalName}: {clone.Id}'");
 
@@ -255,28 +247,15 @@ namespace ConfigurableEntityCloner
 
                 var clone = new Entity();
                 clone.LogicalName = toEntity;
-                var recordToUpdate = new Entity(record.LogicalName) { Id = record.Id };
-                var updateRecord = false;
 
                 foreach (var f in columnsList)
                 {
-                    if (Helper.CopyAttribute(exclude_attributes, record, f.Name))
+                    if (CanCopyAttribute(exclude_attributes, record, f.Name))
                     {
                         clone.Attributes.Add(f.Name, record[f.Name]);
                     }
-
-                    if (f.OriginalNewValue != null)
-                    {
-                        updateRecord = true;
-                        Helper.SetAttributeValue(ref recordToUpdate, record, f.Name, f.OriginalNewValue);
-                    }
                 }
                 var cloneId = this.orgService.Create(clone);
-
-                if (updateRecord)
-                {
-                    this.orgService.Update(recordToUpdate);
-                }
 
                 var entityReferenceCollection = new EntityReferenceCollection
                 {
@@ -313,8 +292,8 @@ namespace ConfigurableEntityCloner
             var record2roleid = connections.FirstOrDefault().GetAttributeValue<Guid>("record2roleid");
             var record1objecttypecode = connections.FirstOrDefault().GetAttributeValue<int>("record1objecttypecode");
             var record2objecttypecode = connections.FirstOrDefault().GetAttributeValue<int>("record2objecttypecode");
-            var record1entityname = Helper.GetEntityLogicalName(this.orgService, record1objecttypecode);
-            var record2entityname = Helper.GetEntityLogicalName(this.orgService, record2objecttypecode);
+            var record1entityname = clonerService.GetEntityLogicalName(record1objecttypecode);
+            var record2entityname = clonerService.GetEntityLogicalName(record2objecttypecode);
 
             var entity1Query = element.Descendants("link-entity").Where(x => x.Attribute("name").Value == record1entityname).FirstOrDefault();
             var entity2Query = element.Descendants("link-entity").Where(x => x.Attribute("name").Value == record2entityname).FirstOrDefault();
@@ -337,48 +316,25 @@ namespace ConfigurableEntityCloner
 
                 var exclude_attributes_e1 = entity1Query.Elements().Attributes().Where(x => x.Name == "exclude-attributes").First().Value == "true";
 
-                var recordToUpdate = new Entity(entity1.LogicalName) { Id = entity1.Id };
-                var updateRecord = false;
-
                 foreach (var f in fieldsEntity1)
                 {
-                    if (Helper.CopyAttribute(exclude_attributes_e1, entity1, f.Name))
+                    if (CanCopyAttribute(exclude_attributes_e1, entity1, f.Name))
                     {
                         clone1.Attributes.Add(f.Name, entity1[f.Name]);
-                    }
-
-                    if (f.OriginalNewValue != null)
-                    {
-                        updateRecord = true;
-                        Helper.SetAttributeValue(ref recordToUpdate, entity1, f.Name, f.OriginalNewValue);
                     }
                 }
 
                 var clone1Id = this.orgService.Create(clone1);
 
-                if (updateRecord)
-                {
-                    this.orgService.Update(recordToUpdate);
-                }
-
                 var clone2 = new Entity();
                 clone2.LogicalName = record2entityname;
                 var exclude_attributes_e2 = entity1Query.Elements().Attributes().Where(x => x.Name == "exclude-attributes").First().Value == "true";
 
-                recordToUpdate = new Entity(entity2.LogicalName) { Id = entity1.Id };
-                updateRecord = false;
-
                 foreach (var f in fieldsEntity2)
                 {
-                    if (Helper.CopyAttribute(exclude_attributes_e1, entity2, f.Name))
+                    if (CanCopyAttribute(exclude_attributes_e1, entity2, f.Name))
                     {
                         clone2.Attributes.Add(f.Name, entity1[f.Name]);
-                    }
-
-                    if (f.OriginalNewValue != null)
-                    {
-                        updateRecord = true;
-                        Helper.SetAttributeValue(ref recordToUpdate, entity2, f.Name, f.OriginalNewValue);
                     }
                 }
 
