@@ -1,11 +1,8 @@
-﻿using Microsoft.Xrm.Sdk.Messages;
-using Microsoft.Xrm.Sdk.Metadata.Query;
-using Microsoft.Xrm.Sdk.Query;
-using Microsoft.Xrm.Sdk;
+﻿using Microsoft.Xrm.Sdk;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System;
 using Microsoft.Xrm.Sdk.Metadata;
+using System.Collections.Generic;
 
 namespace ConfigurableEntityCloner
 {
@@ -19,6 +16,19 @@ namespace ConfigurableEntityCloner
             var id = urlParams.Where(e => e.StartsWith("id=")).FirstOrDefault().Replace("id=", "");
 
             return id;
+        }
+
+        /// <summary>
+        /// Check if the attribute has to be copied
+        /// </summary>
+        /// <param name="exclude_attributes">Attribute in the fetch to indicate weather the list of attribute are to copy or to ignore (black/white list)</param>
+        /// <param name="record">The original record</param>
+        /// <param name="attributename">The original record attribute</param>
+        /// <returns>true/false</returns>
+        public static bool CanCopyAttribute(bool exclude_attributes, Entity record, string attributename, IEnumerable<AttributeMetadata> attributeBlackList = null)
+        {
+            return exclude_attributes != true && record.Contains(attributename)
+                && (attributeBlackList == null || attributeBlackList.Count() == 0 || !attributeBlackList.Any(a => a.LogicalName == attributename));
         }
 
         public static void SetAttributeValue(ref Entity recordToUpdate, Entity record, string fieldName, string newValue)

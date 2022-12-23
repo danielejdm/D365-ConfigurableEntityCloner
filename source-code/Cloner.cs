@@ -47,22 +47,6 @@ namespace ConfigurableEntityCloner
         }
 
         /// <summary>
-        /// Check if the attribute has to be copied
-        /// </summary>
-        /// <param name="exclude_attributes">Attribute in the fetch to indicate weather the list of attribute are to copy or to ignore (black/white list)</param>
-        /// <param name="record">The original record</param>
-        /// <param name="attributename">The original record attribute</param>
-        /// <returns>true/false</returns>
-        private bool CanCopyAttribute(bool exclude_attributes, Entity record, string attributename)
-        {
-            var metadata = clonerService.GetEntityAttributesMetadata(record);
-            var blacklist = metadata.Where(m => m.IsValidForCreate == false);
-
-            return exclude_attributes != true && record.Contains(attributename)
-                && !blacklist.Any(a => a.LogicalName == attributename);
-        }
-
-        /// <summary>
         /// Clone the root entity
         /// </summary>
         /// <param name="rootRecordId">Id of the root entity</param>
@@ -98,9 +82,10 @@ namespace ConfigurableEntityCloner
             var clone = new Entity();
             clone.LogicalName = record.LogicalName;
 
+            var attributeBlackList = clonerService.GetEntityAttributesMetadata(record).Where(a => a.IsValidForCreate == false);
             foreach (var f in fields)
             {
-                if (CanCopyAttribute(exclude_attributes, record, f.Name))
+                if (Helper.CanCopyAttribute(exclude_attributes, record, f.Name, attributeBlackList))
                 {
                     clone.Attributes.Add(f.Name, record[f.Name]);
                 }
@@ -178,9 +163,10 @@ namespace ConfigurableEntityCloner
                 var clone = new Entity();
                 clone.LogicalName = record.LogicalName;
 
+                var attributeBlackList = clonerService.GetEntityAttributesMetadata(record).Where(a => a.IsValidForCreate == false);
                 foreach (var f in fields)
                 {
-                    if (CanCopyAttribute(exclude_attributes, record, f.Name))
+                    if (Helper.CanCopyAttribute(exclude_attributes, record, f.Name, attributeBlackList))
                     {
                         clone.Attributes.Add(f.Name, record[f.Name]);
                     }
@@ -248,9 +234,10 @@ namespace ConfigurableEntityCloner
                 var clone = new Entity();
                 clone.LogicalName = toEntity;
 
+                var attributeBlackList = clonerService.GetEntityAttributesMetadata(record).Where(a => a.IsValidForCreate == false);
                 foreach (var f in columnsList)
                 {
-                    if (CanCopyAttribute(exclude_attributes, record, f.Name))
+                    if (Helper.CanCopyAttribute(exclude_attributes, record, f.Name, attributeBlackList))
                     {
                         clone.Attributes.Add(f.Name, record[f.Name]);
                     }
@@ -295,55 +282,57 @@ namespace ConfigurableEntityCloner
             var record1entityname = clonerService.GetEntityLogicalName(record1objecttypecode);
             var record2entityname = clonerService.GetEntityLogicalName(record2objecttypecode);
 
-            var entity1Query = element.Descendants("link-entity").Where(x => x.Attribute("name").Value == record1entityname).FirstOrDefault();
-            var entity2Query = element.Descendants("link-entity").Where(x => x.Attribute("name").Value == record2entityname).FirstOrDefault();
+            var entityFromQuery = element.Descendants("link-entity").Where(x => x.Attribute("name").Value == record1entityname).FirstOrDefault();
+            var entityToQuery = element.Descendants("link-entity").Where(x => x.Attribute("name").Value == record2entityname).FirstOrDefault();
 
-            var fieldsEntity1 = from a in entity1Query.Descendants()
-                              where a.Name == "attribute"
-                              select new AttributeInfo(a);
+            var fieldsEntityFrom = from a in entityFromQuery.Descendants()
+                                   where a.Name == "attribute"
+                                   select new AttributeInfo(a);
 
-            var fieldsEntity2 = from a in entity2Query.Descendants()
-                                where a.Name == "attribute"
-                                select new AttributeInfo(a);
+            var fieldsEntityTo = from a in entityToQuery.Descendants()
+                                 where a.Name == "attribute"
+                                 select new AttributeInfo(a);
 
-            foreach(var c in connections)
+            foreach (var c in connections)
             {
-                var entity1 = this.orgService.Retrieve(record1entityname, record1id, new ColumnSet(true));
-                var entity2 = this.orgService.Retrieve(record2entityname, record2id, new ColumnSet(true));
+                var entityFrom = this.orgService.Retrieve(record1entityname, record1id, new ColumnSet(true));
+                var entityTo = this.orgService.Retrieve(record2entityname, record2id, new ColumnSet(true));
 
-                var clone1 = new Entity();
-                clone1.LogicalName = record1entityname;
+                var cloneEntityFrom = new Entity();
+                cloneEntityFrom.LogicalName = record1entityname;
 
-                var exclude_attributes_e1 = entity1Query.Elements().Attributes().Where(x => x.Name == "exclude-attributes").First().Value == "true";
+                var exclude_attributes_efrom = entityFromQuery.Elements().Attributes().Where(x => x.Name == "exclude-attributes").First().Value == "true";
 
-                foreach (var f in fieldsEntity1)
+                var attributeBlackListEfrom = clonerService.GetEntityAttributesMetadata(entityFrom).Where(a => a.IsValidForCreate == false);
+                foreach (var f in fieldsEntityFrom)
                 {
-                    if (CanCopyAttribute(exclude_attributes_e1, entity1, f.Name))
+                    if (Helper.CanCopyAttribute(exclude_attributes_efrom, entityFrom, f.Name, attributeBlackListEfrom))
                     {
-                        clone1.Attributes.Add(f.Name, entity1[f.Name]);
+                        cloneEntityFrom.Attributes.Add(f.Name, entityFrom[f.Name]);
                     }
                 }
 
-                var clone1Id = this.orgService.Create(clone1);
+                var cloneEntityFromId = this.orgService.Create(cloneEntityFrom);
 
-                var clone2 = new Entity();
-                clone2.LogicalName = record2entityname;
-                var exclude_attributes_e2 = entity1Query.Elements().Attributes().Where(x => x.Name == "exclude-attributes").First().Value == "true";
+                var cloneEntityTo = new Entity();
+                cloneEntityTo.LogicalName = record2entityname;
+                var exclude_attributes_eto = entityFromQuery.Elements().Attributes().Where(x => x.Name == "exclude-attributes").First().Value == "true";
 
-                foreach (var f in fieldsEntity2)
+                var attributeBlackListEto = clonerService.GetEntityAttributesMetadata(entityTo).Where(a => a.IsValidForCreate == false);
+                foreach (var f in fieldsEntityTo)
                 {
-                    if (CanCopyAttribute(exclude_attributes_e1, entity2, f.Name))
+                    if (Helper.CanCopyAttribute(exclude_attributes_eto, entityTo, f.Name, attributeBlackListEto))
                     {
-                        clone2.Attributes.Add(f.Name, entity1[f.Name]);
+                        cloneEntityTo.Attributes.Add(f.Name, entityFrom[f.Name]);
                     }
                 }
 
-                var clone2Id = this.orgService.Create(clone2);
+                var cloneEntityToId = this.orgService.Create(cloneEntityTo);
 
                 var cloneConnection = new Entity("connection")
                 {
-                    ["record1id"] = clone1Id,
-                    ["record2id"] = clone2Id,
+                    ["record1id"] = cloneEntityFromId,
+                    ["record2id"] = cloneEntityToId,
                     ["record1roleid"] = record1roleid,
                     ["record2roleid"] = record2roleid,
                 };
