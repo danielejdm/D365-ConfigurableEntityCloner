@@ -40,6 +40,7 @@ Download the managed or unmanaged solution and import it in your environment.
 - The root entity <b>cannot be</b> an intersect-entity (entity for the <i>n:m relations</i>).
 - The attribute <i>link-type</i> in the FetchXml has no effect:
   - The action always applies an <i>outer join</i>.
+- The <i>cloner</i> skips all the system fields not valid for creation (i.e.: <i>createdon</i>, <i>createdby</i>, <i>statecode</i>, etc.).
  
 ### Sample Config Xml
 ~~~ xml
