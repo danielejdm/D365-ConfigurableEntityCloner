@@ -1,12 +1,12 @@
 # D365 Configurable Entity/Record Cloner
 
-This solution allows for configurable cloning of entities/records, link-entities (child), relations, associations, connections, attributes, in Dynamics 365.
+This solution allows for configurable cloning of entities/records, link-entities (child), relationships, associations, connections and attributes, in Dynamics 365, at any depth level.
 
 
 ## Description
 
-There are sometimes use cases where cloning of record(s) and associated records is required.
-The idea behind this solution came about as a result of some requirements that came to me, where various record cloning functionalities with specific rules were required, such as cloning an account with some fields, associated contacts, annotations of contacts, etc.
+There are sometimes use cases where cloning of record(s), relationship(s) and associaton(s) is required.
+The idea behind this solution came as a result of some requirements needed for a project, where various record cloning functionalities with specific rules were required, such as cloning an account with some fields, associated contacts, annotations, etc.
 <br/> The goal was to have a single component with the ability to configure cloning information and thus provide a No-Code/Low-Code solution.
 
 
@@ -15,6 +15,8 @@ The idea behind this solution came about as a result of some requirements that c
 - Configurable cloning of entities and sub-entities (child entities).
 - Configurable cloning of associations (n:m relationships).
 - Configurable cloning of connections and connected records.
+- Configurable set of fields to be cloned.
+- Automatically skipping of fields not valid for creation.
 
 ## Getting started
 
@@ -34,13 +36,13 @@ Download the managed or unmanaged solution and import it in your environment.
 
   
 - Provide a meaningful name.
-- Provide the xml representing entities, filters, relationships, attributes, etc. for cloning.
+- Provide the xml representing entities, filters, relationships, associations, attributes, etc. for cloning a specific entity.
   - I recommend to use [FetchXml Builder](https://www.xrmtoolbox.com/plugins/Cinteros.Xrm.FetchXmlBuilder) to build a base FetchXml.
 - The value for the Guid of the root entity in the fetch must be '<b>@id</b>' (placeholder).
 - The root entity <b>cannot be</b> an intersect-entity (entity for the <i>n:m relations</i>).
 - The attribute <i>link-type</i> in the FetchXml has no effect:
   - The action always applies an <i>outer join</i>.
-- The <i>cloner</i> skips all the system fields not valid for creation (i.e.: <i>createdon</i>, <i>createdby</i>, <i>statecode</i>, etc.).
+- The <i>cloner module</i> skips all the system fields not valid for creation (i.e.: <i>createdon</i>, <i>createdby</i>, <i>statecode</i>, etc.).
  
 ### Sample Config Xml
 ~~~ xml
