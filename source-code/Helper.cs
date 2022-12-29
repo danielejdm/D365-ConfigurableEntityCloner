@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xrm.Sdk;
 using System.Linq;
 using System;
-using Microsoft.Xrm.Sdk.Metadata;
 using System.Collections.Generic;
 
 namespace ConfigurableEntityCloner

@@ -6,8 +6,7 @@ using Microsoft.Xrm.Sdk;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace ConfigurableEntityCloner
 {
@@ -60,6 +59,45 @@ namespace ConfigurableEntityCloner
             };
             RetrieveEntityResponse retrieveEntityResponse = (RetrieveEntityResponse)organizationService.Execute(retrieveEntityRequest);
             return retrieveEntityResponse.EntityMetadata.Attributes;
+        }
+
+        /// <summary>
+        /// Merge more config-xml, injecting each config-xml in the corresponding link-entity tag with attribute "merge-config-id"
+        /// </summary>
+        /// <param name="configXml"></param>
+        /// <returns></returns>
+        public XDocument MergeConfigElement(XDocument configXml)
+        {
+            var copyConfigXml = XDocument.Parse(configXml.ToString());
+
+            var mergeDescendants = copyConfigXml.Descendants().Where(d => d.Attributes().Any(a => a.Name == "merge-config-id"));
+
+            if (mergeDescendants.Count() == 0)
+            {
+                return copyConfigXml;
+            }
+
+            foreach(var c in mergeDescendants)
+            {
+                var from = c.Attribute("from").Value;
+                var to = c.Attribute("to").Value;
+                var name = c.Attribute("name").Value;
+
+                var configId = Guid.Parse(c.Attribute("merge-config-id").Value);
+
+                var config = this.organizationService.Retrieve("jdm_configuration", configId, new ColumnSet(true));
+
+                var mergeConfigXml = XElement.Parse(config.GetAttributeValue<string>("jdm_configvalue"));
+
+
+                var subXml = XDocument.Parse(mergeConfigXml.Descendants().Where(d => d.Name == "entity" && d.Attribute("name").Value == name).First().ToString());
+                subXml.Descendants("condition").Where(x => x.Attribute("attribute")?.Value == "contactid").Remove();
+
+                copyConfigXml.Descendants("link-entity").Where(e => e.Attribute("merge-config-id").Value == configId.ToString()).First().AddFirst(subXml.Descendants("entity").Elements());
+                copyConfigXml.Descendants("link-entity").Where(e => e.Attribute("merge-config-id").Value == configId.ToString()).First().Attribute("merge-config-id").Remove();
+            }
+
+            return this.MergeConfigElement(copyConfigXml);
         }
     }
 }

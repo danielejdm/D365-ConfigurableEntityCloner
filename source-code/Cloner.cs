@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Metadata;
 using Microsoft.Xrm.Sdk.Query;
 using Microsoft.Xrm.Sdk.Workflow;
 using System;
@@ -43,6 +42,7 @@ namespace ConfigurableEntityCloner
         public string Clone(EntityReference configId, string rootRecordId)
         {
             this.configuration = this.orgService.Retrieve(configId.LogicalName, configId.Id, new ColumnSet(true));
+
             this.rootRecordId = rootRecordId;
             return CloneRoot();
         }
@@ -56,15 +56,14 @@ namespace ConfigurableEntityCloner
         {
             var fetchXml = this.configuration.GetAttributeValue<string>("jdm_configvalue").Replace(guidPlaceholder, this.rootRecordId);
 
-            XElement element = XElement.Parse(fetchXml);
+            XDocument configDoc = this.clonerService.MergeConfigElement(XDocument.Parse(fetchXml));
 
-            var queryClone = XElement.Parse(element.ToString());
+            var queryClone = XElement.Parse(configDoc.ToString());
 
             if(queryClone.Descendants().FirstOrDefault().Attributes().Where(x => x.Name == "name").First().Value == "connection")
             {
                 CloneEntityConnections(queryClone);
             }
-
 
             queryClone.Descendants().Where(x => x.Name == "link-entity").Remove();
             var queryCloneAllAttributes = XElement.Parse(queryClone.ToString());
@@ -99,7 +98,7 @@ namespace ConfigurableEntityCloner
 
             tracingService.Trace($"Successfully cloned root entity '{clone.LogicalName} : {clone.Id}'");
 
-            var linkEntities = element.Descendants().Where(e => e.Name == "link-entity" &&
+            var linkEntities = configDoc.Descendants().Where(e => e.Name == "link-entity" &&
                         e.Parent.Name == "entity");
             foreach (var el in linkEntities)
             {

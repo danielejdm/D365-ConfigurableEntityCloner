@@ -1,9 +1,7 @@
-﻿
-using FakeXrmEasy;
+﻿using FakeXrmEasy;
 using FakeXrmEasy.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Metadata;
 using Moq;
 using System;
@@ -17,7 +15,6 @@ namespace ConfigurableEntityCloner.Test
     {
         private XrmFakedContext xrmFakedContext;
         private IOrganizationService orgService;
-        private Entity config = new Entity("jdm_configuration");
         private List<AttributeMetadata> attributesMetadata;
 
         [TestInitialize]
@@ -357,6 +354,117 @@ namespace ConfigurableEntityCloner.Test
 
             //'Exception: The organization request type 'Microsoft.Xrm.Sdk.Messages.RetrieveMetadataChangesRequest' is not yet supported... but we DO love pull requests so please feel free to submit one! :). This functionality is not available yet
             //var result = this.xrmFakedContext.ExecuteCodeActivity<CloneEntityActivity>(inputs);
+        }
+
+        [TestMethod]
+        public void Should_Merge_Two_Config()
+        {
+            var config2 = new Entity("jdm_configuration")
+            {
+                Id = Guid.NewGuid(),
+                ["jdm_configvalue"] = "<fetch>" +
+                                          "<entity name='contact' exclude-attributes='false' >" +
+                                            "<attribute name='firstname' />" +
+                                            "<attribute name='lastname' />" +
+                                            "<filter>" +
+                                              "<condition attribute='statuscode' operator='eq' value='1' />" +
+                                              "<condition attribute='contactid' operator='eq' value='@id' />" +
+                                            "</filter>" +
+                                            "<link-entity name='annotation' from='objectid' to='contactid' exclude-attributes='false'>" +
+                                              "<attribute name='subject' />" +
+                                            "</link-entity>" +
+                                          "</entity>" +
+                                        "</fetch>"
+            };
+
+            var config1 = new Entity("jdm_configuration")
+            {
+                Id = Guid.NewGuid(),
+                ["jdm_configvalue"] = "<fetch>" +
+                                          "<entity name='account' exclude-attributes='false'>" +
+                                            "<attribute name='address1_composite' />" +
+                                            "<attribute name='name' />" +
+                                            "<filter>" +
+                                              "<condition attribute='accountid' operator='eq' value='@id' />" +
+                                            "</filter>" +
+                                            $"<link-entity name='contact' from='parentcustomerid' to='accountid' merge-config-id='{config2.Id}' exclude-attributes='false' />" +
+                                          "</entity>" +
+                                        "</fetch>"
+            };
+
+
+            var account = new Entity("account")
+            {
+                Id = Guid.NewGuid(),
+                ["name"] = "Account",
+                ["accountnumber"] = "Acc-1234",
+                ["statecode"] = new OptionSetValue(0),
+                ["statuscode"] = new OptionSetValue(1),
+                ["ownerid"] = new EntityReference("systemuser", Guid.NewGuid()),
+                ["createdby"] = new EntityReference("systemuser", Guid.NewGuid()),
+                ["createdon"] = DateTime.Now,
+                ["address1_city"] = "abc",
+                ["address1_country"] = "abc",
+                ["address1_county"] = "abc",
+                ["address1_fax"] = "abc",
+                ["address1_line1"] = "abc",
+                ["address1_line2"] = "abc",
+                ["address1_line3"] = "abc",
+            };
+
+            var contact = new Entity("contact")
+            {
+                Id = Guid.NewGuid(),
+                ["firstname"] = "Mario",
+                ["lastname"] = "Rossi",
+                ["parentcustomerid"] = account.ToEntityReference(),
+                ["fullname"] = "Mario Rossi",
+                ["address1_composite"] = "Musterstr. 1, 11111 Musterstadt"
+            };
+
+            var note = new Entity("annotation")
+            {
+                Id = Guid.NewGuid(),
+                ["filename"] = "Test.txt",
+                ["mimetype"] = "text /plain",
+                ["documentbody"] = "just a test",
+                ["notetext"] = "some text",
+                ["isdocument"] = true,
+                ["objectid"] = contact.ToEntityReference(),
+                ["subject"] = "Test annotation"
+            };
+
+            this.xrmFakedContext.Initialize(new List<Entity>()
+            {
+                config1, config2, account, contact, note
+            });
+
+            //Inputs
+            var inputs = new Dictionary<string, object>() {
+                { "RootRecordUrl", "https://myorg.crm.dynamics.com/main.aspx?appid=f8a69fd7-e37a-ed11-81ad-0022486f4310&pagetype=entityrecord&etn=account&id=" + account.Id.ToString() },
+                { "ConfigurationId", config1.ToEntityReference() }
+            };
+
+            var result = this.xrmFakedContext.ExecuteCodeActivity<CloneEntityActivity>(inputs);
+
+            Assert.IsNotNull(result);
+
+            var cloneId = new Guid((string)result["RootCloneId"]);
+
+            Assert.IsTrue(this.xrmFakedContext.CreateQuery("account")
+                .Any(e => e.Id == cloneId && 
+                e["accountnumber"].Equals(account["accountnumber"]) && 
+                e["name"].Equals(account["name"])));
+
+            Assert.IsTrue(this.xrmFakedContext.CreateQuery("contact").Any(e => e.Id != contact.Id &&
+                    e["firstname"].Equals(contact["firstname"]) &&
+                    e["lastname"].Equals(contact["lastname"]) &&
+                    e["fullname"].Equals(contact["fullname"]) &&
+                    e["address1_composite"].Equals(contact["address1_composite"]) &&
+                    e.GetAttributeValue<EntityReference>("parentcustomerid").Id.Equals(cloneId)));
+
+            Assert.IsTrue(this.xrmFakedContext.CreateQuery("annotation").Any(e => e.Id != note.Id &&
+                    e["subject"].Equals(note["subject"])));
         }
     }
 }
