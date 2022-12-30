@@ -437,7 +437,7 @@ namespace ConfigurableEntityCloner.Test
             this.xrmFakedContext.Initialize(new List<Entity>()
             {
                 config1, config2, account, contact, note
-            });
+            }); 
 
             //Inputs
             var inputs = new Dictionary<string, object>() {
