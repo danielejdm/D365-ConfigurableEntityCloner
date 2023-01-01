@@ -103,7 +103,7 @@ Download the managed or unmanaged solution and import it in your environment.
     </link-entity>
 ~~~
 
-- <i>associate-entity</i>: represent the associated entity with the attributes <i>name</i> and <i>exclude-attributes</i> like in the other xml-block for the "normal entities".
+- <i>associate-entity</i>: represent the associated entity with the list id attributes and <i>exclude-attributes</i> as in the other xml-block.
 
 - the connections (entity <i>connection</i>) are represented with the following xml-block:
 ~~~ xml
