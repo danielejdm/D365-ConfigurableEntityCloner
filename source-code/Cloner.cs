@@ -203,12 +203,12 @@ namespace ConfigurableEntityCloner
             queryClone.Descendants().Where(x => x.Name == "link-entity").Remove();
 
             var queryAssociated = XElement.Parse(queryClone.ToString().Replace("associate-entity", "entity")).Descendants("entity").First();
-
-
             var queryCloneAllAttributes = XElement.Parse(queryAssociated.ToString());
+
             var exclude_attributes = queryCloneAllAttributes.Attributes().Where(x => x.Name == "exclude-attributes").First().Value == "true";
-           
             queryCloneAllAttributes.Attributes().Where(x => x.Name == "exclude-attributes").Remove();
+
+            var reassociate = queryCloneAllAttributes.Attributes().Where(x => x.Name == "reassociate").First().Value == "true";
 
             var columnsList = from a in queryCloneAllAttributes.Descendants()
                               where a.Name == "attribute"
@@ -235,26 +235,29 @@ namespace ConfigurableEntityCloner
                 tracingService.Trace($"Start cloning association '{association.LogicalName}'");
 
                 var record = this.orgService.Retrieve(toEntity, association.GetAttributeValue<Guid>(toEntityIdField), new ColumnSet(true));
+                var associateId = record.Id;
 
-                var clone = new Entity();
-                clone.LogicalName = toEntity;
-
-                var attributeBlackList = clonerService.GetEntityAttributesMetadata(record).Where(a => a.IsValidForCreate == false).Select(a => a.LogicalName);
-                foreach (var f in association.Attributes.Where(a => a.Value != null))
+                if (reassociate == false)
                 {
-                    if (Helper.CanCopyAttribute(exclude_attributes, record, f.Key, attributeBlackList, columnsList))
-                    {
-                        clone.Attributes.Add(f.Key, record[f.Key]);
-                    }
-                }
-                var cloneId = this.orgService.Create(clone);
+                    var clone = new Entity();
+                    clone.LogicalName = toEntity;
 
+                    var attributeBlackList = clonerService.GetEntityAttributesMetadata(record).Where(a => a.IsValidForCreate == false).Select(a => a.LogicalName);
+                    foreach (var f in association.Attributes.Where(a => a.Value != null))
+                    {
+                        if (Helper.CanCopyAttribute(exclude_attributes, record, f.Key, attributeBlackList, columnsList))
+                        {
+                            clone.Attributes.Add(f.Key, record[f.Key]);
+                        }
+                    }
+                    associateId = this.orgService.Create(clone);
+                }
                 var entityReferenceCollection = new EntityReferenceCollection
                 {
                     parentclonedid
                 };
 
-                this.orgService.Associate(toEntity, cloneId, new Relationship(relationName), entityReferenceCollection);
+                this.orgService.Associate(toEntity, associateId, new Relationship(relationName), entityReferenceCollection);
 
                 tracingService.Trace($"Successfully clone association '{association.LogicalName}'");
 
@@ -262,7 +265,7 @@ namespace ConfigurableEntityCloner
 
                 foreach (var le in linkentities)
                 {
-                    CloneChildren(le, association.ToEntityReference(), new EntityReference(association.LogicalName, cloneId));
+                    CloneChildren(le, association.ToEntityReference(), new EntityReference(association.LogicalName, associateId));
                 }
             }
         }

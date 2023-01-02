@@ -210,7 +210,7 @@ namespace ConfigurableEntityCloner.Test
                                         "<link-entity name='jdm_jdm_myentity_account' from='accountid' to='accountid' intersect='true'>" +
                                           "<attribute name='accountid' />" +
                                           "<attribute name='jdm_myentityid' />" +
-                                          "<associate-entity exclude-attributes='false' name='jdm_myentity'>" +
+                                          "<associate-entity exclude-attributes='false' name='jdm_myentity' reassociate='false'>" +
                                             "<attribute name='jdm_name'/>" +
                                           "</associate-entity>" +
                                         "</link-entity>" +
