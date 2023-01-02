@@ -103,10 +103,11 @@
   <ItemGroup>
     <Compile Include="CloneEntityActivity.cs" />
     <Compile Include="Cloner.cs" />
+    <Compile Include="ClonerUtility.cs" />
     <Compile Include="Helper.cs" />
-    <Compile Include="IClonerService.cs" />
+    <Compile Include="IMetaDataService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ClonerService.cs" />
+    <Compile Include="MetaDataService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />

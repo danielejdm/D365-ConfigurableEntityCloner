@@ -58,7 +58,7 @@ namespace ConfigurableEntityCloner.Test
                         IsValidForCreate= false,
                     }
                 };
-            Mock<IClonerService> chk = new Mock<IClonerService>();
+            Mock<IMetaDataService> chk = new Mock<IMetaDataService>();
 
             chk.Setup(x => x.GetEntityAttributesMetadata(new Entity() { LogicalName = "account", Id = Guid.NewGuid() })).Returns(
                 attributesMetadata
