@@ -153,8 +153,6 @@ namespace ConfigurableEntityCloner
             var linkentityQuery = XElement.Parse($"<fetch><entity name='{entityName}'><all-attributes/>{sfilter}</entity></fetch>");
 
             var exclude_attributes = queryClone.Attributes().Where(x => x.Name == "exclude-attributes").First().Value == "true";
-            var reparent = queryClone.Attributes().Any(x => x.Name == "reparent");
-            var newParentId = reparent == true ? parentclonedid : parentid;
 
             var fetchFields = from a in queryClone.Descendants()
                          where a.Name == "attribute"
@@ -177,7 +175,7 @@ namespace ConfigurableEntityCloner
                     }
                 }
 
-                clone.Attributes.Add(fromField, newParentId);
+                clone.Attributes.Add(fromField, parentclonedid);
 
                 var cloneId = this.orgService.Create(clone);
 
@@ -243,28 +241,29 @@ namespace ConfigurableEntityCloner
                     var clone = new Entity();
                     clone.LogicalName = toEntity;
 
-                var attributeBlackList = metaDataService.GetEntityAttributesMetadata(record).Where(a => a.IsValidForCreate == false).Select(a => a.LogicalName);
-                foreach (var f in association.Attributes.Where(a => a.Value != null))
-                {
-                    if (ClonerUtility.CanCopyAttribute(exclude_attributes, record, f.Key, attributeBlackList, columnsList))
+                    var attributeBlackList = metaDataService.GetEntityAttributesMetadata(record).Where(a => a.IsValidForCreate == false).Select(a => a.LogicalName);
+                    foreach (var f in association.Attributes.Where(a => a.Value != null))
                     {
-                        clone.Attributes.Add(f.Key, record[f.Key]);
+                        if (ClonerUtility.CanCopyAttribute(exclude_attributes, record, f.Key, attributeBlackList, columnsList))
+                        {
+                            clone.Attributes.Add(f.Key, record[f.Key]);
+                        }
                     }
-                }
-                var entityReferenceCollection = new EntityReferenceCollection
+                    var entityReferenceCollection = new EntityReferenceCollection
                 {
                     parentclonedid
                 };
 
-                this.orgService.Associate(toEntity, associateId, new Relationship(relationName), entityReferenceCollection);
+                    this.orgService.Associate(toEntity, associateId, new Relationship(relationName), entityReferenceCollection);
 
-                tracingService.Trace($"Successfully clone association '{association.LogicalName}'");
+                    tracingService.Trace($"Successfully clone association '{association.LogicalName}'");
 
-                var linkentities = element.Elements().Where(d => d.Name == "link-entity");
+                    var linkentities = element.Elements().Where(d => d.Name == "link-entity");
 
-                foreach (var le in linkentities)
-                {
-                    CloneChildren(le, association.ToEntityReference(), new EntityReference(association.LogicalName, associateId));
+                    foreach (var le in linkentities)
+                    {
+                        CloneChildren(le, association.ToEntityReference(), new EntityReference(association.LogicalName, associateId));
+                    }
                 }
             }
         }
@@ -371,7 +370,7 @@ namespace ConfigurableEntityCloner
 
                 var configId = Guid.Parse(c.Attribute("merge-config-id").Value);
 
-                var config = this.organizationService.Retrieve("jdm_configuration", configId, new ColumnSet(true));
+                var config = this.orgService.Retrieve("jdm_configuration", configId, new ColumnSet(true));
 
                 var mergeConfigXml = XElement.Parse(config.GetAttributeValue<string>("jdm_configvalue"));
 
