@@ -91,7 +91,7 @@ namespace ConfigurableEntityCloner
 
 
                 var subXml = XDocument.Parse(mergeConfigXml.Descendants().Where(d => d.Name == "entity" && d.Attribute("name").Value == name).First().ToString());
-                subXml.Descendants("condition").Where(x => x.Attribute("attribute")?.Value == "contactid").Remove();
+                subXml.Descendants("condition").Where(x => x.Attribute("attribute")?.Value == to).Remove();
 
                 copyConfigXml.Descendants("link-entity").Where(e => e.Attribute("merge-config-id").Value == configId.ToString()).First().AddFirst(subXml.Descendants("entity").Elements());
                 copyConfigXml.Descendants("link-entity").Where(e => e.Attribute("merge-config-id").Value == configId.ToString()).First().Attribute("merge-config-id").Remove();
