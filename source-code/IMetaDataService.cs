@@ -7,6 +7,6 @@ namespace ConfigurableEntityCloner
     public interface IMetaDataService
     {
         string GetEntityLogicalName(int entityTypeCode);
-        IEnumerable<AttributeMetadata> GetEntityAttributesMetadata(Entity entity);
+        IEnumerable<AttributeMetadata> GetAttributeMetadata(string entityName);
     }
 }

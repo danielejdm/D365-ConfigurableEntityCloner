@@ -50,12 +50,12 @@ namespace ConfigurableEntityCloner
             return null;
         }
 
-        public IEnumerable<AttributeMetadata> GetEntityAttributesMetadata(Entity entity)
+        public IEnumerable<AttributeMetadata> GetAttributeMetadata(string entityName)
         {
             RetrieveEntityRequest retrieveEntityRequest = new RetrieveEntityRequest
             {
                 EntityFilters = EntityFilters.Attributes,
-                LogicalName = entity.LogicalName
+                LogicalName = entityName
             };
             RetrieveEntityResponse retrieveEntityResponse = (RetrieveEntityResponse)organizationService.Execute(retrieveEntityRequest);
             return retrieveEntityResponse.EntityMetadata.Attributes;

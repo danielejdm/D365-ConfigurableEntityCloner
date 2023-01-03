@@ -27,7 +27,7 @@ namespace ConfigurableEntityCloner
                 var rootRecordId = Helper.GetRecordIdFromUrl(this.RootRecordUrl.Get(activityContext));
                 var configurationId = this.ConfigurationId.Get(activityContext);
 
-                var entityCloner = new Cloner(activityContext);
+                var entityCloner = new EntityClonerService(activityContext);
                 var cloneId = entityCloner.Clone(configurationId, rootRecordId);
 
                 this.RootCloneId.Set(activityContext, cloneId);

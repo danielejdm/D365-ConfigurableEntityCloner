@@ -102,7 +102,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CloneEntityActivity.cs" />
-    <Compile Include="Cloner.cs" />
+    <Compile Include="EntityClonerService.cs" />
     <Compile Include="ClonerUtility.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="IMetaDataService.cs" />

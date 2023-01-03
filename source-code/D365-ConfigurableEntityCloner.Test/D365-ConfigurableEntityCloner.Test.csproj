@@ -129,17 +129,135 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CloneEntityActivityTest.cs" />
+    <Compile Include="CrmPluginRegistrationAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProxyClasses\Entities\Account.cs" />
+    <Compile Include="ProxyClasses\Entities\jdm_configuration.cs" />
+    <Compile Include="ProxyClasses\Entities\new_ddentity.cs" />
+    <Compile Include="ProxyClasses\Entities\new_new_ddentity_account.cs" />
+    <Compile Include="ProxyClasses\OptionSets\AccountState.cs" />
+    <Compile Include="ProxyClasses\OptionSets\account_accountcategorycode.cs" />
+    <Compile Include="ProxyClasses\OptionSets\account_accountclassificationcode.cs" />
+    <Compile Include="ProxyClasses\OptionSets\account_accountratingcode.cs" />
+    <Compile Include="ProxyClasses\OptionSets\account_address1_addresstypecode.cs" />
+    <Compile Include="ProxyClasses\OptionSets\account_address1_freighttermscode.cs" />
+    <Compile Include="ProxyClasses\OptionSets\account_address1_shippingmethodcode.cs" />
+    <Compile Include="ProxyClasses\OptionSets\account_address2_addresstypecode.cs" />
+    <Compile Include="ProxyClasses\OptionSets\account_address2_freighttermscode.cs" />
+    <Compile Include="ProxyClasses\OptionSets\account_address2_shippingmethodcode.cs" />
+    <Compile Include="ProxyClasses\OptionSets\account_businesstypecode.cs" />
+    <Compile Include="ProxyClasses\OptionSets\account_customersizecode.cs" />
+    <Compile Include="ProxyClasses\OptionSets\account_customertypecode.cs" />
+    <Compile Include="ProxyClasses\OptionSets\account_industrycode.cs" />
+    <Compile Include="ProxyClasses\OptionSets\account_ownershipcode.cs" />
+    <Compile Include="ProxyClasses\OptionSets\account_paymenttermscode.cs" />
+    <Compile Include="ProxyClasses\OptionSets\account_preferredappointmentdaycode.cs" />
+    <Compile Include="ProxyClasses\OptionSets\account_preferredappointmenttimecode.cs" />
+    <Compile Include="ProxyClasses\OptionSets\account_preferredcontactmethodcode.cs" />
+    <Compile Include="ProxyClasses\OptionSets\account_shippingmethodcode.cs" />
+    <Compile Include="ProxyClasses\OptionSets\account_statuscode.cs" />
+    <Compile Include="ProxyClasses\OptionSets\account_territorycode.cs" />
+    <Compile Include="ProxyClasses\OptionSets\jdm_configurationState.cs" />
+    <Compile Include="ProxyClasses\OptionSets\jdm_configuration_statuscode.cs" />
+    <Compile Include="ProxyClasses\OptionSets\new_ddentityState.cs" />
+    <Compile Include="ProxyClasses\OptionSets\new_ddentity_statuscode.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="bin\coretools\CrmSvcUtil.exe.config" />
+    <None Include="bin\coretools\LicenseTerms.docx" />
+    <None Include="bin\coretools\pacTelemetryUpload.exe.config" />
+    <None Include="bin\coretools\SolutionPackager.exe.config" />
+    <None Include="bin\Debug\D365-ConfigurableEntityCloner.Test.dll.config" />
+    <None Include="bin\Debug\jdm.ConfigurableEntityCloner.dll.config" />
     <None Include="packages.config" />
+    <None Include="spkl.json" />
+    <None Include="spkl\deploy-plugins.bat" />
+    <None Include="spkl\deploy-webresources.bat" />
+    <None Include="spkl\deploy-workflows.bat" />
+    <None Include="spkl\download-webresources.bat" />
+    <None Include="spkl\earlybound.bat" />
+    <None Include="spkl\instrument-plugin-code.bat" />
+    <None Include="spkl\pack+import.bat" />
+    <None Include="spkl\unpack.bat" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\D365-ConfigurableEntityCloner.csproj">
       <Project>{6fcf1198-a8a3-480c-ae38-99809f37425f}</Project>
       <Name>D365-ConfigurableEntityCloner</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\coretools\CrmSvcUtil.exe" />
+    <Content Include="bin\coretools\CrmSvcUtil.xml" />
+    <Content Include="bin\coretools\Microsoft.ApplicationInsights.dll" />
+    <Content Include="bin\coretools\Microsoft.Crm.Sdk.Proxy.dll" />
+    <Content Include="bin\coretools\Microsoft.IdentityModel.Clients.ActiveDirectory.dll" />
+    <Content Include="bin\coretools\Microsoft.PowerPlatform.Tooling.BatchedTelemetry.dll" />
+    <Content Include="bin\coretools\Microsoft.Rest.ClientRuntime.dll" />
+    <Content Include="bin\coretools\Microsoft.Xrm.Sdk.Deployment.dll" />
+    <Content Include="bin\coretools\Microsoft.Xrm.Sdk.dll" />
+    <Content Include="bin\coretools\Microsoft.Xrm.Tooling.Connector.dll" />
+    <Content Include="bin\coretools\Microsoft.Xrm.Tooling.CrmConnectControl.dll" />
+    <Content Include="bin\coretools\Microsoft.Xrm.Tooling.Ui.Styles.dll" />
+    <Content Include="bin\coretools\Newtonsoft.Json.dll" />
+    <Content Include="bin\coretools\Other Redistributable.txt" />
+    <Content Include="bin\coretools\pacTelemetryUpload.exe" />
+    <Content Include="bin\coretools\SolutionPackager.exe" />
+    <Content Include="bin\coretools\SolutionPackagerLib.dll" />
+    <Content Include="bin\coretools\System.Diagnostics.DiagnosticSource.dll" />
+    <Content Include="bin\coretools\System.ValueTuple.dll" />
+    <Content Include="bin\Debug\Castle.Core.dll" />
+    <Content Include="bin\Debug\Castle.Core.xml" />
+    <Content Include="bin\Debug\D365-ConfigurableEntityCloner.Test.dll" />
+    <Content Include="bin\Debug\D365-ConfigurableEntityCloner.Test.pdb" />
+    <Content Include="bin\Debug\FakeItEasy.dll" />
+    <Content Include="bin\Debug\FakeItEasy.pdb" />
+    <Content Include="bin\Debug\FakeItEasy.xml" />
+    <Content Include="bin\Debug\FakeXrmEasy.dll" />
+    <Content Include="bin\Debug\jdm.ConfigurableEntityCloner.dll" />
+    <Content Include="bin\Debug\jdm.ConfigurableEntityCloner.pdb" />
+    <Content Include="bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll" />
+    <Content Include="bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml" />
+    <Content Include="bin\Debug\Microsoft.Crm.Sdk.Proxy.dll" />
+    <Content Include="bin\Debug\Microsoft.Crm.Sdk.Proxy.xml" />
+    <Content Include="bin\Debug\Microsoft.IdentityModel.Clients.ActiveDirectory.dll" />
+    <Content Include="bin\Debug\Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll" />
+    <Content Include="bin\Debug\Microsoft.IdentityModel.Clients.ActiveDirectory.xml" />
+    <Content Include="bin\Debug\Microsoft.TestPlatform.AdapterUtilities.dll" />
+    <Content Include="bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll" />
+    <Content Include="bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll" />
+    <Content Include="bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll" />
+    <Content Include="bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.dll" />
+    <Content Include="bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll" />
+    <Content Include="bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml" />
+    <Content Include="bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.xml" />
+    <Content Include="bin\Debug\Microsoft.Xrm.Sdk.Deployment.dll" />
+    <Content Include="bin\Debug\Microsoft.Xrm.Sdk.Deployment.xml" />
+    <Content Include="bin\Debug\Microsoft.Xrm.Sdk.dll" />
+    <Content Include="bin\Debug\Microsoft.Xrm.Sdk.Workflow.dll" />
+    <Content Include="bin\Debug\Microsoft.Xrm.Sdk.Workflow.xml" />
+    <Content Include="bin\Debug\Microsoft.Xrm.Sdk.xml" />
+    <Content Include="bin\Debug\Microsoft.Xrm.Tooling.Connector.dll" />
+    <Content Include="bin\Debug\Microsoft.Xrm.Tooling.Connector.xml" />
+    <Content Include="bin\Debug\Moq.dll" />
+    <Content Include="bin\Debug\Moq.xml" />
+    <Content Include="bin\Debug\System.Buffers.dll" />
+    <Content Include="bin\Debug\System.Buffers.xml" />
+    <Content Include="bin\Debug\System.Memory.dll" />
+    <Content Include="bin\Debug\System.Memory.xml" />
+    <Content Include="bin\Debug\System.Numerics.Vectors.dll" />
+    <Content Include="bin\Debug\System.Numerics.Vectors.xml" />
+    <Content Include="bin\Debug\System.Runtime.CompilerServices.Unsafe.dll" />
+    <Content Include="bin\Debug\System.Runtime.CompilerServices.Unsafe.xml" />
+    <Content Include="bin\Debug\System.Text.Encodings.Web.dll" />
+    <Content Include="bin\Debug\System.Text.Encodings.Web.xml" />
+    <Content Include="bin\Debug\System.Text.Json.dll" />
+    <Content Include="bin\Debug\System.Text.Json.xml" />
+    <Content Include="bin\Debug\System.Threading.Tasks.Extensions.dll" />
+    <Content Include="bin\Debug\System.Threading.Tasks.Extensions.xml" />
+    <Content Include="bin\Debug\System.ValueTuple.dll" />
+    <Content Include="bin\Debug\System.ValueTuple.xml" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,4 +1,5 @@
-﻿using FakeXrmEasy;
+﻿using ConfigurableEntityCloner.Test.ProxyClasses;
+using FakeXrmEasy;
 using FakeXrmEasy.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Xrm.Sdk;
@@ -7,6 +8,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace ConfigurableEntityCloner.Test
 {
@@ -20,114 +22,21 @@ namespace ConfigurableEntityCloner.Test
         [TestInitialize]
         public void Initialize()
         {
-            attributesMetadata = new List<AttributeMetadata>()
-                {
-                    new AttributeMetadata()
-                    {
-                        LogicalName = "ownerid",
-                        IsValidForCreate= false,
-                    },
-                    new AttributeMetadata()
-                    {
-                        LogicalName = "createdon",
-                        IsValidForCreate= false,
-                    },
-                    new AttributeMetadata()
-                    {
-                        LogicalName = "createdby",
-                        IsValidForCreate= false,
-                    },
-                    new AttributeMetadata()
-                    {
-                        LogicalName = "modifiedby",
-                        IsValidForCreate= false,
-                    },
-                    new AttributeMetadata()
-                    {
-                        LogicalName = "modifiedon",
-                        IsValidForCreate= false,
-                    },
-                    new AttributeMetadata()
-                    {
-                        LogicalName = "statecode",
-                        IsValidForCreate= false,
-                    },
-                    new AttributeMetadata()
-                    {
-                        LogicalName = "statuscode",
-                        IsValidForCreate= false,
-                    }
-                };
             Mock<IMetaDataService> chk = new Mock<IMetaDataService>();
 
-            chk.Setup(x => x.GetEntityAttributesMetadata(new Entity() { LogicalName = "account", Id = Guid.NewGuid() })).Returns(
+            chk.Setup(x => x.GetAttributeMetadata("account")).Returns(
                 attributesMetadata
             );
 
             this.xrmFakedContext = new XrmFakedContext();
+            this.xrmFakedContext.EnableProxyTypes(Assembly.GetExecutingAssembly());
+
             this.orgService = xrmFakedContext.GetOrganizationService();
-
-            EntityMetadata accountMetadata = new EntityMetadata()
-            {
-                SchemaName = "account",
-                LogicalName = "account"
-            };
-            accountMetadata.SetAttributeCollection(attributesMetadata);
-            accountMetadata.SetSealedPropertyValue("ObjectTypeCode", 1);
-            this.xrmFakedContext.SetEntityMetadata(accountMetadata);
-
-            EntityMetadata contactMetadata = new EntityMetadata()
-            {
-                SchemaName = "contact",
-                LogicalName = "contact"
-            };
-            contactMetadata.SetAttributeCollection(attributesMetadata);
-            contactMetadata.SetSealedPropertyValue("ObjectTypeCode", 2);
-            this.xrmFakedContext.SetEntityMetadata(contactMetadata);
-
-            EntityMetadata noteMetadata = new EntityMetadata()
-            {
-                SchemaName = "annotation",
-                LogicalName = "annotation"
-            };
-            noteMetadata.SetAttributeCollection(attributesMetadata);
-            this.xrmFakedContext.SetEntityMetadata(noteMetadata);
-
-            EntityMetadata phonecallMetadata = new EntityMetadata()
-            {
-                SchemaName = "phonecall",
-                LogicalName = "phonecall"
-            };
-            phonecallMetadata.SetAttributeCollection(attributesMetadata);
-            this.xrmFakedContext.SetEntityMetadata(phonecallMetadata);
-
-            EntityMetadata jdm_myentityMetadata = new EntityMetadata()
-            {
-                SchemaName = "jdm_myentity",
-                LogicalName = "jdm_myentity"
-            };
-            jdm_myentityMetadata.SetAttributeCollection(attributesMetadata);
-            this.xrmFakedContext.SetEntityMetadata(jdm_myentityMetadata);
-
-            EntityMetadata jdm_myentity_accountMetadata = new EntityMetadata()
-            {
-                SchemaName = "jdm_jdm_myentity_account",
-                LogicalName = "jdm_jdm_myentity_account"
-            };
-            jdm_myentity_accountMetadata.SetAttributeCollection(attributesMetadata);
-            this.xrmFakedContext.SetEntityMetadata(jdm_myentity_accountMetadata);
-
-            EntityMetadata jdm_configurationMetadata = new EntityMetadata()
-            {
-                SchemaName = "jdm_configuration",
-                LogicalName = "jdm_configuration"
-            };
-            jdm_configurationMetadata.SetAttributeCollection(attributesMetadata);
-            this.xrmFakedContext.SetEntityMetadata(jdm_configurationMetadata);
+            this.InitializeEntityMetadata();
         }
 
         [TestMethod]
-        public void Should_Clone_Account_Contact_Notes()
+        public void Should_Clone_Account_Contacts_Notes_Phonecalls()
         {
             var account = new Entity("account")
             {
@@ -185,18 +94,18 @@ namespace ConfigurableEntityCloner.Test
                 ["subject"] = "Test Phonecall"
             };
 
-            var jdm_myentity = new Entity("jdm_myentity")
-            {
-                Id = Guid.NewGuid(),
-                ["jdm_name"] = "Test DD"
-            };
+            //var jdm_myentity = new Entity("jdm_myentity")
+            //{
+            //    Id = Guid.NewGuid(),
+            //    ["jdm_name"] = "Test DD"
+            //};
 
-            var jdm_jdm_myentity_account = new Entity("jdm_jdm_myentity_account")
-            {
-                Id = Guid.NewGuid(),
-                ["accountid"] = account.Id,
-                ["jdm_myentityid"] = jdm_myentity.Id,
-            };
+            //var jdm_jdm_myentity_account = new Entity("jdm_jdm_myentity_account")
+            //{
+            //    Id = Guid.NewGuid(),
+            //    ["accountid"] = account.Id,
+            //    ["jdm_myentityid"] = jdm_myentity.Id,
+            //};
 
             var config = new Entity("jdm_configuration")
             {
@@ -207,13 +116,13 @@ namespace ConfigurableEntityCloner.Test
                                         "<filter>" +
                                           "<condition attribute='accountid' operator='eq' value='@id' />" +
                                         "</filter>" +
-                                        "<link-entity name='jdm_jdm_myentity_account' from='accountid' to='accountid' intersect='true'>" +
-                                          "<attribute name='accountid' />" +
-                                          "<attribute name='jdm_myentityid' />" +
-                                          "<associate-entity exclude-attributes='false' name='jdm_myentity' reassociate='false'>" +
-                                            "<attribute name='jdm_name'/>" +
-                                          "</associate-entity>" +
-                                        "</link-entity>" +
+                                        //"<link-entity name='jdm_jdm_myentity_account' from='accountid' to='accountid' intersect='true'>" +
+                                        //  "<attribute name='accountid' />" +
+                                        //  "<attribute name='jdm_myentityid' />" +
+                                        //  "<associate-entity exclude-attributes='false' name='jdm_myentity' reassociate='false'>" +
+                                        //    "<attribute name='jdm_name'/>" +
+                                        //  "</associate-entity>" +
+                                        //"</link-entity>" +
                                         "<link-entity exclude-attributes='false' name='contact' from='parentcustomerid' to='accountid' link-type='outer' >" +
                                           "<attribute name='address1_composite' />" +
                                           "<attribute name='fullname' />" +
@@ -237,17 +146,16 @@ namespace ConfigurableEntityCloner.Test
                                     "</fetch>"
             };
 
-#pragma warning disable CS0618 // Type or member is obsolete
-            this.xrmFakedContext.Initialize(new List<Entity>() { account, contact, contact2, note, phonecall, config, jdm_myentity, jdm_jdm_myentity_account });
-#pragma warning restore CS0618 // Type or member is obsolete
-            this.xrmFakedContext.AddRelationship("jdm_jdm_myentity_account", new XrmFakedRelationship
-            {
-                IntersectEntity = "jdm_jdm_myentity_account",
-                Entity1LogicalName = account.LogicalName,
-                Entity1Attribute = "accountid",
-                Entity2LogicalName = jdm_myentity.LogicalName,
-                Entity2Attribute = "jdm_myentityid"
-            });
+            this.xrmFakedContext.Initialize(new List<Entity>() { account, contact, contact2, note, phonecall, config });
+
+            //this.xrmFakedContext.AddRelationship("jdm_jdm_myentity_account", new XrmFakedRelationship
+            //{
+            //    IntersectEntity = "jdm_jdm_myentity_account",
+            //    Entity1LogicalName = account.LogicalName,
+            //    Entity1Attribute = "accountid",
+            //    Entity2LogicalName = jdm_myentity.LogicalName,
+            //    Entity2Attribute = "jdm_myentityid"
+            //});
 
 
             //Inputs
@@ -287,11 +195,11 @@ namespace ConfigurableEntityCloner.Test
             Assert.IsTrue(this.xrmFakedContext.CreateQuery("phonecall").Any(e => e.Id != phonecall.Id &&
                     e["subject"].Equals(phonecall["subject"])));
 
-            Assert.IsTrue(this.xrmFakedContext.CreateQuery("jdm_jdm_myentity_account").Any(e => e.Id != jdm_jdm_myentity_account.Id));
+            //Assert.IsTrue(this.xrmFakedContext.CreateQuery("jdm_jdm_myentity_account").Any(e => e.Id != jdm_jdm_myentity_account.Id));
         }
 
         [TestMethod]
-        public void Should_Clone_Connections()
+        public void Should_Clone_Connections_And_Connected_Entities()
         {
             var account = new Entity("account")
             {
@@ -326,7 +234,7 @@ namespace ConfigurableEntityCloner.Test
                 ["record2objecttypecode"] = 2
             };
 
-            var config = new Entity("jdm_configuration")
+            var config = new Entity("jdm_configvalue")
             {
                 Id = Guid.NewGuid(),
                 ["jdm_configvalue"] = "<fetch>" +
@@ -346,6 +254,8 @@ namespace ConfigurableEntityCloner.Test
                                     "</fetch>"
             };
 
+            this.xrmFakedContext.Initialize(new List<Entity>() { account, contact, connection1, connectionrole1, config });
+
             //Inputs
             var inputs = new Dictionary<string, object>() {
                 { "RootRecordUrl", "https://myorg.crm.dynamics.com/main.aspx?appid=f8a69fd7-e37a-ed11-81ad-0022486f4310&pagetype=entityrecord&etn=account&id=" + account.Id.ToString() },
@@ -357,7 +267,7 @@ namespace ConfigurableEntityCloner.Test
         }
 
         [TestMethod]
-        public void Should_Merge_Two_Config()
+        public void Should_Merge_Two_Config_And_Clone_Account_Contact_Note()
         {
             var config2 = new Entity("jdm_configuration")
             {
@@ -391,7 +301,6 @@ namespace ConfigurableEntityCloner.Test
                                           "</entity>" +
                                         "</fetch>"
             };
-
 
             var account = new Entity("account")
             {
@@ -437,7 +346,8 @@ namespace ConfigurableEntityCloner.Test
             this.xrmFakedContext.Initialize(new List<Entity>()
             {
                 config1, config2, account, contact, note
-            }); 
+            });
+
 
             //Inputs
             var inputs = new Dictionary<string, object>() {
@@ -452,8 +362,8 @@ namespace ConfigurableEntityCloner.Test
             var cloneId = new Guid((string)result["RootCloneId"]);
 
             Assert.IsTrue(this.xrmFakedContext.CreateQuery("account")
-                .Any(e => e.Id == cloneId && 
-                e["accountnumber"].Equals(account["accountnumber"]) && 
+                .Any(e => e.Id == cloneId &&
+                e["accountnumber"].Equals(account["accountnumber"]) &&
                 e["name"].Equals(account["name"])));
 
             Assert.IsTrue(this.xrmFakedContext.CreateQuery("contact").Any(e => e.Id != contact.Id &&
@@ -465,6 +375,206 @@ namespace ConfigurableEntityCloner.Test
 
             Assert.IsTrue(this.xrmFakedContext.CreateQuery("annotation").Any(e => e.Id != note.Id &&
                     e["subject"].Equals(note["subject"])));
+        }
+
+        [TestMethod]
+        public void Should_Clone_Account_And_MyEntity_Associations()
+        {
+            var myentity = new new_ddentity
+            {
+                Id = Guid.NewGuid(),
+                new_name = "Active MyEntity",
+                statecode = new_ddentityState.Active
+            };
+
+            var myentity2 = new new_ddentity
+            {
+                Id = Guid.NewGuid(),
+                new_name = "Inactive MyEntity",
+                statecode = new_ddentityState.Inactive
+            };
+
+            var account = new Account
+            {
+                Id = Guid.NewGuid(),
+                Name = "Account",
+                AccountNumber = "Acc-1234",
+                StateCode = AccountState.Active,
+                StatusCode = account_statuscode.Active,
+                OwnerId = new EntityReference("systemuser", Guid.NewGuid()),
+                ["createdby"] = new EntityReference("systemuser", Guid.NewGuid()),
+                ["createdon"] = DateTime.Now,
+                Address1_City = "My City",
+                Address1_Country = "Germany",
+                Address1_County = "County",
+                Address1_Fax = "abc",
+                Address1_Line1 = "abc",
+                Address1_Line2 = "abc",
+                Address1_Line3 = "abc",
+            };
+
+            var jdm_myentity_account = new new_new_ddentity_account
+            {
+                Id = Guid.NewGuid(),
+                ["accountid"] = account.Id,
+                ["new_ddentityid"] = myentity.Id,
+            };
+
+            var jdm_jdm_myentity_account2 = new new_new_ddentity_account
+            {
+                Id = Guid.NewGuid(),
+                ["accountid"] = account.Id,
+                ["new_ddentityid"] = myentity2.Id,
+            };
+
+            var config = new jdm_configuration
+            {
+                Id = Guid.NewGuid(),
+                jdm_configvalue = "<fetch>" +
+                                      "<entity name='account' exclude-attributes='false' >" +
+                                        "<link-entity name='new_new_ddentity_account' from='accountid' to='accountid' intersect='true'>" +
+                                        "<attribute name='accountid' />" +
+                                        "<attribute name='new_ddentityid' />" +
+                                          "<associate-entity exclude-attributes='false' name='new_ddentity' reassociate='false'>" +
+                                            "<filter>" +
+                                              "<condition attribute='statecode' operator='eq' value='0' />" +
+                                            "</filter>" +
+                                          "</associate-entity>" +
+                                        "</link-entity>" +
+                                      "</entity>" +
+                                    "</fetch>"
+            };
+
+            this.xrmFakedContext.Initialize(new List<Entity>() { account, myentity, myentity2, jdm_myentity_account, jdm_jdm_myentity_account2, config });
+
+            this.xrmFakedContext.AddRelationship("new_new_ddentity_account", new XrmFakedRelationship
+            {
+                IntersectEntity = new_new_ddentity_account.EntityLogicalName,
+                Entity1LogicalName = Account.EntityLogicalName,
+                Entity1Attribute = "accountid",
+                Entity2LogicalName = new_ddentity.EntityLogicalName,
+                Entity2Attribute = "new_ddentityid"
+            });
+
+            //Inputs
+            var inputs = new Dictionary<string, object>() {
+                { "RootRecordUrl", "https://myorg.crm.dynamics.com/main.aspx?appid=f8a69fd7-e37a-ed11-81ad-0022486f4310&pagetype=entityrecord&etn=account&id=" + account.Id.ToString() },
+                { "ConfigurationId", config.ToEntityReference() }
+            };
+
+            var result = this.xrmFakedContext.ExecuteCodeActivity<CloneEntityActivity>(inputs);
+
+            Assert.IsTrue(this.xrmFakedContext.CreateQuery("account").Any(e => e.Id == new Guid((string)result["RootCloneId"]) && e["name"].Equals(account["name"])));
+
+            Assert.IsTrue(this.xrmFakedContext.CreateQuery("new_ddentity").Any(e => e.Id != myentity.Id &&
+                    e["new_name"].Equals(myentity["new_name"])));
+
+            Assert.IsFalse(this.xrmFakedContext.CreateQuery("new_ddentity").Any(e => e.Id != myentity2.Id &&
+                e["new_name"].Equals(myentity2["new_name"])));
+
+            // Assert.IsTrue(this.xrmFakedContext.CreateQuery("deap_deap_produktvariante_deap_auflagen").Any(e => e.Id != deap_deap_produktvariante_deap_auflagen.Id && !e["deap_auflagenId"].Equals(aufl.Id)));
+        }
+
+        private void InitializeEntityMetadata()
+        {
+            this.attributesMetadata = new List<AttributeMetadata>()
+                {
+                    new AttributeMetadata()
+                    {
+                        LogicalName = "ownerid",
+                        IsValidForCreate= false,
+                    },
+                    new AttributeMetadata()
+                    {
+                        LogicalName = "createdon",
+                        IsValidForCreate= false,
+                    },
+                    new AttributeMetadata()
+                    {
+                        LogicalName = "createdby",
+                        IsValidForCreate= false,
+                    },
+                    new AttributeMetadata()
+                    {
+                        LogicalName = "modifiedby",
+                        IsValidForCreate= false,
+                    },
+                    new AttributeMetadata()
+                    {
+                        LogicalName = "modifiedon",
+                        IsValidForCreate= false,
+                    },
+                    new AttributeMetadata()
+                    {
+                        LogicalName = "statecode",
+                        IsValidForCreate= false,
+                    },
+                    new AttributeMetadata()
+                    {
+                        LogicalName = "statuscode",
+                        IsValidForCreate= false,
+                    }
+                };
+
+
+            EntityMetadata accountMetadata = new EntityMetadata()
+            {
+                SchemaName = "account",
+                LogicalName = "account"
+            };
+            accountMetadata.SetAttributeCollection(attributesMetadata);
+            accountMetadata.SetSealedPropertyValue("ObjectTypeCode", 1);
+            //this.xrmFakedContext.SetEntityMetadata(accountMetadata);
+            this.xrmFakedContext.InitializeMetadata(accountMetadata);
+
+            EntityMetadata contactMetadata = new EntityMetadata()
+            {
+                LogicalName = "contact"
+            };
+            contactMetadata.SetAttributeCollection(attributesMetadata);
+            contactMetadata.SetSealedPropertyValue("ObjectTypeCode", 2);
+            //this.xrmFakedContext.SetEntityMetadata(contactMetadata);
+            this.xrmFakedContext.InitializeMetadata(contactMetadata);
+
+            EntityMetadata noteMetadata = new EntityMetadata()
+            {
+                LogicalName = "annotation"
+            };
+            noteMetadata.SetAttributeCollection(attributesMetadata);
+            //this.xrmFakedContext.SetEntityMetadata(noteMetadata);
+            this.xrmFakedContext.InitializeMetadata(noteMetadata);
+
+            EntityMetadata phonecallMetadata = new EntityMetadata()
+            {
+                LogicalName = "phonecall"
+            };
+            phonecallMetadata.SetAttributeCollection(attributesMetadata);
+            //this.xrmFakedContext.SetEntityMetadata(phonecallMetadata);
+            this.xrmFakedContext.InitializeMetadata(phonecallMetadata);
+
+            EntityMetadata new_ddentityMetadata = new EntityMetadata()
+            {
+                LogicalName = new_ddentity.EntityLogicalName
+            };
+            new_ddentityMetadata.SetAttributeCollection(attributesMetadata);
+            //this.xrmFakedContext.SetEntityMetadata(new_ddentityMetadata);
+            this.xrmFakedContext.InitializeMetadata(new_ddentityMetadata);
+
+            EntityMetadata new_ddentity_accountMetadata = new EntityMetadata()
+            {
+                LogicalName = new_new_ddentity_account.EntityLogicalName
+            };
+            new_ddentity_accountMetadata.SetAttributeCollection(attributesMetadata);
+            //this.xrmFakedContext.SetEntityMetadata(new_ddentity_accountMetadata);
+            this.xrmFakedContext.InitializeMetadata(new_ddentity_accountMetadata);
+
+            EntityMetadata jdm_configurationMetadata = new EntityMetadata()
+            {
+                LogicalName = jdm_configuration.EntityLogicalName
+            };
+            jdm_configurationMetadata.SetAttributeCollection(attributesMetadata);
+            //this.xrmFakedContext.SetEntityMetadata(jdm_configurationMetadata);
+            this.xrmFakedContext.InitializeMetadata(jdm_configurationMetadata);
         }
     }
 }
