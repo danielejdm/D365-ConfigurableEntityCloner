@@ -94,19 +94,6 @@ namespace ConfigurableEntityCloner.Test
                 ["subject"] = "Test Phonecall"
             };
 
-            //var jdm_myentity = new Entity("jdm_myentity")
-            //{
-            //    Id = Guid.NewGuid(),
-            //    ["jdm_name"] = "Test DD"
-            //};
-
-            //var jdm_jdm_myentity_account = new Entity("jdm_jdm_myentity_account")
-            //{
-            //    Id = Guid.NewGuid(),
-            //    ["accountid"] = account.Id,
-            //    ["jdm_myentityid"] = jdm_myentity.Id,
-            //};
-
             var config = new Entity("jdm_configuration")
             {
                 Id = Guid.NewGuid(),
@@ -116,13 +103,6 @@ namespace ConfigurableEntityCloner.Test
                                         "<filter>" +
                                           "<condition attribute='accountid' operator='eq' value='@id' />" +
                                         "</filter>" +
-                                        //"<link-entity name='jdm_jdm_myentity_account' from='accountid' to='accountid' intersect='true'>" +
-                                        //  "<attribute name='accountid' />" +
-                                        //  "<attribute name='jdm_myentityid' />" +
-                                        //  "<associate-entity exclude-attributes='false' name='jdm_myentity' reassociate='false'>" +
-                                        //    "<attribute name='jdm_name'/>" +
-                                        //  "</associate-entity>" +
-                                        //"</link-entity>" +
                                         "<link-entity exclude-attributes='false' name='contact' from='parentcustomerid' to='accountid' link-type='outer' >" +
                                           "<attribute name='address1_composite' />" +
                                           "<attribute name='fullname' />" +
@@ -147,16 +127,6 @@ namespace ConfigurableEntityCloner.Test
             };
 
             this.xrmFakedContext.Initialize(new List<Entity>() { account, contact, contact2, note, phonecall, config });
-
-            //this.xrmFakedContext.AddRelationship("jdm_jdm_myentity_account", new XrmFakedRelationship
-            //{
-            //    IntersectEntity = "jdm_jdm_myentity_account",
-            //    Entity1LogicalName = account.LogicalName,
-            //    Entity1Attribute = "accountid",
-            //    Entity2LogicalName = jdm_myentity.LogicalName,
-            //    Entity2Attribute = "jdm_myentityid"
-            //});
-
 
             //Inputs
             var inputs = new Dictionary<string, object>() {
@@ -234,10 +204,10 @@ namespace ConfigurableEntityCloner.Test
                 ["record2objecttypecode"] = 2
             };
 
-            var config = new Entity("jdm_configvalue")
+            var config = new jdm_configuration
             {
                 Id = Guid.NewGuid(),
-                ["jdm_configvalue"] = "<fetch>" +
+                jdm_configvalue = "<fetch>" +
                                       "<entity name='connection'>" +
                                         "<attribute name='record1roleid' />" +
                                         "<attribute name='record2roleid' />" +
@@ -435,11 +405,11 @@ namespace ConfigurableEntityCloner.Test
                                         "<link-entity name='new_new_ddentity_account' from='accountid' to='accountid' intersect='true'>" +
                                         "<attribute name='accountid' />" +
                                         "<attribute name='new_ddentityid' />" +
-                                          "<associate-entity exclude-attributes='false' name='new_ddentity' reassociate='false'>" +
+                                          "<link-entity name='new_ddentity' from='new_ddentityid' to='new_ddentityid' intersect='true' reassociate='false' exclude-attributes='false'>" +
                                             "<filter>" +
-                                              "<condition attribute='statecode' operator='eq' value='0' />" +
+                                                "<condition attribute='statecode' operator='eq' value='0' />" +
                                             "</filter>" +
-                                          "</associate-entity>" +
+                                           "</link-entity>" +
                                         "</link-entity>" +
                                       "</entity>" +
                                     "</fetch>"
@@ -519,37 +489,32 @@ namespace ConfigurableEntityCloner.Test
 
             EntityMetadata accountMetadata = new EntityMetadata()
             {
-                SchemaName = "account",
-                LogicalName = "account"
+                LogicalName = Account.EntityLogicalName
             };
             accountMetadata.SetAttributeCollection(attributesMetadata);
             accountMetadata.SetSealedPropertyValue("ObjectTypeCode", 1);
-            //this.xrmFakedContext.SetEntityMetadata(accountMetadata);
             this.xrmFakedContext.InitializeMetadata(accountMetadata);
 
             EntityMetadata contactMetadata = new EntityMetadata()
             {
-                LogicalName = "contact"
+                LogicalName = Contact.EntityLogicalName
             };
             contactMetadata.SetAttributeCollection(attributesMetadata);
             contactMetadata.SetSealedPropertyValue("ObjectTypeCode", 2);
-            //this.xrmFakedContext.SetEntityMetadata(contactMetadata);
             this.xrmFakedContext.InitializeMetadata(contactMetadata);
 
             EntityMetadata noteMetadata = new EntityMetadata()
             {
-                LogicalName = "annotation"
+                LogicalName = Annotation.EntityLogicalName
             };
             noteMetadata.SetAttributeCollection(attributesMetadata);
-            //this.xrmFakedContext.SetEntityMetadata(noteMetadata);
             this.xrmFakedContext.InitializeMetadata(noteMetadata);
 
             EntityMetadata phonecallMetadata = new EntityMetadata()
             {
-                LogicalName = "phonecall"
+                LogicalName = PhoneCall.EntityLogicalName
             };
             phonecallMetadata.SetAttributeCollection(attributesMetadata);
-            //this.xrmFakedContext.SetEntityMetadata(phonecallMetadata);
             this.xrmFakedContext.InitializeMetadata(phonecallMetadata);
 
             EntityMetadata new_ddentityMetadata = new EntityMetadata()
@@ -557,7 +522,6 @@ namespace ConfigurableEntityCloner.Test
                 LogicalName = new_ddentity.EntityLogicalName
             };
             new_ddentityMetadata.SetAttributeCollection(attributesMetadata);
-            //this.xrmFakedContext.SetEntityMetadata(new_ddentityMetadata);
             this.xrmFakedContext.InitializeMetadata(new_ddentityMetadata);
 
             EntityMetadata new_ddentity_accountMetadata = new EntityMetadata()
@@ -565,7 +529,6 @@ namespace ConfigurableEntityCloner.Test
                 LogicalName = new_new_ddentity_account.EntityLogicalName
             };
             new_ddentity_accountMetadata.SetAttributeCollection(attributesMetadata);
-            //this.xrmFakedContext.SetEntityMetadata(new_ddentity_accountMetadata);
             this.xrmFakedContext.InitializeMetadata(new_ddentity_accountMetadata);
 
             EntityMetadata jdm_configurationMetadata = new EntityMetadata()
@@ -573,8 +536,21 @@ namespace ConfigurableEntityCloner.Test
                 LogicalName = jdm_configuration.EntityLogicalName
             };
             jdm_configurationMetadata.SetAttributeCollection(attributesMetadata);
-            //this.xrmFakedContext.SetEntityMetadata(jdm_configurationMetadata);
             this.xrmFakedContext.InitializeMetadata(jdm_configurationMetadata);
+
+            EntityMetadata connectionMetadata = new EntityMetadata()
+            {
+                LogicalName = Connection.EntityLogicalName
+            };
+            connectionMetadata.SetAttributeCollection(attributesMetadata);
+            this.xrmFakedContext.InitializeMetadata(connectionMetadata);
+
+            EntityMetadata connectionRoleMetadata = new EntityMetadata()
+            {
+                LogicalName = ConnectionRole.EntityLogicalName
+            };
+            connectionRoleMetadata.SetAttributeCollection(attributesMetadata);
+            this.xrmFakedContext.InitializeMetadata(connectionRoleMetadata);
         }
     }
 }

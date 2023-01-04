@@ -2813,6 +2813,60 @@ namespace ConfigurableEntityCloner.Test.ProxyClasses
 		}
 		
 		/// <summary>
+		/// 1:N Account_Annotation
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("Account_Annotation")]
+		public System.Collections.Generic.IEnumerable<ConfigurableEntityCloner.Test.ProxyClasses.Annotation> Account_Annotation
+		{
+			get
+			{
+				return this.GetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Annotation>("Account_Annotation", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("Account_Annotation");
+				this.SetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Annotation>("Account_Annotation", null, value);
+				this.OnPropertyChanged("Account_Annotation");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N account_connections1
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_connections1")]
+		public System.Collections.Generic.IEnumerable<ConfigurableEntityCloner.Test.ProxyClasses.Connection> account_connections1
+		{
+			get
+			{
+				return this.GetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Connection>("account_connections1", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("account_connections1");
+				this.SetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Connection>("account_connections1", null, value);
+				this.OnPropertyChanged("account_connections1");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N account_connections2
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_connections2")]
+		public System.Collections.Generic.IEnumerable<ConfigurableEntityCloner.Test.ProxyClasses.Connection> account_connections2
+		{
+			get
+			{
+				return this.GetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Connection>("account_connections2", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("account_connections2");
+				this.SetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Connection>("account_connections2", null, value);
+				this.OnPropertyChanged("account_connections2");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N account_master_account
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_master_account", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
@@ -2845,6 +2899,60 @@ namespace ConfigurableEntityCloner.Test.ProxyClasses
 				this.OnPropertyChanging("Referencedaccount_parent_account");
 				this.SetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Account>("account_parent_account", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
 				this.OnPropertyChanged("Referencedaccount_parent_account");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N Account_Phonecalls
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("Account_Phonecalls")]
+		public System.Collections.Generic.IEnumerable<ConfigurableEntityCloner.Test.ProxyClasses.PhoneCall> Account_Phonecalls
+		{
+			get
+			{
+				return this.GetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.PhoneCall>("Account_Phonecalls", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("Account_Phonecalls");
+				this.SetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.PhoneCall>("Account_Phonecalls", null, value);
+				this.OnPropertyChanged("Account_Phonecalls");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N contact_customer_accounts
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_customer_accounts")]
+		public System.Collections.Generic.IEnumerable<ConfigurableEntityCloner.Test.ProxyClasses.Contact> contact_customer_accounts
+		{
+			get
+			{
+				return this.GetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Contact>("contact_customer_accounts", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("contact_customer_accounts");
+				this.SetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Contact>("contact_customer_accounts", null, value);
+				this.OnPropertyChanged("contact_customer_accounts");
+			}
+		}
+		
+		/// <summary>
+		/// N:N new_account_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("new_account_contact")]
+		public System.Collections.Generic.IEnumerable<ConfigurableEntityCloner.Test.ProxyClasses.Contact> new_account_contact
+		{
+			get
+			{
+				return this.GetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Contact>("new_account_contact", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("new_account_contact");
+				this.SetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Contact>("new_account_contact", null, value);
+				this.OnPropertyChanged("new_account_contact");
 			}
 		}
 		
@@ -2895,6 +3003,25 @@ namespace ConfigurableEntityCloner.Test.ProxyClasses
 				this.OnPropertyChanging("Referencingaccount_parent_account");
 				this.SetRelatedEntity<ConfigurableEntityCloner.Test.ProxyClasses.Account>("account_parent_account", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
 				this.OnPropertyChanged("Referencingaccount_parent_account");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 account_primary_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("primarycontactid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_primary_contact")]
+		public ConfigurableEntityCloner.Test.ProxyClasses.Contact account_primary_contact
+		{
+			get
+			{
+				return this.GetRelatedEntity<ConfigurableEntityCloner.Test.ProxyClasses.Contact>("account_primary_contact", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("account_primary_contact");
+				this.SetRelatedEntity<ConfigurableEntityCloner.Test.ProxyClasses.Contact>("account_primary_contact", null, value);
+				this.OnPropertyChanged("account_primary_contact");
 			}
 		}
 	}

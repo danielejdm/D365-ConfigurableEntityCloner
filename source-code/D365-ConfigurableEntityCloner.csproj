@@ -103,8 +103,7 @@
   <ItemGroup>
     <Compile Include="CloneEntityActivity.cs" />
     <Compile Include="EntityClonerService.cs" />
-    <Compile Include="ClonerUtility.cs" />
-    <Compile Include="Helper.cs" />
+    <Compile Include="DynamicsUrlService.cs" />
     <Compile Include="IMetaDataService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MetaDataService.cs" />

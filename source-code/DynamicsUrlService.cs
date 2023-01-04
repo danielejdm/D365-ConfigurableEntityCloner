@@ -6,7 +6,7 @@ using System.Web;
 
 namespace ConfigurableEntityCloner
 {
-    public static class Helper
+    public static class DynamicsUrlService
     {
         public static string GetRecordIdFromUrl(string url)
         {

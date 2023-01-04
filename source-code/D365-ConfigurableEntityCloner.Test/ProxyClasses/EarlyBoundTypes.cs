@@ -3249,6 +3249,60 @@ namespace ConfigurableEntityCloner.Test.ProxyClasses
 		}
 		
 		/// <summary>
+		/// 1:N Account_Annotation
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("Account_Annotation")]
+		public System.Collections.Generic.IEnumerable<ConfigurableEntityCloner.Test.ProxyClasses.Annotation> Account_Annotation
+		{
+			get
+			{
+				return this.GetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Annotation>("Account_Annotation", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("Account_Annotation");
+				this.SetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Annotation>("Account_Annotation", null, value);
+				this.OnPropertyChanged("Account_Annotation");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N account_connections1
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_connections1")]
+		public System.Collections.Generic.IEnumerable<ConfigurableEntityCloner.Test.ProxyClasses.Connection> account_connections1
+		{
+			get
+			{
+				return this.GetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Connection>("account_connections1", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("account_connections1");
+				this.SetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Connection>("account_connections1", null, value);
+				this.OnPropertyChanged("account_connections1");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N account_connections2
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_connections2")]
+		public System.Collections.Generic.IEnumerable<ConfigurableEntityCloner.Test.ProxyClasses.Connection> account_connections2
+		{
+			get
+			{
+				return this.GetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Connection>("account_connections2", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("account_connections2");
+				this.SetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Connection>("account_connections2", null, value);
+				this.OnPropertyChanged("account_connections2");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N account_master_account
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_master_account", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
@@ -3281,6 +3335,60 @@ namespace ConfigurableEntityCloner.Test.ProxyClasses
 				this.OnPropertyChanging("Referencedaccount_parent_account");
 				this.SetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Account>("account_parent_account", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
 				this.OnPropertyChanged("Referencedaccount_parent_account");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N Account_Phonecalls
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("Account_Phonecalls")]
+		public System.Collections.Generic.IEnumerable<ConfigurableEntityCloner.Test.ProxyClasses.PhoneCall> Account_Phonecalls
+		{
+			get
+			{
+				return this.GetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.PhoneCall>("Account_Phonecalls", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("Account_Phonecalls");
+				this.SetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.PhoneCall>("Account_Phonecalls", null, value);
+				this.OnPropertyChanged("Account_Phonecalls");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N contact_customer_accounts
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_customer_accounts")]
+		public System.Collections.Generic.IEnumerable<ConfigurableEntityCloner.Test.ProxyClasses.Contact> contact_customer_accounts
+		{
+			get
+			{
+				return this.GetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Contact>("contact_customer_accounts", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("contact_customer_accounts");
+				this.SetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Contact>("contact_customer_accounts", null, value);
+				this.OnPropertyChanged("contact_customer_accounts");
+			}
+		}
+		
+		/// <summary>
+		/// N:N new_account_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("new_account_contact")]
+		public System.Collections.Generic.IEnumerable<ConfigurableEntityCloner.Test.ProxyClasses.Contact> new_account_contact
+		{
+			get
+			{
+				return this.GetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Contact>("new_account_contact", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("new_account_contact");
+				this.SetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Contact>("new_account_contact", null, value);
+				this.OnPropertyChanged("new_account_contact");
 			}
 		}
 		
@@ -3331,6 +3439,6249 @@ namespace ConfigurableEntityCloner.Test.ProxyClasses
 				this.OnPropertyChanging("Referencingaccount_parent_account");
 				this.SetRelatedEntity<ConfigurableEntityCloner.Test.ProxyClasses.Account>("account_parent_account", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
 				this.OnPropertyChanged("Referencingaccount_parent_account");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 account_primary_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("primarycontactid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_primary_contact")]
+		public ConfigurableEntityCloner.Test.ProxyClasses.Contact account_primary_contact
+		{
+			get
+			{
+				return this.GetRelatedEntity<ConfigurableEntityCloner.Test.ProxyClasses.Contact>("account_primary_contact", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("account_primary_contact");
+				this.SetRelatedEntity<ConfigurableEntityCloner.Test.ProxyClasses.Contact>("account_primary_contact", null, value);
+				this.OnPropertyChanged("account_primary_contact");
+			}
+		}
+	}
+	
+	/// <summary>
+	/// Note that is attached to one or more objects, including other notes.
+	/// </summary>
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("annotation")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.82")]
+	public partial class Annotation : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	{
+		
+		/// <summary>
+		/// Default Constructor.
+		/// </summary>
+		public Annotation() : 
+				base(EntityLogicalName)
+		{
+		}
+		
+		public const string EntityLogicalName = "annotation";
+		
+		public const string EntityLogicalCollectionName = "annotations";
+		
+		public const string EntitySetName = "annotations";
+		
+		public const int EntityTypeCode = 5;
+		
+		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+		
+		public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
+		
+		private void OnPropertyChanged(string propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void OnPropertyChanging(string propertyName)
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, new System.ComponentModel.PropertyChangingEventArgs(propertyName));
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the note.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("annotationid")]
+		public System.Nullable<System.Guid> AnnotationId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("annotationid");
+			}
+			set
+			{
+				this.OnPropertyChanging("AnnotationId");
+				this.SetAttributeValue("annotationid", value);
+				if (value.HasValue)
+				{
+					base.Id = value.Value;
+				}
+				else
+				{
+					base.Id = System.Guid.Empty;
+				}
+				this.OnPropertyChanged("AnnotationId");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("annotationid")]
+		public override System.Guid Id
+		{
+			get
+			{
+				return base.Id;
+			}
+			set
+			{
+				this.AnnotationId = value;
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the user who created the note.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		public Microsoft.Xrm.Sdk.EntityReference CreatedBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdby");
+			}
+		}
+		
+		/// <summary>
+		/// Date and time when the note was created.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdon")]
+		public System.Nullable<System.DateTime> CreatedOn
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("createdon");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the delegate user who created the annotation.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		public Microsoft.Xrm.Sdk.EntityReference CreatedOnBehalfBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// Contents of the note's attachment.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("documentbody")]
+		public string DocumentBody
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("documentbody");
+			}
+			set
+			{
+				this.OnPropertyChanging("DocumentBody");
+				this.SetAttributeValue("documentbody", value);
+				this.OnPropertyChanged("DocumentBody");
+			}
+		}
+		
+		/// <summary>
+		/// File name of the note.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("filename")]
+		public string FileName
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("filename");
+			}
+			set
+			{
+				this.OnPropertyChanging("FileName");
+				this.SetAttributeValue("filename", value);
+				this.OnPropertyChanged("FileName");
+			}
+		}
+		
+		/// <summary>
+		/// File size of the note.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("filesize")]
+		public System.Nullable<int> FileSize
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("filesize");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the data import or data migration that created this record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("importsequencenumber")]
+		public System.Nullable<int> ImportSequenceNumber
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("importsequencenumber");
+			}
+			set
+			{
+				this.OnPropertyChanging("ImportSequenceNumber");
+				this.SetAttributeValue("importsequencenumber", value);
+				this.OnPropertyChanged("ImportSequenceNumber");
+			}
+		}
+		
+		/// <summary>
+		/// Specifies whether the note is an attachment.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("isdocument")]
+		public System.Nullable<bool> IsDocument
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("isdocument");
+			}
+			set
+			{
+				this.OnPropertyChanging("IsDocument");
+				this.SetAttributeValue("isdocument", value);
+				this.OnPropertyChanged("IsDocument");
+			}
+		}
+		
+		/// <summary>
+		/// Language identifier for the note.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("langid")]
+		public string LangId
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("langid");
+			}
+			set
+			{
+				this.OnPropertyChanging("LangId");
+				this.SetAttributeValue("langid", value);
+				this.OnPropertyChanged("LangId");
+			}
+		}
+		
+		/// <summary>
+		/// MIME type of the note's attachment.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("mimetype")]
+		public string MimeType
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("mimetype");
+			}
+			set
+			{
+				this.OnPropertyChanging("MimeType");
+				this.SetAttributeValue("mimetype", value);
+				this.OnPropertyChanged("MimeType");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the user who last modified the note.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		public Microsoft.Xrm.Sdk.EntityReference ModifiedBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedby");
+			}
+		}
+		
+		/// <summary>
+		/// Date and time when the note was last modified.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedon")]
+		public System.Nullable<System.DateTime> ModifiedOn
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("modifiedon");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the delegate user who last modified the annotation.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		public Microsoft.Xrm.Sdk.EntityReference ModifiedOnBehalfBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// Text of the note.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("notetext")]
+		public string NoteText
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("notetext");
+			}
+			set
+			{
+				this.OnPropertyChanging("NoteText");
+				this.SetAttributeValue("notetext", value);
+				this.OnPropertyChanged("NoteText");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the object with which the note is associated.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("objectid")]
+		public Microsoft.Xrm.Sdk.EntityReference ObjectId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("objectid");
+			}
+			set
+			{
+				this.OnPropertyChanging("ObjectId");
+				this.SetAttributeValue("objectid", value);
+				this.OnPropertyChanged("ObjectId");
+			}
+		}
+		
+		/// <summary>
+		/// Type of entity with which the note is associated.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("objecttypecode")]
+		public string ObjectTypeCode
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("objecttypecode");
+			}
+			set
+			{
+				this.OnPropertyChanging("ObjectTypeCode");
+				this.SetAttributeValue("objecttypecode", value);
+				this.OnPropertyChanged("ObjectTypeCode");
+			}
+		}
+		
+		/// <summary>
+		/// Date and time that the record was migrated.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("overriddencreatedon")]
+		public System.Nullable<System.DateTime> OverriddenCreatedOn
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("overriddencreatedon");
+			}
+			set
+			{
+				this.OnPropertyChanging("OverriddenCreatedOn");
+				this.SetAttributeValue("overriddencreatedon", value);
+				this.OnPropertyChanged("OverriddenCreatedOn");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the user or team who owns the note.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("ownerid")]
+		public Microsoft.Xrm.Sdk.EntityReference OwnerId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("ownerid");
+			}
+			set
+			{
+				this.OnPropertyChanging("OwnerId");
+				this.SetAttributeValue("ownerid", value);
+				this.OnPropertyChanged("OwnerId");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the business unit that owns the note.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningbusinessunit")]
+		public Microsoft.Xrm.Sdk.EntityReference OwningBusinessUnit
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owningbusinessunit");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the team who owns the note.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		public Microsoft.Xrm.Sdk.EntityReference OwningTeam
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owningteam");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the user who owns the note.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		public Microsoft.Xrm.Sdk.EntityReference OwningUser
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owninguser");
+			}
+		}
+		
+		/// <summary>
+		/// Prefix of the file pointer in blob storage.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("prefix")]
+		public string Prefix
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("prefix");
+			}
+		}
+		
+		/// <summary>
+		/// workflow step id associated with the note.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("stepid")]
+		public string StepId
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("stepid");
+			}
+			set
+			{
+				this.OnPropertyChanging("StepId");
+				this.SetAttributeValue("stepid", value);
+				this.OnPropertyChanged("StepId");
+			}
+		}
+		
+		/// <summary>
+		/// Subject associated with the note.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("subject")]
+		public string Subject
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("subject");
+			}
+			set
+			{
+				this.OnPropertyChanging("Subject");
+				this.SetAttributeValue("subject", value);
+				this.OnPropertyChanged("Subject");
+			}
+		}
+		
+		/// <summary>
+		/// Version number of the note.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("versionnumber")]
+		public System.Nullable<long> VersionNumber
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 Account_Annotation
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("objectid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("Account_Annotation")]
+		public ConfigurableEntityCloner.Test.ProxyClasses.Account Account_Annotation
+		{
+			get
+			{
+				return this.GetRelatedEntity<ConfigurableEntityCloner.Test.ProxyClasses.Account>("Account_Annotation", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("Account_Annotation");
+				this.SetRelatedEntity<ConfigurableEntityCloner.Test.ProxyClasses.Account>("Account_Annotation", null, value);
+				this.OnPropertyChanged("Account_Annotation");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 Contact_Annotation
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("objectid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("Contact_Annotation")]
+		public ConfigurableEntityCloner.Test.ProxyClasses.Contact Contact_Annotation
+		{
+			get
+			{
+				return this.GetRelatedEntity<ConfigurableEntityCloner.Test.ProxyClasses.Contact>("Contact_Annotation", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("Contact_Annotation");
+				this.SetRelatedEntity<ConfigurableEntityCloner.Test.ProxyClasses.Contact>("Contact_Annotation", null, value);
+				this.OnPropertyChanged("Contact_Annotation");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 PhoneCall_Annotation
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("objectid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("PhoneCall_Annotation")]
+		public ConfigurableEntityCloner.Test.ProxyClasses.PhoneCall PhoneCall_Annotation
+		{
+			get
+			{
+				return this.GetRelatedEntity<ConfigurableEntityCloner.Test.ProxyClasses.PhoneCall>("PhoneCall_Annotation", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("PhoneCall_Annotation");
+				this.SetRelatedEntity<ConfigurableEntityCloner.Test.ProxyClasses.PhoneCall>("PhoneCall_Annotation", null, value);
+				this.OnPropertyChanged("PhoneCall_Annotation");
+			}
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.82")]
+	public enum connection_record1objecttypecode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Team = 9,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ChannelAccessProfileRule = 9400,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ProcessSession = 4710,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Task = 4212,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		SocialProfile = 99,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		PhoneCall = 4210,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Territory = 2013,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Idea = 10292,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		TeamProject = 10293,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Product = 10294,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Donation = 10287,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Fundraiser = 10288,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Challenge = 10290,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		RecurringAppointment = 4251,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Goal = 9600,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		User = 8,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Account = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		KnowledgeArticle = 9953,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Letter = 4207,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Activity = 4200,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		SocialActivity = 4216,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Email = 4202,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Contact = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Fax = 4204,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		KnowledgeBaseRecord = 9930,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Position = 50,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Appointment = 4201,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.82")]
+	public enum connection_record2objecttypecode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		User = 8,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		KnowledgeArticle = 9953,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		SocialActivity = 4216,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Team = 9,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Letter = 4207,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Email = 4202,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Territory = 2013,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Idea = 10292,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		TeamProject = 10293,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Product = 10294,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Donation = 10287,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Fundraiser = 10288,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Challenge = 10290,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Contact = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Appointment = 4201,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Account = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		KnowledgeBaseRecord = 9930,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		SocialProfile = 99,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Goal = 9600,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Activity = 4200,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Task = 4212,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Fax = 4204,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		RecurringAppointment = 4251,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		PhoneCall = 4210,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ProcessSession = 4710,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ChannelAccessProfileRule = 9400,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Position = 50,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.82")]
+	public enum ConnectionState
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Active = 0,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Inactive = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.82")]
+	public enum connection_statuscode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Active = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Inactive = 2,
+	}
+	
+	/// <summary>
+	/// Relationship between two entities.
+	/// </summary>
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("connection")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.82")]
+	public partial class Connection : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	{
+		
+		/// <summary>
+		/// Default Constructor.
+		/// </summary>
+		public Connection() : 
+				base(EntityLogicalName)
+		{
+		}
+		
+		public const string EntityLogicalName = "connection";
+		
+		public const string EntityLogicalCollectionName = "connections";
+		
+		public const string EntitySetName = "connections";
+		
+		public const int EntityTypeCode = 3234;
+		
+		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+		
+		public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
+		
+		private void OnPropertyChanged(string propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void OnPropertyChanging(string propertyName)
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, new System.ComponentModel.PropertyChangingEventArgs(propertyName));
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the connection.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("connectionid")]
+		public System.Nullable<System.Guid> ConnectionId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("connectionid");
+			}
+			set
+			{
+				this.OnPropertyChanging("ConnectionId");
+				this.SetAttributeValue("connectionid", value);
+				if (value.HasValue)
+				{
+					base.Id = value.Value;
+				}
+				else
+				{
+					base.Id = System.Guid.Empty;
+				}
+				this.OnPropertyChanged("ConnectionId");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("connectionid")]
+		public override System.Guid Id
+		{
+			get
+			{
+				return base.Id;
+			}
+			set
+			{
+				this.ConnectionId = value;
+			}
+		}
+		
+		/// <summary>
+		/// Shows who created the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		public Microsoft.Xrm.Sdk.EntityReference CreatedBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdby");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the date and time when the record was created. The date and time are displayed in the time zone selected in Microsoft Dynamics 365 options.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdon")]
+		public System.Nullable<System.DateTime> CreatedOn
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("createdon");
+			}
+		}
+		
+		/// <summary>
+		/// Shows who created the record on behalf of another user.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		public Microsoft.Xrm.Sdk.EntityReference CreatedOnBehalfBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// Type additional information to describe the connection, such as the length or quality of the relationship.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("description")]
+		public string Description
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("description");
+			}
+			set
+			{
+				this.OnPropertyChanging("Description");
+				this.SetAttributeValue("description", value);
+				this.OnPropertyChanged("Description");
+			}
+		}
+		
+		/// <summary>
+		/// Enter the end date of the connection.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("effectiveend")]
+		public System.Nullable<System.DateTime> EffectiveEnd
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("effectiveend");
+			}
+			set
+			{
+				this.OnPropertyChanging("EffectiveEnd");
+				this.SetAttributeValue("effectiveend", value);
+				this.OnPropertyChanged("EffectiveEnd");
+			}
+		}
+		
+		/// <summary>
+		/// Enter the start date of the connection.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("effectivestart")]
+		public System.Nullable<System.DateTime> EffectiveStart
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("effectivestart");
+			}
+			set
+			{
+				this.OnPropertyChanging("EffectiveStart");
+				this.SetAttributeValue("effectivestart", value);
+				this.OnPropertyChanged("EffectiveStart");
+			}
+		}
+		
+		/// <summary>
+		/// The default image for the entity.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("entityimage")]
+		public byte[] EntityImage
+		{
+			get
+			{
+				return this.GetAttributeValue<byte[]>("entityimage");
+			}
+			set
+			{
+				this.OnPropertyChanging("EntityImage");
+				this.SetAttributeValue("entityimage", value);
+				this.OnPropertyChanged("EntityImage");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("entityimage_timestamp")]
+		public System.Nullable<long> EntityImage_Timestamp
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<long>>("entityimage_timestamp");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("entityimage_url")]
+		public string EntityImage_URL
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("entityimage_url");
+			}
+		}
+		
+		/// <summary>
+		/// For internal use only.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("entityimageid")]
+		public System.Nullable<System.Guid> EntityImageId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("entityimageid");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the conversion rate of the record's currency. The exchange rate is used to convert all money fields in the record from the local currency to the system's default currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("exchangerate")]
+		public System.Nullable<decimal> ExchangeRate
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("exchangerate");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the data import or data migration that created this record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("importsequencenumber")]
+		public System.Nullable<int> ImportSequenceNumber
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("importsequencenumber");
+			}
+			set
+			{
+				this.OnPropertyChanging("ImportSequenceNumber");
+				this.SetAttributeValue("importsequencenumber", value);
+				this.OnPropertyChanged("ImportSequenceNumber");
+			}
+		}
+		
+		/// <summary>
+		/// Indicates that this is the master record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("ismaster")]
+		public System.Nullable<bool> IsMaster
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("ismaster");
+			}
+		}
+		
+		/// <summary>
+		/// Shows who last updated the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		public Microsoft.Xrm.Sdk.EntityReference ModifiedBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedby");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the date and time when the record was last updated. The date and time are displayed in the time zone selected in Microsoft Dynamics 365 options.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedon")]
+		public System.Nullable<System.DateTime> ModifiedOn
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("modifiedon");
+			}
+		}
+		
+		/// <summary>
+		/// Shows who last updated the record on behalf of another user.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		public Microsoft.Xrm.Sdk.EntityReference ModifiedOnBehalfBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// Name of the connection.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("name")]
+		public string Name
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("name");
+			}
+		}
+		
+		/// <summary>
+		/// Date and time that the record was migrated.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("overriddencreatedon")]
+		public System.Nullable<System.DateTime> OverriddenCreatedOn
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("overriddencreatedon");
+			}
+			set
+			{
+				this.OnPropertyChanging("OverriddenCreatedOn");
+				this.SetAttributeValue("overriddencreatedon", value);
+				this.OnPropertyChanged("OverriddenCreatedOn");
+			}
+		}
+		
+		/// <summary>
+		/// Enter the user or team who is assigned to manage the record. This field is updated every time the record is assigned to a different user.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("ownerid")]
+		public Microsoft.Xrm.Sdk.EntityReference OwnerId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("ownerid");
+			}
+			set
+			{
+				this.OnPropertyChanging("OwnerId");
+				this.SetAttributeValue("ownerid", value);
+				this.OnPropertyChanged("OwnerId");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the business unit that the record owner belongs to.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningbusinessunit")]
+		public Microsoft.Xrm.Sdk.EntityReference OwningBusinessUnit
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owningbusinessunit");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the team who owns the connection.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		public Microsoft.Xrm.Sdk.EntityReference OwningTeam
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owningteam");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the user who owns the connection.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		public Microsoft.Xrm.Sdk.EntityReference OwningUser
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owninguser");
+			}
+		}
+		
+		/// <summary>
+		/// Choose the primary account, contact, or other record involved in the connection.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("record1id")]
+		public Microsoft.Xrm.Sdk.EntityReference Record1Id
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("record1id");
+			}
+			set
+			{
+				this.OnPropertyChanging("Record1Id");
+				this.SetAttributeValue("record1id", value);
+				this.OnPropertyChanged("Record1Id");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the record type of the source record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("record1objecttypecode")]
+		public System.Nullable<ConfigurableEntityCloner.Test.ProxyClasses.connection_record1objecttypecode> Record1ObjectTypeCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("record1objecttypecode");
+				if ((optionSet != null))
+				{
+					return ((ConfigurableEntityCloner.Test.ProxyClasses.connection_record1objecttypecode)(System.Enum.ToObject(typeof(ConfigurableEntityCloner.Test.ProxyClasses.connection_record1objecttypecode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+		}
+		
+		/// <summary>
+		/// Choose the primary party's role or relationship with the second party.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("record1roleid")]
+		public Microsoft.Xrm.Sdk.EntityReference Record1RoleId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("record1roleid");
+			}
+			set
+			{
+				this.OnPropertyChanging("Record1RoleId");
+				this.SetAttributeValue("record1roleid", value);
+				this.OnPropertyChanged("Record1RoleId");
+			}
+		}
+		
+		/// <summary>
+		/// Select the secondary account, contact, or other record involved in the connection.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("record2id")]
+		public Microsoft.Xrm.Sdk.EntityReference Record2Id
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("record2id");
+			}
+			set
+			{
+				this.OnPropertyChanging("Record2Id");
+				this.SetAttributeValue("record2id", value);
+				this.OnPropertyChanged("Record2Id");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the record type of the target record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("record2objecttypecode")]
+		public System.Nullable<ConfigurableEntityCloner.Test.ProxyClasses.connection_record2objecttypecode> Record2ObjectTypeCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("record2objecttypecode");
+				if ((optionSet != null))
+				{
+					return ((ConfigurableEntityCloner.Test.ProxyClasses.connection_record2objecttypecode)(System.Enum.ToObject(typeof(ConfigurableEntityCloner.Test.ProxyClasses.connection_record2objecttypecode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+		}
+		
+		/// <summary>
+		/// Choose the secondary party's role or relationship with the primary party.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("record2roleid")]
+		public Microsoft.Xrm.Sdk.EntityReference Record2RoleId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("record2roleid");
+			}
+			set
+			{
+				this.OnPropertyChanging("Record2RoleId");
+				this.SetAttributeValue("record2roleid", value);
+				this.OnPropertyChanged("Record2RoleId");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier for the reciprocal connection record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("relatedconnectionid")]
+		public Microsoft.Xrm.Sdk.EntityReference RelatedConnectionId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("relatedconnectionid");
+			}
+		}
+		
+		/// <summary>
+		/// Shows whether the connection is active or inactive. Inactive connections are read-only and can't be edited unless they are reactivated.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statecode")]
+		public System.Nullable<ConfigurableEntityCloner.Test.ProxyClasses.ConnectionState> StateCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("statecode");
+				if ((optionSet != null))
+				{
+					return ((ConfigurableEntityCloner.Test.ProxyClasses.ConnectionState)(System.Enum.ToObject(typeof(ConfigurableEntityCloner.Test.ProxyClasses.ConnectionState), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("StateCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("statecode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("statecode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("StateCode");
+			}
+		}
+		
+		/// <summary>
+		/// Reason for the status of the connection.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statuscode")]
+		public System.Nullable<ConfigurableEntityCloner.Test.ProxyClasses.connection_statuscode> StatusCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("statuscode");
+				if ((optionSet != null))
+				{
+					return ((ConfigurableEntityCloner.Test.ProxyClasses.connection_statuscode)(System.Enum.ToObject(typeof(ConfigurableEntityCloner.Test.ProxyClasses.connection_statuscode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("StatusCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("statuscode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("statuscode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("StatusCode");
+			}
+		}
+		
+		/// <summary>
+		/// Choose the local currency for the record to make sure budgets are reported in the correct currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("transactioncurrencyid")]
+		public Microsoft.Xrm.Sdk.EntityReference TransactionCurrencyId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("transactioncurrencyid");
+			}
+			set
+			{
+				this.OnPropertyChanging("TransactionCurrencyId");
+				this.SetAttributeValue("transactioncurrencyid", value);
+				this.OnPropertyChanged("TransactionCurrencyId");
+			}
+		}
+		
+		/// <summary>
+		/// Version number of the connection.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("versionnumber")]
+		public System.Nullable<long> VersionNumber
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N connection_related_connection
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("connection_related_connection", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
+		public System.Collections.Generic.IEnumerable<ConfigurableEntityCloner.Test.ProxyClasses.Connection> Referencedconnection_related_connection
+		{
+			get
+			{
+				return this.GetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Connection>("connection_related_connection", Microsoft.Xrm.Sdk.EntityRole.Referenced);
+			}
+			set
+			{
+				this.OnPropertyChanging("Referencedconnection_related_connection");
+				this.SetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Connection>("connection_related_connection", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
+				this.OnPropertyChanged("Referencedconnection_related_connection");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 account_connections1
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("record1id")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_connections1")]
+		public ConfigurableEntityCloner.Test.ProxyClasses.Account account_connections1
+		{
+			get
+			{
+				return this.GetRelatedEntity<ConfigurableEntityCloner.Test.ProxyClasses.Account>("account_connections1", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("account_connections1");
+				this.SetRelatedEntity<ConfigurableEntityCloner.Test.ProxyClasses.Account>("account_connections1", null, value);
+				this.OnPropertyChanged("account_connections1");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 account_connections2
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("record2id")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_connections2")]
+		public ConfigurableEntityCloner.Test.ProxyClasses.Account account_connections2
+		{
+			get
+			{
+				return this.GetRelatedEntity<ConfigurableEntityCloner.Test.ProxyClasses.Account>("account_connections2", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("account_connections2");
+				this.SetRelatedEntity<ConfigurableEntityCloner.Test.ProxyClasses.Account>("account_connections2", null, value);
+				this.OnPropertyChanged("account_connections2");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 connection_related_connection
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("relatedconnectionid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("connection_related_connection", Microsoft.Xrm.Sdk.EntityRole.Referencing)]
+		public ConfigurableEntityCloner.Test.ProxyClasses.Connection Referencingconnection_related_connection
+		{
+			get
+			{
+				return this.GetRelatedEntity<ConfigurableEntityCloner.Test.ProxyClasses.Connection>("connection_related_connection", Microsoft.Xrm.Sdk.EntityRole.Referencing);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 connection_role_connections1
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("record1roleid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("connection_role_connections1")]
+		public ConfigurableEntityCloner.Test.ProxyClasses.ConnectionRole connection_role_connections1
+		{
+			get
+			{
+				return this.GetRelatedEntity<ConfigurableEntityCloner.Test.ProxyClasses.ConnectionRole>("connection_role_connections1", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("connection_role_connections1");
+				this.SetRelatedEntity<ConfigurableEntityCloner.Test.ProxyClasses.ConnectionRole>("connection_role_connections1", null, value);
+				this.OnPropertyChanged("connection_role_connections1");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 connection_role_connections2
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("record2roleid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("connection_role_connections2")]
+		public ConfigurableEntityCloner.Test.ProxyClasses.ConnectionRole connection_role_connections2
+		{
+			get
+			{
+				return this.GetRelatedEntity<ConfigurableEntityCloner.Test.ProxyClasses.ConnectionRole>("connection_role_connections2", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("connection_role_connections2");
+				this.SetRelatedEntity<ConfigurableEntityCloner.Test.ProxyClasses.ConnectionRole>("connection_role_connections2", null, value);
+				this.OnPropertyChanged("connection_role_connections2");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 contact_connections1
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("record1id")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_connections1")]
+		public ConfigurableEntityCloner.Test.ProxyClasses.Contact contact_connections1
+		{
+			get
+			{
+				return this.GetRelatedEntity<ConfigurableEntityCloner.Test.ProxyClasses.Contact>("contact_connections1", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("contact_connections1");
+				this.SetRelatedEntity<ConfigurableEntityCloner.Test.ProxyClasses.Contact>("contact_connections1", null, value);
+				this.OnPropertyChanged("contact_connections1");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 contact_connections2
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("record2id")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_connections2")]
+		public ConfigurableEntityCloner.Test.ProxyClasses.Contact contact_connections2
+		{
+			get
+			{
+				return this.GetRelatedEntity<ConfigurableEntityCloner.Test.ProxyClasses.Contact>("contact_connections2", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("contact_connections2");
+				this.SetRelatedEntity<ConfigurableEntityCloner.Test.ProxyClasses.Contact>("contact_connections2", null, value);
+				this.OnPropertyChanged("contact_connections2");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 phonecall_connections1
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("record1id")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("phonecall_connections1")]
+		public ConfigurableEntityCloner.Test.ProxyClasses.PhoneCall phonecall_connections1
+		{
+			get
+			{
+				return this.GetRelatedEntity<ConfigurableEntityCloner.Test.ProxyClasses.PhoneCall>("phonecall_connections1", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("phonecall_connections1");
+				this.SetRelatedEntity<ConfigurableEntityCloner.Test.ProxyClasses.PhoneCall>("phonecall_connections1", null, value);
+				this.OnPropertyChanged("phonecall_connections1");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 phonecall_connections2
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("record2id")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("phonecall_connections2")]
+		public ConfigurableEntityCloner.Test.ProxyClasses.PhoneCall phonecall_connections2
+		{
+			get
+			{
+				return this.GetRelatedEntity<ConfigurableEntityCloner.Test.ProxyClasses.PhoneCall>("phonecall_connections2", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("phonecall_connections2");
+				this.SetRelatedEntity<ConfigurableEntityCloner.Test.ProxyClasses.PhoneCall>("phonecall_connections2", null, value);
+				this.OnPropertyChanged("phonecall_connections2");
+			}
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.82")]
+	public enum ConnectionRoleState
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Active = 0,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Inactive = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.82")]
+	public enum connectionrole_statuscode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Active = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Inactive = 2,
+	}
+	
+	/// <summary>
+	/// Role describing a relationship between a two records.
+	/// </summary>
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("connectionrole")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.82")]
+	public partial class ConnectionRole : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	{
+		
+		/// <summary>
+		/// Default Constructor.
+		/// </summary>
+		public ConnectionRole() : 
+				base(EntityLogicalName)
+		{
+		}
+		
+		public const string EntityLogicalName = "connectionrole";
+		
+		public const string EntityLogicalCollectionName = "connectionroles";
+		
+		public const string EntitySetName = "connectionroles";
+		
+		public const int EntityTypeCode = 3231;
+		
+		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+		
+		public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
+		
+		private void OnPropertyChanged(string propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void OnPropertyChanging(string propertyName)
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, new System.ComponentModel.PropertyChangingEventArgs(propertyName));
+			}
+		}
+		
+		/// <summary>
+		/// Categories for connection roles.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("category")]
+		public Microsoft.Xrm.Sdk.OptionSetValue Category
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("category");
+			}
+			set
+			{
+				this.OnPropertyChanging("Category");
+				this.SetAttributeValue("category", value);
+				this.OnPropertyChanged("Category");
+			}
+		}
+		
+		/// <summary>
+		/// State of the component.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("componentstate")]
+		public Microsoft.Xrm.Sdk.OptionSetValue ComponentState
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("componentstate");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the connection role.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("connectionroleid")]
+		public System.Nullable<System.Guid> ConnectionRoleId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("connectionroleid");
+			}
+			set
+			{
+				this.OnPropertyChanging("ConnectionRoleId");
+				this.SetAttributeValue("connectionroleid", value);
+				if (value.HasValue)
+				{
+					base.Id = value.Value;
+				}
+				else
+				{
+					base.Id = System.Guid.Empty;
+				}
+				this.OnPropertyChanged("ConnectionRoleId");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("connectionroleid")]
+		public override System.Guid Id
+		{
+			get
+			{
+				return base.Id;
+			}
+			set
+			{
+				this.ConnectionRoleId = value;
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the published or unpublished connection role record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("connectionroleidunique")]
+		public System.Nullable<System.Guid> ConnectionRoleIdUnique
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("connectionroleidunique");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the user who created the relationship role.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		public Microsoft.Xrm.Sdk.EntityReference CreatedBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdby");
+			}
+		}
+		
+		/// <summary>
+		/// Date and time when the connection role was created.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdon")]
+		public System.Nullable<System.DateTime> CreatedOn
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("createdon");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the delegate user who created the relationship role.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		public Microsoft.Xrm.Sdk.EntityReference CreatedOnBehalfBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// Description of the connection role.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("description")]
+		public string Description
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("description");
+			}
+			set
+			{
+				this.OnPropertyChanging("Description");
+				this.SetAttributeValue("description", value);
+				this.OnPropertyChanged("Description");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the data import or data migration that created this record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("importsequencenumber")]
+		public System.Nullable<int> ImportSequenceNumber
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("importsequencenumber");
+			}
+			set
+			{
+				this.OnPropertyChanging("ImportSequenceNumber");
+				this.SetAttributeValue("importsequencenumber", value);
+				this.OnPropertyChanged("ImportSequenceNumber");
+			}
+		}
+		
+		/// <summary>
+		/// Version in which the form is introduced.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("introducedversion")]
+		public string IntroducedVersion
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("introducedversion");
+			}
+			set
+			{
+				this.OnPropertyChanging("IntroducedVersion");
+				this.SetAttributeValue("introducedversion", value);
+				this.OnPropertyChanged("IntroducedVersion");
+			}
+		}
+		
+		/// <summary>
+		/// Information that specifies whether this component can be customized.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("iscustomizable")]
+		public Microsoft.Xrm.Sdk.BooleanManagedProperty IsCustomizable
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.BooleanManagedProperty>("iscustomizable");
+			}
+			set
+			{
+				this.OnPropertyChanging("IsCustomizable");
+				this.SetAttributeValue("iscustomizable", value);
+				this.OnPropertyChanged("IsCustomizable");
+			}
+		}
+		
+		/// <summary>
+		/// Indicates whether the solution component is part of a managed solution.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("ismanaged")]
+		public System.Nullable<bool> IsManaged
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("ismanaged");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the user who last modified the connection role.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		public Microsoft.Xrm.Sdk.EntityReference ModifiedBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedby");
+			}
+		}
+		
+		/// <summary>
+		/// Date and time when the connection role was last modified.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedon")]
+		public System.Nullable<System.DateTime> ModifiedOn
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("modifiedon");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the delegate user who modified the relationship role.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		public Microsoft.Xrm.Sdk.EntityReference ModifiedOnBehalfBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// Name of the connection role.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("name")]
+		public string Name
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("name");
+			}
+			set
+			{
+				this.OnPropertyChanging("Name");
+				this.SetAttributeValue("name", value);
+				this.OnPropertyChanged("Name");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the organization that this connection role belongs to.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("organizationid")]
+		public Microsoft.Xrm.Sdk.EntityReference OrganizationId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("organizationid");
+			}
+		}
+		
+		/// <summary>
+		/// Date and time when the record was last overwritten.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("overwritetime")]
+		public System.Nullable<System.DateTime> OverwriteTime
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("overwritetime");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the associated solution.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("solutionid")]
+		public System.Nullable<System.Guid> SolutionId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("solutionid");
+			}
+		}
+		
+		/// <summary>
+		/// Status of the connection role.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statecode")]
+		public System.Nullable<ConfigurableEntityCloner.Test.ProxyClasses.ConnectionRoleState> StateCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("statecode");
+				if ((optionSet != null))
+				{
+					return ((ConfigurableEntityCloner.Test.ProxyClasses.ConnectionRoleState)(System.Enum.ToObject(typeof(ConfigurableEntityCloner.Test.ProxyClasses.ConnectionRoleState), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("StateCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("statecode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("statecode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("StateCode");
+			}
+		}
+		
+		/// <summary>
+		/// Reason for the status of the connection role.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statuscode")]
+		public System.Nullable<ConfigurableEntityCloner.Test.ProxyClasses.connectionrole_statuscode> StatusCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("statuscode");
+				if ((optionSet != null))
+				{
+					return ((ConfigurableEntityCloner.Test.ProxyClasses.connectionrole_statuscode)(System.Enum.ToObject(typeof(ConfigurableEntityCloner.Test.ProxyClasses.connectionrole_statuscode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("StatusCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("statuscode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("statuscode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("StatusCode");
+			}
+		}
+		
+		/// <summary>
+		/// Version number of the connection role.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("versionnumber")]
+		public System.Nullable<long> VersionNumber
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N connection_role_connections1
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("connection_role_connections1")]
+		public System.Collections.Generic.IEnumerable<ConfigurableEntityCloner.Test.ProxyClasses.Connection> connection_role_connections1
+		{
+			get
+			{
+				return this.GetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Connection>("connection_role_connections1", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("connection_role_connections1");
+				this.SetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Connection>("connection_role_connections1", null, value);
+				this.OnPropertyChanged("connection_role_connections1");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N connection_role_connections2
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("connection_role_connections2")]
+		public System.Collections.Generic.IEnumerable<ConfigurableEntityCloner.Test.ProxyClasses.Connection> connection_role_connections2
+		{
+			get
+			{
+				return this.GetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Connection>("connection_role_connections2", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("connection_role_connections2");
+				this.SetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Connection>("connection_role_connections2", null, value);
+				this.OnPropertyChanged("connection_role_connections2");
+			}
+		}
+		
+		/// <summary>
+		/// N:N connectionroleassociation_association
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("connectionroleassociation_association", Microsoft.Xrm.Sdk.EntityRole.Referencing)]
+		public System.Collections.Generic.IEnumerable<ConfigurableEntityCloner.Test.ProxyClasses.ConnectionRole> Referencingconnectionroleassociation_association
+		{
+			get
+			{
+				return this.GetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.ConnectionRole>("connectionroleassociation_association", Microsoft.Xrm.Sdk.EntityRole.Referencing);
+			}
+			set
+			{
+				this.OnPropertyChanging("Referencingconnectionroleassociation_association");
+				this.SetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.ConnectionRole>("connectionroleassociation_association", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
+				this.OnPropertyChanged("Referencingconnectionroleassociation_association");
+			}
+		}
+		
+		/// <summary>
+		/// N:N connectionroleassociation_association
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("connectionroleassociation_association", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
+		public System.Collections.Generic.IEnumerable<ConfigurableEntityCloner.Test.ProxyClasses.ConnectionRole> Referencedconnectionroleassociation_association
+		{
+			get
+			{
+				return this.GetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.ConnectionRole>("connectionroleassociation_association", Microsoft.Xrm.Sdk.EntityRole.Referenced);
+			}
+			set
+			{
+				this.OnPropertyChanging("Referencedconnectionroleassociation_association");
+				this.SetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.ConnectionRole>("connectionroleassociation_association", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
+				this.OnPropertyChanged("Referencedconnectionroleassociation_association");
+			}
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.82")]
+	public enum contact_accountrolecode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DecisionMaker = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Employee = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Influencer = 3,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.82")]
+	public enum contact_address1_addresstypecode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		BillTo = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ShipTo = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Primary = 3,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Other = 4,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.82")]
+	public enum contact_address1_freighttermscode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		FOB = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NoCharge = 2,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.82")]
+	public enum contact_address1_shippingmethodcode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Airborne = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DHL = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		FedEx = 3,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		UPS = 4,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		PostalMail = 5,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		FullLoad = 6,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		WillCall = 7,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.82")]
+	public enum contact_address2_addresstypecode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DefaultValue = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.82")]
+	public enum contact_address2_freighttermscode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DefaultValue = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.82")]
+	public enum contact_address2_shippingmethodcode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DefaultValue = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.82")]
+	public enum contact_address3_addresstypecode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DefaultValue = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.82")]
+	public enum contact_address3_freighttermscode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DefaultValue = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.82")]
+	public enum contact_address3_shippingmethodcode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DefaultValue = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.82")]
+	public enum contact_customersizecode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DefaultValue = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.82")]
+	public enum contact_customertypecode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DefaultValue = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.82")]
+	public enum contact_educationcode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DefaultValue = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.82")]
+	public enum contact_familystatuscode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Single = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Married = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Divorced = 3,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Widowed = 4,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.82")]
+	public enum contact_gendercode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Male = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Female = 2,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.82")]
+	public enum contact_haschildrencode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DefaultValue = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.82")]
+	public enum contact_leadsourcecode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DefaultValue = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.82")]
+	public enum contact_paymenttermscode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Net30 = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Number_210Net30 = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Net45 = 3,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Net60 = 4,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.82")]
+	public enum contact_preferredappointmentdaycode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Sunday = 0,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Monday = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Tuesday = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Wednesday = 3,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Thursday = 4,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Friday = 5,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Saturday = 6,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.82")]
+	public enum contact_preferredappointmenttimecode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Morning = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Afternoon = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Evening = 3,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.82")]
+	public enum contact_preferredcontactmethodcode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Any = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Email = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Phone = 3,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Fax = 4,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Mail = 5,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.82")]
+	public enum contact_shippingmethodcode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DefaultValue = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.82")]
+	public enum ContactState
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Active = 0,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Inactive = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.82")]
+	public enum contact_statuscode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Active = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Inactive = 2,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.82")]
+	public enum contact_territorycode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DefaultValue = 1,
+	}
+	
+	/// <summary>
+	/// Person with whom a business unit has a relationship, such as customer, supplier, and colleague.
+	/// </summary>
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("contact")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.82")]
+	public partial class Contact : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	{
+		
+		/// <summary>
+		/// Default Constructor.
+		/// </summary>
+		public Contact() : 
+				base(EntityLogicalName)
+		{
+		}
+		
+		public const string EntityLogicalName = "contact";
+		
+		public const string EntityLogicalCollectionName = "contacts";
+		
+		public const string EntitySetName = "contacts";
+		
+		public const int EntityTypeCode = 2;
+		
+		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+		
+		public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
+		
+		private void OnPropertyChanged(string propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void OnPropertyChanging(string propertyName)
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, new System.ComponentModel.PropertyChangingEventArgs(propertyName));
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the account with which the contact is associated.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("accountid")]
+		public Microsoft.Xrm.Sdk.EntityReference AccountId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("accountid");
+			}
+		}
+		
+		/// <summary>
+		/// Select the contact's role within the company or sales process, such as decision maker, employee, or influencer.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("accountrolecode")]
+		public System.Nullable<ConfigurableEntityCloner.Test.ProxyClasses.contact_accountrolecode> AccountRoleCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("accountrolecode");
+				if ((optionSet != null))
+				{
+					return ((ConfigurableEntityCloner.Test.ProxyClasses.contact_accountrolecode)(System.Enum.ToObject(typeof(ConfigurableEntityCloner.Test.ProxyClasses.contact_accountrolecode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("AccountRoleCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("accountrolecode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("accountrolecode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("AccountRoleCode");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier for address 1.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_addressid")]
+		public System.Nullable<System.Guid> Address1_AddressId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("address1_addressid");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_AddressId");
+				this.SetAttributeValue("address1_addressid", value);
+				this.OnPropertyChanged("Address1_AddressId");
+			}
+		}
+		
+		/// <summary>
+		/// Select the primary address type.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_addresstypecode")]
+		public System.Nullable<ConfigurableEntityCloner.Test.ProxyClasses.contact_address1_addresstypecode> Address1_AddressTypeCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("address1_addresstypecode");
+				if ((optionSet != null))
+				{
+					return ((ConfigurableEntityCloner.Test.ProxyClasses.contact_address1_addresstypecode)(System.Enum.ToObject(typeof(ConfigurableEntityCloner.Test.ProxyClasses.contact_address1_addresstypecode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_AddressTypeCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("address1_addresstypecode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("address1_addresstypecode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("Address1_AddressTypeCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type the city for the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_city")]
+		public string Address1_City
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_city");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_City");
+				this.SetAttributeValue("address1_city", value);
+				this.OnPropertyChanged("Address1_City");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the complete primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_composite")]
+		public string Address1_Composite
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_composite");
+			}
+		}
+		
+		/// <summary>
+		/// Type the country or region for the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_country")]
+		public string Address1_Country
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_country");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_Country");
+				this.SetAttributeValue("address1_country", value);
+				this.OnPropertyChanged("Address1_Country");
+			}
+		}
+		
+		/// <summary>
+		/// Type the county for the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_county")]
+		public string Address1_County
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_county");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_County");
+				this.SetAttributeValue("address1_county", value);
+				this.OnPropertyChanged("Address1_County");
+			}
+		}
+		
+		/// <summary>
+		/// Type the fax number associated with the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_fax")]
+		public string Address1_Fax
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_fax");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_Fax");
+				this.SetAttributeValue("address1_fax", value);
+				this.OnPropertyChanged("Address1_Fax");
+			}
+		}
+		
+		/// <summary>
+		/// Select the freight terms for the primary address to make sure shipping orders are processed correctly.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_freighttermscode")]
+		public System.Nullable<ConfigurableEntityCloner.Test.ProxyClasses.contact_address1_freighttermscode> Address1_FreightTermsCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("address1_freighttermscode");
+				if ((optionSet != null))
+				{
+					return ((ConfigurableEntityCloner.Test.ProxyClasses.contact_address1_freighttermscode)(System.Enum.ToObject(typeof(ConfigurableEntityCloner.Test.ProxyClasses.contact_address1_freighttermscode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_FreightTermsCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("address1_freighttermscode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("address1_freighttermscode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("Address1_FreightTermsCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type the latitude value for the primary address for use in mapping and other applications.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_latitude")]
+		public System.Nullable<double> Address1_Latitude
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<double>>("address1_latitude");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_Latitude");
+				this.SetAttributeValue("address1_latitude", value);
+				this.OnPropertyChanged("Address1_Latitude");
+			}
+		}
+		
+		/// <summary>
+		/// Type the first line of the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_line1")]
+		public string Address1_Line1
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_line1");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_Line1");
+				this.SetAttributeValue("address1_line1", value);
+				this.OnPropertyChanged("Address1_Line1");
+			}
+		}
+		
+		/// <summary>
+		/// Type the second line of the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_line2")]
+		public string Address1_Line2
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_line2");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_Line2");
+				this.SetAttributeValue("address1_line2", value);
+				this.OnPropertyChanged("Address1_Line2");
+			}
+		}
+		
+		/// <summary>
+		/// Type the third line of the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_line3")]
+		public string Address1_Line3
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_line3");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_Line3");
+				this.SetAttributeValue("address1_line3", value);
+				this.OnPropertyChanged("Address1_Line3");
+			}
+		}
+		
+		/// <summary>
+		/// Type the longitude value for the primary address for use in mapping and other applications.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_longitude")]
+		public System.Nullable<double> Address1_Longitude
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<double>>("address1_longitude");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_Longitude");
+				this.SetAttributeValue("address1_longitude", value);
+				this.OnPropertyChanged("Address1_Longitude");
+			}
+		}
+		
+		/// <summary>
+		/// Type a descriptive name for the primary address, such as Corporate Headquarters.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_name")]
+		public string Address1_Name
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_name");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_Name");
+				this.SetAttributeValue("address1_name", value);
+				this.OnPropertyChanged("Address1_Name");
+			}
+		}
+		
+		/// <summary>
+		/// Type the ZIP Code or postal code for the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_postalcode")]
+		public string Address1_PostalCode
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_postalcode");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_PostalCode");
+				this.SetAttributeValue("address1_postalcode", value);
+				this.OnPropertyChanged("Address1_PostalCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type the post office box number of the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_postofficebox")]
+		public string Address1_PostOfficeBox
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_postofficebox");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_PostOfficeBox");
+				this.SetAttributeValue("address1_postofficebox", value);
+				this.OnPropertyChanged("Address1_PostOfficeBox");
+			}
+		}
+		
+		/// <summary>
+		/// Type the name of the main contact at the account's primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_primarycontactname")]
+		public string Address1_PrimaryContactName
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_primarycontactname");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_PrimaryContactName");
+				this.SetAttributeValue("address1_primarycontactname", value);
+				this.OnPropertyChanged("Address1_PrimaryContactName");
+			}
+		}
+		
+		/// <summary>
+		/// Select a shipping method for deliveries sent to this address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_shippingmethodcode")]
+		public System.Nullable<ConfigurableEntityCloner.Test.ProxyClasses.contact_address1_shippingmethodcode> Address1_ShippingMethodCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("address1_shippingmethodcode");
+				if ((optionSet != null))
+				{
+					return ((ConfigurableEntityCloner.Test.ProxyClasses.contact_address1_shippingmethodcode)(System.Enum.ToObject(typeof(ConfigurableEntityCloner.Test.ProxyClasses.contact_address1_shippingmethodcode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_ShippingMethodCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("address1_shippingmethodcode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("address1_shippingmethodcode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("Address1_ShippingMethodCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type the state or province of the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_stateorprovince")]
+		public string Address1_StateOrProvince
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_stateorprovince");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_StateOrProvince");
+				this.SetAttributeValue("address1_stateorprovince", value);
+				this.OnPropertyChanged("Address1_StateOrProvince");
+			}
+		}
+		
+		/// <summary>
+		/// Type the main phone number associated with the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_telephone1")]
+		public string Address1_Telephone1
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_telephone1");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_Telephone1");
+				this.SetAttributeValue("address1_telephone1", value);
+				this.OnPropertyChanged("Address1_Telephone1");
+			}
+		}
+		
+		/// <summary>
+		/// Type a second phone number associated with the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_telephone2")]
+		public string Address1_Telephone2
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_telephone2");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_Telephone2");
+				this.SetAttributeValue("address1_telephone2", value);
+				this.OnPropertyChanged("Address1_Telephone2");
+			}
+		}
+		
+		/// <summary>
+		/// Type a third phone number associated with the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_telephone3")]
+		public string Address1_Telephone3
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_telephone3");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_Telephone3");
+				this.SetAttributeValue("address1_telephone3", value);
+				this.OnPropertyChanged("Address1_Telephone3");
+			}
+		}
+		
+		/// <summary>
+		/// Type the UPS zone of the primary address to make sure shipping charges are calculated correctly and deliveries are made promptly, if shipped by UPS.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_upszone")]
+		public string Address1_UPSZone
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_upszone");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_UPSZone");
+				this.SetAttributeValue("address1_upszone", value);
+				this.OnPropertyChanged("Address1_UPSZone");
+			}
+		}
+		
+		/// <summary>
+		/// Select the time zone, or UTC offset, for this address so that other people can reference it when they contact someone at this address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_utcoffset")]
+		public System.Nullable<int> Address1_UTCOffset
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("address1_utcoffset");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_UTCOffset");
+				this.SetAttributeValue("address1_utcoffset", value);
+				this.OnPropertyChanged("Address1_UTCOffset");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier for address 2.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_addressid")]
+		public System.Nullable<System.Guid> Address2_AddressId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("address2_addressid");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_AddressId");
+				this.SetAttributeValue("address2_addressid", value);
+				this.OnPropertyChanged("Address2_AddressId");
+			}
+		}
+		
+		/// <summary>
+		/// Select the secondary address type.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_addresstypecode")]
+		public System.Nullable<ConfigurableEntityCloner.Test.ProxyClasses.contact_address2_addresstypecode> Address2_AddressTypeCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("address2_addresstypecode");
+				if ((optionSet != null))
+				{
+					return ((ConfigurableEntityCloner.Test.ProxyClasses.contact_address2_addresstypecode)(System.Enum.ToObject(typeof(ConfigurableEntityCloner.Test.ProxyClasses.contact_address2_addresstypecode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_AddressTypeCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("address2_addresstypecode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("address2_addresstypecode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("Address2_AddressTypeCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type the city for the secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_city")]
+		public string Address2_City
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_city");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_City");
+				this.SetAttributeValue("address2_city", value);
+				this.OnPropertyChanged("Address2_City");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the complete secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_composite")]
+		public string Address2_Composite
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_composite");
+			}
+		}
+		
+		/// <summary>
+		/// Type the country or region for the secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_country")]
+		public string Address2_Country
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_country");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_Country");
+				this.SetAttributeValue("address2_country", value);
+				this.OnPropertyChanged("Address2_Country");
+			}
+		}
+		
+		/// <summary>
+		/// Type the county for the secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_county")]
+		public string Address2_County
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_county");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_County");
+				this.SetAttributeValue("address2_county", value);
+				this.OnPropertyChanged("Address2_County");
+			}
+		}
+		
+		/// <summary>
+		/// Type the fax number associated with the secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_fax")]
+		public string Address2_Fax
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_fax");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_Fax");
+				this.SetAttributeValue("address2_fax", value);
+				this.OnPropertyChanged("Address2_Fax");
+			}
+		}
+		
+		/// <summary>
+		/// Select the freight terms for the secondary address to make sure shipping orders are processed correctly.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_freighttermscode")]
+		public System.Nullable<ConfigurableEntityCloner.Test.ProxyClasses.contact_address2_freighttermscode> Address2_FreightTermsCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("address2_freighttermscode");
+				if ((optionSet != null))
+				{
+					return ((ConfigurableEntityCloner.Test.ProxyClasses.contact_address2_freighttermscode)(System.Enum.ToObject(typeof(ConfigurableEntityCloner.Test.ProxyClasses.contact_address2_freighttermscode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_FreightTermsCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("address2_freighttermscode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("address2_freighttermscode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("Address2_FreightTermsCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type the latitude value for the secondary address for use in mapping and other applications.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_latitude")]
+		public System.Nullable<double> Address2_Latitude
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<double>>("address2_latitude");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_Latitude");
+				this.SetAttributeValue("address2_latitude", value);
+				this.OnPropertyChanged("Address2_Latitude");
+			}
+		}
+		
+		/// <summary>
+		/// Type the first line of the secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_line1")]
+		public string Address2_Line1
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_line1");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_Line1");
+				this.SetAttributeValue("address2_line1", value);
+				this.OnPropertyChanged("Address2_Line1");
+			}
+		}
+		
+		/// <summary>
+		/// Type the second line of the secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_line2")]
+		public string Address2_Line2
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_line2");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_Line2");
+				this.SetAttributeValue("address2_line2", value);
+				this.OnPropertyChanged("Address2_Line2");
+			}
+		}
+		
+		/// <summary>
+		/// Type the third line of the secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_line3")]
+		public string Address2_Line3
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_line3");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_Line3");
+				this.SetAttributeValue("address2_line3", value);
+				this.OnPropertyChanged("Address2_Line3");
+			}
+		}
+		
+		/// <summary>
+		/// Type the longitude value for the secondary address for use in mapping and other applications.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_longitude")]
+		public System.Nullable<double> Address2_Longitude
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<double>>("address2_longitude");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_Longitude");
+				this.SetAttributeValue("address2_longitude", value);
+				this.OnPropertyChanged("Address2_Longitude");
+			}
+		}
+		
+		/// <summary>
+		/// Type a descriptive name for the secondary address, such as Corporate Headquarters.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_name")]
+		public string Address2_Name
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_name");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_Name");
+				this.SetAttributeValue("address2_name", value);
+				this.OnPropertyChanged("Address2_Name");
+			}
+		}
+		
+		/// <summary>
+		/// Type the ZIP Code or postal code for the secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_postalcode")]
+		public string Address2_PostalCode
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_postalcode");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_PostalCode");
+				this.SetAttributeValue("address2_postalcode", value);
+				this.OnPropertyChanged("Address2_PostalCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type the post office box number of the secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_postofficebox")]
+		public string Address2_PostOfficeBox
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_postofficebox");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_PostOfficeBox");
+				this.SetAttributeValue("address2_postofficebox", value);
+				this.OnPropertyChanged("Address2_PostOfficeBox");
+			}
+		}
+		
+		/// <summary>
+		/// Type the name of the main contact at the account's secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_primarycontactname")]
+		public string Address2_PrimaryContactName
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_primarycontactname");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_PrimaryContactName");
+				this.SetAttributeValue("address2_primarycontactname", value);
+				this.OnPropertyChanged("Address2_PrimaryContactName");
+			}
+		}
+		
+		/// <summary>
+		/// Select a shipping method for deliveries sent to this address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_shippingmethodcode")]
+		public System.Nullable<ConfigurableEntityCloner.Test.ProxyClasses.contact_address2_shippingmethodcode> Address2_ShippingMethodCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("address2_shippingmethodcode");
+				if ((optionSet != null))
+				{
+					return ((ConfigurableEntityCloner.Test.ProxyClasses.contact_address2_shippingmethodcode)(System.Enum.ToObject(typeof(ConfigurableEntityCloner.Test.ProxyClasses.contact_address2_shippingmethodcode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_ShippingMethodCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("address2_shippingmethodcode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("address2_shippingmethodcode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("Address2_ShippingMethodCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type the state or province of the secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_stateorprovince")]
+		public string Address2_StateOrProvince
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_stateorprovince");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_StateOrProvince");
+				this.SetAttributeValue("address2_stateorprovince", value);
+				this.OnPropertyChanged("Address2_StateOrProvince");
+			}
+		}
+		
+		/// <summary>
+		/// Type the main phone number associated with the secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_telephone1")]
+		public string Address2_Telephone1
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_telephone1");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_Telephone1");
+				this.SetAttributeValue("address2_telephone1", value);
+				this.OnPropertyChanged("Address2_Telephone1");
+			}
+		}
+		
+		/// <summary>
+		/// Type a second phone number associated with the secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_telephone2")]
+		public string Address2_Telephone2
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_telephone2");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_Telephone2");
+				this.SetAttributeValue("address2_telephone2", value);
+				this.OnPropertyChanged("Address2_Telephone2");
+			}
+		}
+		
+		/// <summary>
+		/// Type a third phone number associated with the secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_telephone3")]
+		public string Address2_Telephone3
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_telephone3");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_Telephone3");
+				this.SetAttributeValue("address2_telephone3", value);
+				this.OnPropertyChanged("Address2_Telephone3");
+			}
+		}
+		
+		/// <summary>
+		/// Type the UPS zone of the secondary address to make sure shipping charges are calculated correctly and deliveries are made promptly, if shipped by UPS.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_upszone")]
+		public string Address2_UPSZone
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_upszone");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_UPSZone");
+				this.SetAttributeValue("address2_upszone", value);
+				this.OnPropertyChanged("Address2_UPSZone");
+			}
+		}
+		
+		/// <summary>
+		/// Select the time zone, or UTC offset, for this address so that other people can reference it when they contact someone at this address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_utcoffset")]
+		public System.Nullable<int> Address2_UTCOffset
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("address2_utcoffset");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_UTCOffset");
+				this.SetAttributeValue("address2_utcoffset", value);
+				this.OnPropertyChanged("Address2_UTCOffset");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier for address 3.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_addressid")]
+		public System.Nullable<System.Guid> Address3_AddressId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("address3_addressid");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_AddressId");
+				this.SetAttributeValue("address3_addressid", value);
+				this.OnPropertyChanged("Address3_AddressId");
+			}
+		}
+		
+		/// <summary>
+		/// Select the third address type.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_addresstypecode")]
+		public System.Nullable<ConfigurableEntityCloner.Test.ProxyClasses.contact_address3_addresstypecode> Address3_AddressTypeCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("address3_addresstypecode");
+				if ((optionSet != null))
+				{
+					return ((ConfigurableEntityCloner.Test.ProxyClasses.contact_address3_addresstypecode)(System.Enum.ToObject(typeof(ConfigurableEntityCloner.Test.ProxyClasses.contact_address3_addresstypecode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_AddressTypeCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("address3_addresstypecode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("address3_addresstypecode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("Address3_AddressTypeCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type the city for the 3rd address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_city")]
+		public string Address3_City
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address3_city");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_City");
+				this.SetAttributeValue("address3_city", value);
+				this.OnPropertyChanged("Address3_City");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the complete third address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_composite")]
+		public string Address3_Composite
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address3_composite");
+			}
+		}
+		
+		/// <summary>
+		/// the country or region for the 3rd address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_country")]
+		public string Address3_Country
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address3_country");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_Country");
+				this.SetAttributeValue("address3_country", value);
+				this.OnPropertyChanged("Address3_Country");
+			}
+		}
+		
+		/// <summary>
+		/// Type the county for the third address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_county")]
+		public string Address3_County
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address3_county");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_County");
+				this.SetAttributeValue("address3_county", value);
+				this.OnPropertyChanged("Address3_County");
+			}
+		}
+		
+		/// <summary>
+		/// Type the fax number associated with the third address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_fax")]
+		public string Address3_Fax
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address3_fax");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_Fax");
+				this.SetAttributeValue("address3_fax", value);
+				this.OnPropertyChanged("Address3_Fax");
+			}
+		}
+		
+		/// <summary>
+		/// Select the freight terms for the third address to make sure shipping orders are processed correctly.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_freighttermscode")]
+		public System.Nullable<ConfigurableEntityCloner.Test.ProxyClasses.contact_address3_freighttermscode> Address3_FreightTermsCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("address3_freighttermscode");
+				if ((optionSet != null))
+				{
+					return ((ConfigurableEntityCloner.Test.ProxyClasses.contact_address3_freighttermscode)(System.Enum.ToObject(typeof(ConfigurableEntityCloner.Test.ProxyClasses.contact_address3_freighttermscode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_FreightTermsCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("address3_freighttermscode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("address3_freighttermscode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("Address3_FreightTermsCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type the latitude value for the third address for use in mapping and other applications.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_latitude")]
+		public System.Nullable<double> Address3_Latitude
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<double>>("address3_latitude");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_Latitude");
+				this.SetAttributeValue("address3_latitude", value);
+				this.OnPropertyChanged("Address3_Latitude");
+			}
+		}
+		
+		/// <summary>
+		/// the first line of the 3rd address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_line1")]
+		public string Address3_Line1
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address3_line1");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_Line1");
+				this.SetAttributeValue("address3_line1", value);
+				this.OnPropertyChanged("Address3_Line1");
+			}
+		}
+		
+		/// <summary>
+		/// the second line of the 3rd address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_line2")]
+		public string Address3_Line2
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address3_line2");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_Line2");
+				this.SetAttributeValue("address3_line2", value);
+				this.OnPropertyChanged("Address3_Line2");
+			}
+		}
+		
+		/// <summary>
+		/// the third line of the 3rd address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_line3")]
+		public string Address3_Line3
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address3_line3");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_Line3");
+				this.SetAttributeValue("address3_line3", value);
+				this.OnPropertyChanged("Address3_Line3");
+			}
+		}
+		
+		/// <summary>
+		/// Type the longitude value for the third address for use in mapping and other applications.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_longitude")]
+		public System.Nullable<double> Address3_Longitude
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<double>>("address3_longitude");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_Longitude");
+				this.SetAttributeValue("address3_longitude", value);
+				this.OnPropertyChanged("Address3_Longitude");
+			}
+		}
+		
+		/// <summary>
+		/// Type a descriptive name for the third address, such as Corporate Headquarters.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_name")]
+		public string Address3_Name
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address3_name");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_Name");
+				this.SetAttributeValue("address3_name", value);
+				this.OnPropertyChanged("Address3_Name");
+			}
+		}
+		
+		/// <summary>
+		/// the ZIP Code or postal code for the 3rd address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_postalcode")]
+		public string Address3_PostalCode
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address3_postalcode");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_PostalCode");
+				this.SetAttributeValue("address3_postalcode", value);
+				this.OnPropertyChanged("Address3_PostalCode");
+			}
+		}
+		
+		/// <summary>
+		/// the post office box number of the 3rd address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_postofficebox")]
+		public string Address3_PostOfficeBox
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address3_postofficebox");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_PostOfficeBox");
+				this.SetAttributeValue("address3_postofficebox", value);
+				this.OnPropertyChanged("Address3_PostOfficeBox");
+			}
+		}
+		
+		/// <summary>
+		/// Type the name of the main contact at the account's third address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_primarycontactname")]
+		public string Address3_PrimaryContactName
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address3_primarycontactname");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_PrimaryContactName");
+				this.SetAttributeValue("address3_primarycontactname", value);
+				this.OnPropertyChanged("Address3_PrimaryContactName");
+			}
+		}
+		
+		/// <summary>
+		/// Select a shipping method for deliveries sent to this address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_shippingmethodcode")]
+		public System.Nullable<ConfigurableEntityCloner.Test.ProxyClasses.contact_address3_shippingmethodcode> Address3_ShippingMethodCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("address3_shippingmethodcode");
+				if ((optionSet != null))
+				{
+					return ((ConfigurableEntityCloner.Test.ProxyClasses.contact_address3_shippingmethodcode)(System.Enum.ToObject(typeof(ConfigurableEntityCloner.Test.ProxyClasses.contact_address3_shippingmethodcode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_ShippingMethodCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("address3_shippingmethodcode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("address3_shippingmethodcode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("Address3_ShippingMethodCode");
+			}
+		}
+		
+		/// <summary>
+		/// the state or province of the third address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_stateorprovince")]
+		public string Address3_StateOrProvince
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address3_stateorprovince");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_StateOrProvince");
+				this.SetAttributeValue("address3_stateorprovince", value);
+				this.OnPropertyChanged("Address3_StateOrProvince");
+			}
+		}
+		
+		/// <summary>
+		/// Type the main phone number associated with the third address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_telephone1")]
+		public string Address3_Telephone1
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address3_telephone1");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_Telephone1");
+				this.SetAttributeValue("address3_telephone1", value);
+				this.OnPropertyChanged("Address3_Telephone1");
+			}
+		}
+		
+		/// <summary>
+		/// Type a second phone number associated with the third address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_telephone2")]
+		public string Address3_Telephone2
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address3_telephone2");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_Telephone2");
+				this.SetAttributeValue("address3_telephone2", value);
+				this.OnPropertyChanged("Address3_Telephone2");
+			}
+		}
+		
+		/// <summary>
+		/// Type a third phone number associated with the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_telephone3")]
+		public string Address3_Telephone3
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address3_telephone3");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_Telephone3");
+				this.SetAttributeValue("address3_telephone3", value);
+				this.OnPropertyChanged("Address3_Telephone3");
+			}
+		}
+		
+		/// <summary>
+		/// Type the UPS zone of the third address to make sure shipping charges are calculated correctly and deliveries are made promptly, if shipped by UPS.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_upszone")]
+		public string Address3_UPSZone
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address3_upszone");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_UPSZone");
+				this.SetAttributeValue("address3_upszone", value);
+				this.OnPropertyChanged("Address3_UPSZone");
+			}
+		}
+		
+		/// <summary>
+		/// Select the time zone, or UTC offset, for this address so that other people can reference it when they contact someone at this address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_utcoffset")]
+		public System.Nullable<int> Address3_UTCOffset
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("address3_utcoffset");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_UTCOffset");
+				this.SetAttributeValue("address3_utcoffset", value);
+				this.OnPropertyChanged("Address3_UTCOffset");
+			}
+		}
+		
+		/// <summary>
+		/// For system use only.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("aging30")]
+		public Microsoft.Xrm.Sdk.Money Aging30
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("aging30");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the Aging 30 field converted to the system's default base currency. The calculations use the exchange rate specified in the Currencies area.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("aging30_base")]
+		public Microsoft.Xrm.Sdk.Money Aging30_Base
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("aging30_base");
+			}
+		}
+		
+		/// <summary>
+		/// For system use only.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("aging60")]
+		public Microsoft.Xrm.Sdk.Money Aging60
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("aging60");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the Aging 60 field converted to the system's default base currency. The calculations use the exchange rate specified in the Currencies area.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("aging60_base")]
+		public Microsoft.Xrm.Sdk.Money Aging60_Base
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("aging60_base");
+			}
+		}
+		
+		/// <summary>
+		/// For system use only.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("aging90")]
+		public Microsoft.Xrm.Sdk.Money Aging90
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("aging90");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the Aging 90 field converted to the system's default base currency. The calculations use the exchange rate specified in the Currencies area.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("aging90_base")]
+		public Microsoft.Xrm.Sdk.Money Aging90_Base
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("aging90_base");
+			}
+		}
+		
+		/// <summary>
+		/// Enter the date of the contact's wedding or service anniversary for use in customer gift programs or other communications.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("anniversary")]
+		public System.Nullable<System.DateTime> Anniversary
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("anniversary");
+			}
+			set
+			{
+				this.OnPropertyChanging("Anniversary");
+				this.SetAttributeValue("anniversary", value);
+				this.OnPropertyChanged("Anniversary");
+			}
+		}
+		
+		/// <summary>
+		/// Type the contact's annual income for use in profiling and financial analysis.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("annualincome")]
+		public Microsoft.Xrm.Sdk.Money AnnualIncome
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("annualincome");
+			}
+			set
+			{
+				this.OnPropertyChanging("AnnualIncome");
+				this.SetAttributeValue("annualincome", value);
+				this.OnPropertyChanged("AnnualIncome");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the Annual Income field converted to the system's default base currency. The calculations use the exchange rate specified in the Currencies area.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("annualincome_base")]
+		public Microsoft.Xrm.Sdk.Money AnnualIncome_Base
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("annualincome_base");
+			}
+		}
+		
+		/// <summary>
+		/// Type the name of the contact's assistant.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("assistantname")]
+		public string AssistantName
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("assistantname");
+			}
+			set
+			{
+				this.OnPropertyChanging("AssistantName");
+				this.SetAttributeValue("assistantname", value);
+				this.OnPropertyChanged("AssistantName");
+			}
+		}
+		
+		/// <summary>
+		/// Type the phone number for the contact's assistant.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("assistantphone")]
+		public string AssistantPhone
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("assistantphone");
+			}
+			set
+			{
+				this.OnPropertyChanging("AssistantPhone");
+				this.SetAttributeValue("assistantphone", value);
+				this.OnPropertyChanged("AssistantPhone");
+			}
+		}
+		
+		/// <summary>
+		/// Enter the contact's birthday for use in customer gift programs or other communications.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("birthdate")]
+		public System.Nullable<System.DateTime> BirthDate
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("birthdate");
+			}
+			set
+			{
+				this.OnPropertyChanging("BirthDate");
+				this.SetAttributeValue("birthdate", value);
+				this.OnPropertyChanged("BirthDate");
+			}
+		}
+		
+		/// <summary>
+		/// Type a second business phone number for this contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("business2")]
+		public string Business2
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("business2");
+			}
+			set
+			{
+				this.OnPropertyChanging("Business2");
+				this.SetAttributeValue("business2", value);
+				this.OnPropertyChanged("Business2");
+			}
+		}
+		
+		/// <summary>
+		/// Type a callback phone number for this contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("callback")]
+		public string Callback
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("callback");
+			}
+			set
+			{
+				this.OnPropertyChanging("Callback");
+				this.SetAttributeValue("callback", value);
+				this.OnPropertyChanged("Callback");
+			}
+		}
+		
+		/// <summary>
+		/// Type the names of the contact's children for reference in communications and client programs.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("childrensnames")]
+		public string ChildrensNames
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("childrensnames");
+			}
+			set
+			{
+				this.OnPropertyChanging("ChildrensNames");
+				this.SetAttributeValue("childrensnames", value);
+				this.OnPropertyChanged("ChildrensNames");
+			}
+		}
+		
+		/// <summary>
+		/// Type the company phone of the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("company")]
+		public string Company
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("company");
+			}
+			set
+			{
+				this.OnPropertyChanging("Company");
+				this.SetAttributeValue("company", value);
+				this.OnPropertyChanged("Company");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("contactid")]
+		public System.Nullable<System.Guid> ContactId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("contactid");
+			}
+			set
+			{
+				this.OnPropertyChanging("ContactId");
+				this.SetAttributeValue("contactid", value);
+				if (value.HasValue)
+				{
+					base.Id = value.Value;
+				}
+				else
+				{
+					base.Id = System.Guid.Empty;
+				}
+				this.OnPropertyChanged("ContactId");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("contactid")]
+		public override System.Guid Id
+		{
+			get
+			{
+				return base.Id;
+			}
+			set
+			{
+				this.ContactId = value;
+			}
+		}
+		
+		/// <summary>
+		/// Shows who created the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		public Microsoft.Xrm.Sdk.EntityReference CreatedBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdby");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the external party who created the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdbyexternalparty")]
+		public Microsoft.Xrm.Sdk.EntityReference CreatedByExternalParty
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdbyexternalparty");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the date and time when the record was created. The date and time are displayed in the time zone selected in Microsoft Dynamics 365 options.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdon")]
+		public System.Nullable<System.DateTime> CreatedOn
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("createdon");
+			}
+		}
+		
+		/// <summary>
+		/// Shows who created the record on behalf of another user.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		public Microsoft.Xrm.Sdk.EntityReference CreatedOnBehalfBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// Type the credit limit of the contact for reference when you address invoice and accounting issues with the customer.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("creditlimit")]
+		public Microsoft.Xrm.Sdk.Money CreditLimit
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("creditlimit");
+			}
+			set
+			{
+				this.OnPropertyChanging("CreditLimit");
+				this.SetAttributeValue("creditlimit", value);
+				this.OnPropertyChanged("CreditLimit");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the Credit Limit field converted to the system's default base currency for reporting purposes. The calculations use the exchange rate specified in the Currencies area.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("creditlimit_base")]
+		public Microsoft.Xrm.Sdk.Money CreditLimit_Base
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("creditlimit_base");
+			}
+		}
+		
+		/// <summary>
+		/// Select whether the contact is on a credit hold, for reference when addressing invoice and accounting issues.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("creditonhold")]
+		public System.Nullable<bool> CreditOnHold
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("creditonhold");
+			}
+			set
+			{
+				this.OnPropertyChanging("CreditOnHold");
+				this.SetAttributeValue("creditonhold", value);
+				this.OnPropertyChanged("CreditOnHold");
+			}
+		}
+		
+		/// <summary>
+		/// Select the size of the contact's company for segmentation and reporting purposes.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("customersizecode")]
+		public System.Nullable<ConfigurableEntityCloner.Test.ProxyClasses.contact_customersizecode> CustomerSizeCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("customersizecode");
+				if ((optionSet != null))
+				{
+					return ((ConfigurableEntityCloner.Test.ProxyClasses.contact_customersizecode)(System.Enum.ToObject(typeof(ConfigurableEntityCloner.Test.ProxyClasses.contact_customersizecode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("CustomerSizeCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("customersizecode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("customersizecode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("CustomerSizeCode");
+			}
+		}
+		
+		/// <summary>
+		/// Select the category that best describes the relationship between the contact and your organization.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("customertypecode")]
+		public System.Nullable<ConfigurableEntityCloner.Test.ProxyClasses.contact_customertypecode> CustomerTypeCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("customertypecode");
+				if ((optionSet != null))
+				{
+					return ((ConfigurableEntityCloner.Test.ProxyClasses.contact_customertypecode)(System.Enum.ToObject(typeof(ConfigurableEntityCloner.Test.ProxyClasses.contact_customertypecode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("CustomerTypeCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("customertypecode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("customertypecode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("CustomerTypeCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type the department or business unit where the contact works in the parent company or business.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("department")]
+		public string Department
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("department");
+			}
+			set
+			{
+				this.OnPropertyChanging("Department");
+				this.SetAttributeValue("department", value);
+				this.OnPropertyChanged("Department");
+			}
+		}
+		
+		/// <summary>
+		/// Type additional information to describe the contact, such as an excerpt from the company's website.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("description")]
+		public string Description
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("description");
+			}
+			set
+			{
+				this.OnPropertyChanging("Description");
+				this.SetAttributeValue("description", value);
+				this.OnPropertyChanged("Description");
+			}
+		}
+		
+		/// <summary>
+		/// Select whether the contact accepts bulk email sent through marketing campaigns or quick campaigns. If Do Not Allow is selected, the contact can be added to marketing lists, but will be excluded from the email.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("donotbulkemail")]
+		public System.Nullable<bool> DoNotBulkEMail
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("donotbulkemail");
+			}
+			set
+			{
+				this.OnPropertyChanging("DoNotBulkEMail");
+				this.SetAttributeValue("donotbulkemail", value);
+				this.OnPropertyChanged("DoNotBulkEMail");
+			}
+		}
+		
+		/// <summary>
+		/// Select whether the contact accepts bulk postal mail sent through marketing campaigns or quick campaigns. If Do Not Allow is selected, the contact can be added to marketing lists, but will be excluded from the letters.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("donotbulkpostalmail")]
+		public System.Nullable<bool> DoNotBulkPostalMail
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("donotbulkpostalmail");
+			}
+			set
+			{
+				this.OnPropertyChanging("DoNotBulkPostalMail");
+				this.SetAttributeValue("donotbulkpostalmail", value);
+				this.OnPropertyChanged("DoNotBulkPostalMail");
+			}
+		}
+		
+		/// <summary>
+		/// Select whether the contact allows direct email sent from Microsoft Dynamics 365. If Do Not Allow is selected, Microsoft Dynamics 365 will not send the email.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("donotemail")]
+		public System.Nullable<bool> DoNotEMail
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("donotemail");
+			}
+			set
+			{
+				this.OnPropertyChanging("DoNotEMail");
+				this.SetAttributeValue("donotemail", value);
+				this.OnPropertyChanged("DoNotEMail");
+			}
+		}
+		
+		/// <summary>
+		/// Select whether the contact allows faxes. If Do Not Allow is selected, the contact will be excluded from any fax activities distributed in marketing campaigns.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("donotfax")]
+		public System.Nullable<bool> DoNotFax
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("donotfax");
+			}
+			set
+			{
+				this.OnPropertyChanging("DoNotFax");
+				this.SetAttributeValue("donotfax", value);
+				this.OnPropertyChanged("DoNotFax");
+			}
+		}
+		
+		/// <summary>
+		/// Select whether the contact accepts phone calls. If Do Not Allow is selected, the contact will be excluded from any phone call activities distributed in marketing campaigns.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("donotphone")]
+		public System.Nullable<bool> DoNotPhone
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("donotphone");
+			}
+			set
+			{
+				this.OnPropertyChanging("DoNotPhone");
+				this.SetAttributeValue("donotphone", value);
+				this.OnPropertyChanged("DoNotPhone");
+			}
+		}
+		
+		/// <summary>
+		/// Select whether the contact allows direct mail. If Do Not Allow is selected, the contact will be excluded from letter activities distributed in marketing campaigns.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("donotpostalmail")]
+		public System.Nullable<bool> DoNotPostalMail
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("donotpostalmail");
+			}
+			set
+			{
+				this.OnPropertyChanging("DoNotPostalMail");
+				this.SetAttributeValue("donotpostalmail", value);
+				this.OnPropertyChanged("DoNotPostalMail");
+			}
+		}
+		
+		/// <summary>
+		/// Select whether the contact accepts marketing materials, such as brochures or catalogs. Contacts that opt out can be excluded from marketing initiatives.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("donotsendmm")]
+		public System.Nullable<bool> DoNotSendMM
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("donotsendmm");
+			}
+			set
+			{
+				this.OnPropertyChanging("DoNotSendMM");
+				this.SetAttributeValue("donotsendmm", value);
+				this.OnPropertyChanged("DoNotSendMM");
+			}
+		}
+		
+		/// <summary>
+		/// Select the contact's highest level of education for use in segmentation and analysis.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("educationcode")]
+		public System.Nullable<ConfigurableEntityCloner.Test.ProxyClasses.contact_educationcode> EducationCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("educationcode");
+				if ((optionSet != null))
+				{
+					return ((ConfigurableEntityCloner.Test.ProxyClasses.contact_educationcode)(System.Enum.ToObject(typeof(ConfigurableEntityCloner.Test.ProxyClasses.contact_educationcode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("EducationCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("educationcode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("educationcode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("EducationCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type the primary email address for the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("emailaddress1")]
+		public string EMailAddress1
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("emailaddress1");
+			}
+			set
+			{
+				this.OnPropertyChanging("EMailAddress1");
+				this.SetAttributeValue("emailaddress1", value);
+				this.OnPropertyChanged("EMailAddress1");
+			}
+		}
+		
+		/// <summary>
+		/// Type the secondary email address for the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("emailaddress2")]
+		public string EMailAddress2
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("emailaddress2");
+			}
+			set
+			{
+				this.OnPropertyChanging("EMailAddress2");
+				this.SetAttributeValue("emailaddress2", value);
+				this.OnPropertyChanged("EMailAddress2");
+			}
+		}
+		
+		/// <summary>
+		/// Type an alternate email address for the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("emailaddress3")]
+		public string EMailAddress3
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("emailaddress3");
+			}
+			set
+			{
+				this.OnPropertyChanging("EMailAddress3");
+				this.SetAttributeValue("emailaddress3", value);
+				this.OnPropertyChanged("EMailAddress3");
+			}
+		}
+		
+		/// <summary>
+		/// Type the employee ID or number for the contact for reference in orders, service cases, or other communications with the contact's organization.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("employeeid")]
+		public string EmployeeId
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("employeeid");
+			}
+			set
+			{
+				this.OnPropertyChanging("EmployeeId");
+				this.SetAttributeValue("employeeid", value);
+				this.OnPropertyChanged("EmployeeId");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the default image for the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("entityimage")]
+		public byte[] EntityImage
+		{
+			get
+			{
+				return this.GetAttributeValue<byte[]>("entityimage");
+			}
+			set
+			{
+				this.OnPropertyChanging("EntityImage");
+				this.SetAttributeValue("entityimage", value);
+				this.OnPropertyChanged("EntityImage");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("entityimage_timestamp")]
+		public System.Nullable<long> EntityImage_Timestamp
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<long>>("entityimage_timestamp");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("entityimage_url")]
+		public string EntityImage_URL
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("entityimage_url");
+			}
+		}
+		
+		/// <summary>
+		/// For internal use only.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("entityimageid")]
+		public System.Nullable<System.Guid> EntityImageId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("entityimageid");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the conversion rate of the record's currency. The exchange rate is used to convert all money fields in the record from the local currency to the system's default currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("exchangerate")]
+		public System.Nullable<decimal> ExchangeRate
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("exchangerate");
+			}
+		}
+		
+		/// <summary>
+		/// Identifier for an external user.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("externaluseridentifier")]
+		public string ExternalUserIdentifier
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("externaluseridentifier");
+			}
+			set
+			{
+				this.OnPropertyChanging("ExternalUserIdentifier");
+				this.SetAttributeValue("externaluseridentifier", value);
+				this.OnPropertyChanged("ExternalUserIdentifier");
+			}
+		}
+		
+		/// <summary>
+		/// Select the marital status of the contact for reference in follow-up phone calls and other communications.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("familystatuscode")]
+		public System.Nullable<ConfigurableEntityCloner.Test.ProxyClasses.contact_familystatuscode> FamilyStatusCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("familystatuscode");
+				if ((optionSet != null))
+				{
+					return ((ConfigurableEntityCloner.Test.ProxyClasses.contact_familystatuscode)(System.Enum.ToObject(typeof(ConfigurableEntityCloner.Test.ProxyClasses.contact_familystatuscode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("FamilyStatusCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("familystatuscode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("familystatuscode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("FamilyStatusCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type the fax number for the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("fax")]
+		public string Fax
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("fax");
+			}
+			set
+			{
+				this.OnPropertyChanging("Fax");
+				this.SetAttributeValue("fax", value);
+				this.OnPropertyChanged("Fax");
+			}
+		}
+		
+		/// <summary>
+		/// Type the contact's first name to make sure the contact is addressed correctly in sales calls, email, and marketing campaigns.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("firstname")]
+		public string FirstName
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("firstname");
+			}
+			set
+			{
+				this.OnPropertyChanging("FirstName");
+				this.SetAttributeValue("firstname", value);
+				this.OnPropertyChanged("FirstName");
+			}
+		}
+		
+		/// <summary>
+		/// Information about whether to allow following email activity like opens, attachment views and link clicks for emails sent to the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("followemail")]
+		public System.Nullable<bool> FollowEmail
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("followemail");
+			}
+			set
+			{
+				this.OnPropertyChanging("FollowEmail");
+				this.SetAttributeValue("followemail", value);
+				this.OnPropertyChanged("FollowEmail");
+			}
+		}
+		
+		/// <summary>
+		/// Type the URL for the contact's FTP site to enable users to access data and share documents.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("ftpsiteurl")]
+		public string FtpSiteUrl
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("ftpsiteurl");
+			}
+			set
+			{
+				this.OnPropertyChanging("FtpSiteUrl");
+				this.SetAttributeValue("ftpsiteurl", value);
+				this.OnPropertyChanged("FtpSiteUrl");
+			}
+		}
+		
+		/// <summary>
+		/// Combines and shows the contact's first and last names so that the full name can be displayed in views and reports.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("fullname")]
+		public string FullName
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("fullname");
+			}
+		}
+		
+		/// <summary>
+		/// Select the contact's gender to make sure the contact is addressed correctly in sales calls, email, and marketing campaigns.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("gendercode")]
+		public System.Nullable<ConfigurableEntityCloner.Test.ProxyClasses.contact_gendercode> GenderCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("gendercode");
+				if ((optionSet != null))
+				{
+					return ((ConfigurableEntityCloner.Test.ProxyClasses.contact_gendercode)(System.Enum.ToObject(typeof(ConfigurableEntityCloner.Test.ProxyClasses.contact_gendercode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("GenderCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("gendercode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("gendercode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("GenderCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type the passport number or other government ID for the contact for use in documents or reports.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("governmentid")]
+		public string GovernmentId
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("governmentid");
+			}
+			set
+			{
+				this.OnPropertyChanging("GovernmentId");
+				this.SetAttributeValue("governmentid", value);
+				this.OnPropertyChanged("GovernmentId");
+			}
+		}
+		
+		/// <summary>
+		/// Select whether the contact has any children for reference in follow-up phone calls and other communications.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("haschildrencode")]
+		public System.Nullable<ConfigurableEntityCloner.Test.ProxyClasses.contact_haschildrencode> HasChildrenCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("haschildrencode");
+				if ((optionSet != null))
+				{
+					return ((ConfigurableEntityCloner.Test.ProxyClasses.contact_haschildrencode)(System.Enum.ToObject(typeof(ConfigurableEntityCloner.Test.ProxyClasses.contact_haschildrencode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("HasChildrenCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("haschildrencode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("haschildrencode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("HasChildrenCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type a second home phone number for this contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("home2")]
+		public string Home2
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("home2");
+			}
+			set
+			{
+				this.OnPropertyChanging("Home2");
+				this.SetAttributeValue("home2", value);
+				this.OnPropertyChanged("Home2");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the data import or data migration that created this record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("importsequencenumber")]
+		public System.Nullable<int> ImportSequenceNumber
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("importsequencenumber");
+			}
+			set
+			{
+				this.OnPropertyChanging("ImportSequenceNumber");
+				this.SetAttributeValue("importsequencenumber", value);
+				this.OnPropertyChanged("ImportSequenceNumber");
+			}
+		}
+		
+		/// <summary>
+		/// Select whether the contact exists in a separate accounting or other system, such as Microsoft Dynamics GP or another ERP database, for use in integration processes.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("isbackofficecustomer")]
+		public System.Nullable<bool> IsBackofficeCustomer
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("isbackofficecustomer");
+			}
+			set
+			{
+				this.OnPropertyChanging("IsBackofficeCustomer");
+				this.SetAttributeValue("isbackofficecustomer", value);
+				this.OnPropertyChanged("IsBackofficeCustomer");
+			}
+		}
+		
+		/// <summary>
+		/// Type the job title of the contact to make sure the contact is addressed correctly in sales calls, email, and marketing campaigns.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("jobtitle")]
+		public string JobTitle
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("jobtitle");
+			}
+			set
+			{
+				this.OnPropertyChanging("JobTitle");
+				this.SetAttributeValue("jobtitle", value);
+				this.OnPropertyChanged("JobTitle");
+			}
+		}
+		
+		/// <summary>
+		/// Type the contact's last name to make sure the contact is addressed correctly in sales calls, email, and marketing campaigns.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("lastname")]
+		public string LastName
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("lastname");
+			}
+			set
+			{
+				this.OnPropertyChanging("LastName");
+				this.SetAttributeValue("lastname", value);
+				this.OnPropertyChanged("LastName");
+			}
+		}
+		
+		/// <summary>
+		/// Contains the date and time stamp of the last on hold time.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("lastonholdtime")]
+		public System.Nullable<System.DateTime> LastOnHoldTime
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("lastonholdtime");
+			}
+			set
+			{
+				this.OnPropertyChanging("LastOnHoldTime");
+				this.SetAttributeValue("lastonholdtime", value);
+				this.OnPropertyChanged("LastOnHoldTime");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the date when the contact was last included in a marketing campaign or quick campaign.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("lastusedincampaign")]
+		public System.Nullable<System.DateTime> LastUsedInCampaign
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("lastusedincampaign");
+			}
+			set
+			{
+				this.OnPropertyChanging("LastUsedInCampaign");
+				this.SetAttributeValue("lastusedincampaign", value);
+				this.OnPropertyChanged("LastUsedInCampaign");
+			}
+		}
+		
+		/// <summary>
+		/// Select the primary marketing source that directed the contact to your organization.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("leadsourcecode")]
+		public System.Nullable<ConfigurableEntityCloner.Test.ProxyClasses.contact_leadsourcecode> LeadSourceCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("leadsourcecode");
+				if ((optionSet != null))
+				{
+					return ((ConfigurableEntityCloner.Test.ProxyClasses.contact_leadsourcecode)(System.Enum.ToObject(typeof(ConfigurableEntityCloner.Test.ProxyClasses.contact_leadsourcecode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("LeadSourceCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("leadsourcecode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("leadsourcecode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("LeadSourceCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type the name of the contact's manager for use in escalating issues or other follow-up communications with the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("managername")]
+		public string ManagerName
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("managername");
+			}
+			set
+			{
+				this.OnPropertyChanging("ManagerName");
+				this.SetAttributeValue("managername", value);
+				this.OnPropertyChanged("ManagerName");
+			}
+		}
+		
+		/// <summary>
+		/// Type the phone number for the contact's manager.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("managerphone")]
+		public string ManagerPhone
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("managerphone");
+			}
+			set
+			{
+				this.OnPropertyChanging("ManagerPhone");
+				this.SetAttributeValue("managerphone", value);
+				this.OnPropertyChanged("ManagerPhone");
+			}
+		}
+		
+		/// <summary>
+		/// Whether is only for marketing
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("marketingonly")]
+		public System.Nullable<bool> MarketingOnly
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("marketingonly");
+			}
+			set
+			{
+				this.OnPropertyChanging("MarketingOnly");
+				this.SetAttributeValue("marketingonly", value);
+				this.OnPropertyChanged("MarketingOnly");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the master contact for merge.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("masterid")]
+		public Microsoft.Xrm.Sdk.EntityReference MasterId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("masterid");
+			}
+		}
+		
+		/// <summary>
+		/// Shows whether the account has been merged with a master contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("merged")]
+		public System.Nullable<bool> Merged
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("merged");
+			}
+		}
+		
+		/// <summary>
+		/// Type the contact's middle name or initial to make sure the contact is addressed correctly.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("middlename")]
+		public string MiddleName
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("middlename");
+			}
+			set
+			{
+				this.OnPropertyChanging("MiddleName");
+				this.SetAttributeValue("middlename", value);
+				this.OnPropertyChanged("MiddleName");
+			}
+		}
+		
+		/// <summary>
+		/// Type the mobile phone number for the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("mobilephone")]
+		public string MobilePhone
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("mobilephone");
+			}
+			set
+			{
+				this.OnPropertyChanging("MobilePhone");
+				this.SetAttributeValue("mobilephone", value);
+				this.OnPropertyChanged("MobilePhone");
+			}
+		}
+		
+		/// <summary>
+		/// Shows who last updated the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		public Microsoft.Xrm.Sdk.EntityReference ModifiedBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedby");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the external party who modified the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedbyexternalparty")]
+		public Microsoft.Xrm.Sdk.EntityReference ModifiedByExternalParty
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedbyexternalparty");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the date and time when the record was last updated. The date and time are displayed in the time zone selected in Microsoft Dynamics 365 options.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedon")]
+		public System.Nullable<System.DateTime> ModifiedOn
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("modifiedon");
+			}
+		}
+		
+		/// <summary>
+		/// Shows who last updated the record on behalf of another user.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		public Microsoft.Xrm.Sdk.EntityReference ModifiedOnBehalfBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// Type the contact's nickname.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("nickname")]
+		public string NickName
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("nickname");
+			}
+			set
+			{
+				this.OnPropertyChanging("NickName");
+				this.SetAttributeValue("nickname", value);
+				this.OnPropertyChanged("NickName");
+			}
+		}
+		
+		/// <summary>
+		/// Type the number of children the contact has for reference in follow-up phone calls and other communications.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("numberofchildren")]
+		public System.Nullable<int> NumberOfChildren
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("numberofchildren");
+			}
+			set
+			{
+				this.OnPropertyChanging("NumberOfChildren");
+				this.SetAttributeValue("numberofchildren", value);
+				this.OnPropertyChanged("NumberOfChildren");
+			}
+		}
+		
+		/// <summary>
+		/// Shows how long, in minutes, that the record was on hold.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("onholdtime")]
+		public System.Nullable<int> OnHoldTime
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("onholdtime");
+			}
+		}
+		
+		/// <summary>
+		/// Date and time that the record was migrated.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("overriddencreatedon")]
+		public System.Nullable<System.DateTime> OverriddenCreatedOn
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("overriddencreatedon");
+			}
+			set
+			{
+				this.OnPropertyChanging("OverriddenCreatedOn");
+				this.SetAttributeValue("overriddencreatedon", value);
+				this.OnPropertyChanged("OverriddenCreatedOn");
+			}
+		}
+		
+		/// <summary>
+		/// Enter the user or team who is assigned to manage the record. This field is updated every time the record is assigned to a different user.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("ownerid")]
+		public Microsoft.Xrm.Sdk.EntityReference OwnerId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("ownerid");
+			}
+			set
+			{
+				this.OnPropertyChanging("OwnerId");
+				this.SetAttributeValue("ownerid", value);
+				this.OnPropertyChanged("OwnerId");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the business unit that owns the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningbusinessunit")]
+		public Microsoft.Xrm.Sdk.EntityReference OwningBusinessUnit
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owningbusinessunit");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the team who owns the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		public Microsoft.Xrm.Sdk.EntityReference OwningTeam
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owningteam");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the user who owns the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		public Microsoft.Xrm.Sdk.EntityReference OwningUser
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owninguser");
+			}
+		}
+		
+		/// <summary>
+		/// Type the pager number for the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("pager")]
+		public string Pager
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("pager");
+			}
+			set
+			{
+				this.OnPropertyChanging("Pager");
+				this.SetAttributeValue("pager", value);
+				this.OnPropertyChanged("Pager");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the parent contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("parentcontactid")]
+		public Microsoft.Xrm.Sdk.EntityReference ParentContactId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("parentcontactid");
+			}
+		}
+		
+		/// <summary>
+		/// Select the parent account or parent contact for the contact to provide a quick link to additional details, such as financial information, activities, and opportunities.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("parentcustomerid")]
+		public Microsoft.Xrm.Sdk.EntityReference ParentCustomerId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("parentcustomerid");
+			}
+			set
+			{
+				this.OnPropertyChanging("ParentCustomerId");
+				this.SetAttributeValue("parentcustomerid", value);
+				this.OnPropertyChanged("ParentCustomerId");
+			}
+		}
+		
+		/// <summary>
+		/// Shows whether the contact participates in workflow rules.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("participatesinworkflow")]
+		public System.Nullable<bool> ParticipatesInWorkflow
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("participatesinworkflow");
+			}
+			set
+			{
+				this.OnPropertyChanging("ParticipatesInWorkflow");
+				this.SetAttributeValue("participatesinworkflow", value);
+				this.OnPropertyChanged("ParticipatesInWorkflow");
+			}
+		}
+		
+		/// <summary>
+		/// Select the payment terms to indicate when the customer needs to pay the total amount.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("paymenttermscode")]
+		public System.Nullable<ConfigurableEntityCloner.Test.ProxyClasses.contact_paymenttermscode> PaymentTermsCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("paymenttermscode");
+				if ((optionSet != null))
+				{
+					return ((ConfigurableEntityCloner.Test.ProxyClasses.contact_paymenttermscode)(System.Enum.ToObject(typeof(ConfigurableEntityCloner.Test.ProxyClasses.contact_paymenttermscode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("PaymentTermsCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("paymenttermscode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("paymenttermscode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("PaymentTermsCode");
+			}
+		}
+		
+		/// <summary>
+		/// Select the preferred day of the week for service appointments.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("preferredappointmentdaycode")]
+		public System.Nullable<ConfigurableEntityCloner.Test.ProxyClasses.contact_preferredappointmentdaycode> PreferredAppointmentDayCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("preferredappointmentdaycode");
+				if ((optionSet != null))
+				{
+					return ((ConfigurableEntityCloner.Test.ProxyClasses.contact_preferredappointmentdaycode)(System.Enum.ToObject(typeof(ConfigurableEntityCloner.Test.ProxyClasses.contact_preferredappointmentdaycode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("PreferredAppointmentDayCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("preferredappointmentdaycode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("preferredappointmentdaycode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("PreferredAppointmentDayCode");
+			}
+		}
+		
+		/// <summary>
+		/// Select the preferred time of day for service appointments.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("preferredappointmenttimecode")]
+		public System.Nullable<ConfigurableEntityCloner.Test.ProxyClasses.contact_preferredappointmenttimecode> PreferredAppointmentTimeCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("preferredappointmenttimecode");
+				if ((optionSet != null))
+				{
+					return ((ConfigurableEntityCloner.Test.ProxyClasses.contact_preferredappointmenttimecode)(System.Enum.ToObject(typeof(ConfigurableEntityCloner.Test.ProxyClasses.contact_preferredappointmenttimecode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("PreferredAppointmentTimeCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("preferredappointmenttimecode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("preferredappointmenttimecode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("PreferredAppointmentTimeCode");
+			}
+		}
+		
+		/// <summary>
+		/// Select the preferred method of contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("preferredcontactmethodcode")]
+		public System.Nullable<ConfigurableEntityCloner.Test.ProxyClasses.contact_preferredcontactmethodcode> PreferredContactMethodCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("preferredcontactmethodcode");
+				if ((optionSet != null))
+				{
+					return ((ConfigurableEntityCloner.Test.ProxyClasses.contact_preferredcontactmethodcode)(System.Enum.ToObject(typeof(ConfigurableEntityCloner.Test.ProxyClasses.contact_preferredcontactmethodcode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("PreferredContactMethodCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("preferredcontactmethodcode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("preferredcontactmethodcode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("PreferredContactMethodCode");
+			}
+		}
+		
+		/// <summary>
+		/// Choose the regular or preferred customer service representative for reference when scheduling service activities for the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("preferredsystemuserid")]
+		public Microsoft.Xrm.Sdk.EntityReference PreferredSystemUserId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("preferredsystemuserid");
+			}
+			set
+			{
+				this.OnPropertyChanging("PreferredSystemUserId");
+				this.SetAttributeValue("preferredsystemuserid", value);
+				this.OnPropertyChanged("PreferredSystemUserId");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the ID of the process.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("processid")]
+		public System.Nullable<System.Guid> ProcessId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("processid");
+			}
+			set
+			{
+				this.OnPropertyChanging("ProcessId");
+				this.SetAttributeValue("processid", value);
+				this.OnPropertyChanged("ProcessId");
+			}
+		}
+		
+		/// <summary>
+		/// Type the salutation of the contact to make sure the contact is addressed correctly in sales calls, email messages, and marketing campaigns.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("salutation")]
+		public string Salutation
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("salutation");
+			}
+			set
+			{
+				this.OnPropertyChanging("Salutation");
+				this.SetAttributeValue("salutation", value);
+				this.OnPropertyChanged("Salutation");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier for Idea associated with Contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("sample_contributorsid")]
+		public Microsoft.Xrm.Sdk.EntityReference sample_ContributorsId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("sample_contributorsid");
+			}
+			set
+			{
+				this.OnPropertyChanging("sample_ContributorsId");
+				this.SetAttributeValue("sample_contributorsid", value);
+				this.OnPropertyChanged("sample_ContributorsId");
+			}
+		}
+		
+		/// <summary>
+		/// Select a shipping method for deliveries sent to this address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("shippingmethodcode")]
+		public System.Nullable<ConfigurableEntityCloner.Test.ProxyClasses.contact_shippingmethodcode> ShippingMethodCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("shippingmethodcode");
+				if ((optionSet != null))
+				{
+					return ((ConfigurableEntityCloner.Test.ProxyClasses.contact_shippingmethodcode)(System.Enum.ToObject(typeof(ConfigurableEntityCloner.Test.ProxyClasses.contact_shippingmethodcode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("ShippingMethodCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("shippingmethodcode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("shippingmethodcode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("ShippingMethodCode");
+			}
+		}
+		
+		/// <summary>
+		/// Choose the service level agreement (SLA) that you want to apply to the Contact record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("slaid")]
+		public Microsoft.Xrm.Sdk.EntityReference SLAId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("slaid");
+			}
+			set
+			{
+				this.OnPropertyChanging("SLAId");
+				this.SetAttributeValue("slaid", value);
+				this.OnPropertyChanged("SLAId");
+			}
+		}
+		
+		/// <summary>
+		/// Last SLA that was applied to this case. This field is for internal use only.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("slainvokedid")]
+		public Microsoft.Xrm.Sdk.EntityReference SLAInvokedId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("slainvokedid");
+			}
+		}
+		
+		/// <summary>
+		/// Type the name of the contact's spouse or partner for reference during calls, events, or other communications with the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("spousesname")]
+		public string SpousesName
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("spousesname");
+			}
+			set
+			{
+				this.OnPropertyChanging("SpousesName");
+				this.SetAttributeValue("spousesname", value);
+				this.OnPropertyChanged("SpousesName");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the ID of the stage.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("stageid")]
+		public System.Nullable<System.Guid> StageId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("stageid");
+			}
+			set
+			{
+				this.OnPropertyChanging("StageId");
+				this.SetAttributeValue("stageid", value);
+				this.OnPropertyChanged("StageId");
+			}
+		}
+		
+		/// <summary>
+		/// Shows whether the contact is active or inactive. Inactive contacts are read-only and can't be edited unless they are reactivated.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statecode")]
+		public System.Nullable<ConfigurableEntityCloner.Test.ProxyClasses.ContactState> StateCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("statecode");
+				if ((optionSet != null))
+				{
+					return ((ConfigurableEntityCloner.Test.ProxyClasses.ContactState)(System.Enum.ToObject(typeof(ConfigurableEntityCloner.Test.ProxyClasses.ContactState), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("StateCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("statecode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("statecode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("StateCode");
+			}
+		}
+		
+		/// <summary>
+		/// Select the contact's status.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statuscode")]
+		public System.Nullable<ConfigurableEntityCloner.Test.ProxyClasses.contact_statuscode> StatusCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("statuscode");
+				if ((optionSet != null))
+				{
+					return ((ConfigurableEntityCloner.Test.ProxyClasses.contact_statuscode)(System.Enum.ToObject(typeof(ConfigurableEntityCloner.Test.ProxyClasses.contact_statuscode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("StatusCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("statuscode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("statuscode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("StatusCode");
+			}
+		}
+		
+		/// <summary>
+		/// For internal use only.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("subscriptionid")]
+		public System.Nullable<System.Guid> SubscriptionId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("subscriptionid");
+			}
+			set
+			{
+				this.OnPropertyChanging("SubscriptionId");
+				this.SetAttributeValue("subscriptionid", value);
+				this.OnPropertyChanged("SubscriptionId");
+			}
+		}
+		
+		/// <summary>
+		/// Type the suffix used in the contact's name, such as Jr. or Sr. to make sure the contact is addressed correctly in sales calls, email, and marketing campaigns.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("suffix")]
+		public string Suffix
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("suffix");
+			}
+			set
+			{
+				this.OnPropertyChanging("Suffix");
+				this.SetAttributeValue("suffix", value);
+				this.OnPropertyChanged("Suffix");
+			}
+		}
+		
+		/// <summary>
+		/// Type the main phone number for this contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("telephone1")]
+		public string Telephone1
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("telephone1");
+			}
+			set
+			{
+				this.OnPropertyChanging("Telephone1");
+				this.SetAttributeValue("telephone1", value);
+				this.OnPropertyChanged("Telephone1");
+			}
+		}
+		
+		/// <summary>
+		/// Type a second phone number for this contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("telephone2")]
+		public string Telephone2
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("telephone2");
+			}
+			set
+			{
+				this.OnPropertyChanging("Telephone2");
+				this.SetAttributeValue("telephone2", value);
+				this.OnPropertyChanged("Telephone2");
+			}
+		}
+		
+		/// <summary>
+		/// Type a third phone number for this contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("telephone3")]
+		public string Telephone3
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("telephone3");
+			}
+			set
+			{
+				this.OnPropertyChanging("Telephone3");
+				this.SetAttributeValue("telephone3", value);
+				this.OnPropertyChanged("Telephone3");
+			}
+		}
+		
+		/// <summary>
+		/// Select a region or territory for the contact for use in segmentation and analysis.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("territorycode")]
+		public System.Nullable<ConfigurableEntityCloner.Test.ProxyClasses.contact_territorycode> TerritoryCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("territorycode");
+				if ((optionSet != null))
+				{
+					return ((ConfigurableEntityCloner.Test.ProxyClasses.contact_territorycode)(System.Enum.ToObject(typeof(ConfigurableEntityCloner.Test.ProxyClasses.contact_territorycode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("TerritoryCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("territorycode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("territorycode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("TerritoryCode");
+			}
+		}
+		
+		/// <summary>
+		/// Total time spent for emails (read and write) and meetings by me in relation to the contact record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("timespentbymeonemailandmeetings")]
+		public string TimeSpentByMeOnEmailAndMeetings
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("timespentbymeonemailandmeetings");
+			}
+		}
+		
+		/// <summary>
+		/// For internal use only.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("timezoneruleversionnumber")]
+		public System.Nullable<int> TimeZoneRuleVersionNumber
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("timezoneruleversionnumber");
+			}
+			set
+			{
+				this.OnPropertyChanging("TimeZoneRuleVersionNumber");
+				this.SetAttributeValue("timezoneruleversionnumber", value);
+				this.OnPropertyChanged("TimeZoneRuleVersionNumber");
+			}
+		}
+		
+		/// <summary>
+		/// Choose the local currency for the record to make sure budgets are reported in the correct currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("transactioncurrencyid")]
+		public Microsoft.Xrm.Sdk.EntityReference TransactionCurrencyId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("transactioncurrencyid");
+			}
+			set
+			{
+				this.OnPropertyChanging("TransactionCurrencyId");
+				this.SetAttributeValue("transactioncurrencyid", value);
+				this.OnPropertyChanged("TransactionCurrencyId");
+			}
+		}
+		
+		/// <summary>
+		/// For internal use only.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("traversedpath")]
+		public string TraversedPath
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("traversedpath");
+			}
+			set
+			{
+				this.OnPropertyChanging("TraversedPath");
+				this.SetAttributeValue("traversedpath", value);
+				this.OnPropertyChanged("TraversedPath");
+			}
+		}
+		
+		/// <summary>
+		/// Time zone code that was in use when the record was created.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("utcconversiontimezonecode")]
+		public System.Nullable<int> UTCConversionTimeZoneCode
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("utcconversiontimezonecode");
+			}
+			set
+			{
+				this.OnPropertyChanging("UTCConversionTimeZoneCode");
+				this.SetAttributeValue("utcconversiontimezonecode", value);
+				this.OnPropertyChanged("UTCConversionTimeZoneCode");
+			}
+		}
+		
+		/// <summary>
+		/// Version number of the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("versionnumber")]
+		public System.Nullable<long> VersionNumber
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// Type the contact's professional or personal website or blog URL.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("websiteurl")]
+		public string WebSiteUrl
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("websiteurl");
+			}
+			set
+			{
+				this.OnPropertyChanging("WebSiteUrl");
+				this.SetAttributeValue("websiteurl", value);
+				this.OnPropertyChanged("WebSiteUrl");
+			}
+		}
+		
+		/// <summary>
+		/// Type the phonetic spelling of the contact's first name, if the name is specified in Japanese, to make sure the name is pronounced correctly in phone calls with the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("yomifirstname")]
+		public string YomiFirstName
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("yomifirstname");
+			}
+			set
+			{
+				this.OnPropertyChanging("YomiFirstName");
+				this.SetAttributeValue("yomifirstname", value);
+				this.OnPropertyChanged("YomiFirstName");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the combined Yomi first and last names of the contact so that the full phonetic name can be displayed in views and reports.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("yomifullname")]
+		public string YomiFullName
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("yomifullname");
+			}
+		}
+		
+		/// <summary>
+		/// Type the phonetic spelling of the contact's last name, if the name is specified in Japanese, to make sure the name is pronounced correctly in phone calls with the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("yomilastname")]
+		public string YomiLastName
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("yomilastname");
+			}
+			set
+			{
+				this.OnPropertyChanging("YomiLastName");
+				this.SetAttributeValue("yomilastname", value);
+				this.OnPropertyChanged("YomiLastName");
+			}
+		}
+		
+		/// <summary>
+		/// Type the phonetic spelling of the contact's middle name, if the name is specified in Japanese, to make sure the name is pronounced correctly in phone calls with the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("yomimiddlename")]
+		public string YomiMiddleName
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("yomimiddlename");
+			}
+			set
+			{
+				this.OnPropertyChanging("YomiMiddleName");
+				this.SetAttributeValue("yomimiddlename", value);
+				this.OnPropertyChanged("YomiMiddleName");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N account_primary_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_primary_contact")]
+		public System.Collections.Generic.IEnumerable<ConfigurableEntityCloner.Test.ProxyClasses.Account> account_primary_contact
+		{
+			get
+			{
+				return this.GetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Account>("account_primary_contact", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("account_primary_contact");
+				this.SetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Account>("account_primary_contact", null, value);
+				this.OnPropertyChanged("account_primary_contact");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N Contact_Annotation
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("Contact_Annotation")]
+		public System.Collections.Generic.IEnumerable<ConfigurableEntityCloner.Test.ProxyClasses.Annotation> Contact_Annotation
+		{
+			get
+			{
+				return this.GetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Annotation>("Contact_Annotation", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("Contact_Annotation");
+				this.SetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Annotation>("Contact_Annotation", null, value);
+				this.OnPropertyChanged("Contact_Annotation");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N contact_connections1
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_connections1")]
+		public System.Collections.Generic.IEnumerable<ConfigurableEntityCloner.Test.ProxyClasses.Connection> contact_connections1
+		{
+			get
+			{
+				return this.GetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Connection>("contact_connections1", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("contact_connections1");
+				this.SetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Connection>("contact_connections1", null, value);
+				this.OnPropertyChanged("contact_connections1");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N contact_connections2
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_connections2")]
+		public System.Collections.Generic.IEnumerable<ConfigurableEntityCloner.Test.ProxyClasses.Connection> contact_connections2
+		{
+			get
+			{
+				return this.GetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Connection>("contact_connections2", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("contact_connections2");
+				this.SetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Connection>("contact_connections2", null, value);
+				this.OnPropertyChanged("contact_connections2");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N contact_customer_contacts
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_customer_contacts", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
+		public System.Collections.Generic.IEnumerable<ConfigurableEntityCloner.Test.ProxyClasses.Contact> Referencedcontact_customer_contacts
+		{
+			get
+			{
+				return this.GetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Contact>("contact_customer_contacts", Microsoft.Xrm.Sdk.EntityRole.Referenced);
+			}
+			set
+			{
+				this.OnPropertyChanging("Referencedcontact_customer_contacts");
+				this.SetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Contact>("contact_customer_contacts", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
+				this.OnPropertyChanged("Referencedcontact_customer_contacts");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N contact_master_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_master_contact", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
+		public System.Collections.Generic.IEnumerable<ConfigurableEntityCloner.Test.ProxyClasses.Contact> Referencedcontact_master_contact
+		{
+			get
+			{
+				return this.GetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Contact>("contact_master_contact", Microsoft.Xrm.Sdk.EntityRole.Referenced);
+			}
+			set
+			{
+				this.OnPropertyChanging("Referencedcontact_master_contact");
+				this.SetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Contact>("contact_master_contact", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
+				this.OnPropertyChanged("Referencedcontact_master_contact");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N Contact_Phonecalls
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("Contact_Phonecalls")]
+		public System.Collections.Generic.IEnumerable<ConfigurableEntityCloner.Test.ProxyClasses.PhoneCall> Contact_Phonecalls
+		{
+			get
+			{
+				return this.GetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.PhoneCall>("Contact_Phonecalls", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("Contact_Phonecalls");
+				this.SetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.PhoneCall>("Contact_Phonecalls", null, value);
+				this.OnPropertyChanged("Contact_Phonecalls");
+			}
+		}
+		
+		/// <summary>
+		/// N:N new_account_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("new_account_contact")]
+		public System.Collections.Generic.IEnumerable<ConfigurableEntityCloner.Test.ProxyClasses.Account> new_account_contact
+		{
+			get
+			{
+				return this.GetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Account>("new_account_contact", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("new_account_contact");
+				this.SetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Account>("new_account_contact", null, value);
+				this.OnPropertyChanged("new_account_contact");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 contact_customer_accounts
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("parentcustomerid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_customer_accounts")]
+		public ConfigurableEntityCloner.Test.ProxyClasses.Account contact_customer_accounts
+		{
+			get
+			{
+				return this.GetRelatedEntity<ConfigurableEntityCloner.Test.ProxyClasses.Account>("contact_customer_accounts", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("contact_customer_accounts");
+				this.SetRelatedEntity<ConfigurableEntityCloner.Test.ProxyClasses.Account>("contact_customer_accounts", null, value);
+				this.OnPropertyChanged("contact_customer_accounts");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 contact_customer_contacts
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("parentcustomerid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_customer_contacts", Microsoft.Xrm.Sdk.EntityRole.Referencing)]
+		public ConfigurableEntityCloner.Test.ProxyClasses.Contact Referencingcontact_customer_contacts
+		{
+			get
+			{
+				return this.GetRelatedEntity<ConfigurableEntityCloner.Test.ProxyClasses.Contact>("contact_customer_contacts", Microsoft.Xrm.Sdk.EntityRole.Referencing);
+			}
+			set
+			{
+				this.OnPropertyChanging("Referencingcontact_customer_contacts");
+				this.SetRelatedEntity<ConfigurableEntityCloner.Test.ProxyClasses.Contact>("contact_customer_contacts", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
+				this.OnPropertyChanged("Referencingcontact_customer_contacts");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 contact_master_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("masterid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_master_contact", Microsoft.Xrm.Sdk.EntityRole.Referencing)]
+		public ConfigurableEntityCloner.Test.ProxyClasses.Contact Referencingcontact_master_contact
+		{
+			get
+			{
+				return this.GetRelatedEntity<ConfigurableEntityCloner.Test.ProxyClasses.Contact>("contact_master_contact", Microsoft.Xrm.Sdk.EntityRole.Referencing);
 			}
 		}
 	}
@@ -4320,6 +10671,1112 @@ namespace ConfigurableEntityCloner.Test.ProxyClasses
 		}
 	}
 	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.82")]
+	public enum phonecall_prioritycode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Low = 0,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Normal = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		High = 2,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.82")]
+	public enum PhoneCallState
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Open = 0,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Completed = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Canceled = 2,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.82")]
+	public enum phonecall_statuscode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Open = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Made = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Canceled = 3,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Received = 4,
+	}
+	
+	/// <summary>
+	/// Activity to track a telephone call.
+	/// </summary>
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("phonecall")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.82")]
+	public partial class PhoneCall : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	{
+		
+		/// <summary>
+		/// Default Constructor.
+		/// </summary>
+		public PhoneCall() : 
+				base(EntityLogicalName)
+		{
+		}
+		
+		public const string EntityLogicalName = "phonecall";
+		
+		public const string EntityLogicalCollectionName = "phonecalls";
+		
+		public const string EntitySetName = "phonecalls";
+		
+		public const int EntityTypeCode = 4210;
+		
+		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+		
+		public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
+		
+		private void OnPropertyChanged(string propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void OnPropertyChanging(string propertyName)
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, new System.ComponentModel.PropertyChangingEventArgs(propertyName));
+			}
+		}
+		
+		/// <summary>
+		/// For internal use only.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("activityadditionalparams")]
+		public string ActivityAdditionalParams
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("activityadditionalparams");
+			}
+			set
+			{
+				this.OnPropertyChanging("ActivityAdditionalParams");
+				this.SetAttributeValue("activityadditionalparams", value);
+				this.OnPropertyChanged("ActivityAdditionalParams");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the phone call activity.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("activityid")]
+		public System.Nullable<System.Guid> ActivityId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("activityid");
+			}
+			set
+			{
+				this.OnPropertyChanging("ActivityId");
+				this.SetAttributeValue("activityid", value);
+				if (value.HasValue)
+				{
+					base.Id = value.Value;
+				}
+				else
+				{
+					base.Id = System.Guid.Empty;
+				}
+				this.OnPropertyChanged("ActivityId");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("activityid")]
+		public override System.Guid Id
+		{
+			get
+			{
+				return base.Id;
+			}
+			set
+			{
+				this.ActivityId = value;
+			}
+		}
+		
+		/// <summary>
+		/// Shows the type of activity.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("activitytypecode")]
+		public string ActivityTypeCode
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("activitytypecode");
+			}
+		}
+		
+		/// <summary>
+		/// Type the number of minutes spent on the phone call. The duration is used in reporting.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("actualdurationminutes")]
+		public System.Nullable<int> ActualDurationMinutes
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("actualdurationminutes");
+			}
+			set
+			{
+				this.OnPropertyChanging("ActualDurationMinutes");
+				this.SetAttributeValue("actualdurationminutes", value);
+				this.OnPropertyChanged("ActualDurationMinutes");
+			}
+		}
+		
+		/// <summary>
+		/// Enter the actual end date and time of the phone call. By default, it displays the date and time when the activity was completed or canceled, but can be edited to capture the actual duration of the phone call.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("actualend")]
+		public System.Nullable<System.DateTime> ActualEnd
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("actualend");
+			}
+			set
+			{
+				this.OnPropertyChanging("ActualEnd");
+				this.SetAttributeValue("actualend", value);
+				this.OnPropertyChanged("ActualEnd");
+			}
+		}
+		
+		/// <summary>
+		/// Enter the actual start date and time for the phone call. By default, it displays the date and time when the activity was created, but can be edited to capture the actual duration of the phone call.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("actualstart")]
+		public System.Nullable<System.DateTime> ActualStart
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("actualstart");
+			}
+			set
+			{
+				this.OnPropertyChanging("ActualStart");
+				this.SetAttributeValue("actualstart", value);
+				this.OnPropertyChanged("ActualStart");
+			}
+		}
+		
+		/// <summary>
+		/// Type a category to identify the phone call type, such as lead gathering or customer follow-up, to tie the phone call to a business group or function.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("category")]
+		public string Category
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("category");
+			}
+			set
+			{
+				this.OnPropertyChanging("Category");
+				this.SetAttributeValue("category", value);
+				this.OnPropertyChanged("Category");
+			}
+		}
+		
+		/// <summary>
+		/// Shows who created the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		public Microsoft.Xrm.Sdk.EntityReference CreatedBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdby");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the date and time when the record was created. The date and time are displayed in the time zone selected in Microsoft Dynamics 365 options.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdon")]
+		public System.Nullable<System.DateTime> CreatedOn
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("createdon");
+			}
+		}
+		
+		/// <summary>
+		/// Shows who created the record on behalf of another user.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		public Microsoft.Xrm.Sdk.EntityReference CreatedOnBehalfBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// Type additional information to describe the phone call, such as the primary message or the products and services discussed.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("description")]
+		public string Description
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("description");
+			}
+			set
+			{
+				this.OnPropertyChanging("Description");
+				this.SetAttributeValue("description", value);
+				this.OnPropertyChanged("Description");
+			}
+		}
+		
+		/// <summary>
+		/// Select the direction of the phone call as incoming or outbound.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("directioncode")]
+		public System.Nullable<bool> DirectionCode
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("directioncode");
+			}
+			set
+			{
+				this.OnPropertyChanging("DirectionCode");
+				this.SetAttributeValue("directioncode", value);
+				this.OnPropertyChanged("DirectionCode");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the conversion rate of the record's currency. The exchange rate is used to convert all money fields in the record from the local currency to the system's default currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("exchangerate")]
+		public System.Nullable<decimal> ExchangeRate
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("exchangerate");
+			}
+		}
+		
+		/// <summary>
+		/// Enter the account, contact, lead, or user who made the phone call.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("from")]
+		public System.Collections.Generic.IEnumerable<Microsoft.Xrm.Sdk.Entity> From
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.EntityCollection collection = this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityCollection>("from");
+				if (((collection != null) 
+							&& (collection.Entities != null)))
+				{
+					return System.Linq.Enumerable.Cast<Microsoft.Xrm.Sdk.Entity>(collection.Entities);
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("From");
+				if ((value == null))
+				{
+					this.SetAttributeValue("from", value);
+				}
+				else
+				{
+					this.SetAttributeValue("from", new Microsoft.Xrm.Sdk.EntityCollection(new System.Collections.Generic.List<Microsoft.Xrm.Sdk.Entity>(value)));
+				}
+				this.OnPropertyChanged("From");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the data import or data migration that created this record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("importsequencenumber")]
+		public System.Nullable<int> ImportSequenceNumber
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("importsequencenumber");
+			}
+			set
+			{
+				this.OnPropertyChanging("ImportSequenceNumber");
+				this.SetAttributeValue("importsequencenumber", value);
+				this.OnPropertyChanged("ImportSequenceNumber");
+			}
+		}
+		
+		/// <summary>
+		/// Information which specifies whether the phone call activity was billed as part of resolving a case.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("isbilled")]
+		public System.Nullable<bool> IsBilled
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("isbilled");
+			}
+			set
+			{
+				this.OnPropertyChanging("IsBilled");
+				this.SetAttributeValue("isbilled", value);
+				this.OnPropertyChanged("IsBilled");
+			}
+		}
+		
+		/// <summary>
+		/// Information regarding whether the activity is a regular activity type or event type.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("isregularactivity")]
+		public System.Nullable<bool> IsRegularActivity
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("isregularactivity");
+			}
+		}
+		
+		/// <summary>
+		/// Indication which specifies if the phone call activity was created by a workflow rule.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("isworkflowcreated")]
+		public System.Nullable<bool> IsWorkflowCreated
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("isworkflowcreated");
+			}
+			set
+			{
+				this.OnPropertyChanging("IsWorkflowCreated");
+				this.SetAttributeValue("isworkflowcreated", value);
+				this.OnPropertyChanged("IsWorkflowCreated");
+			}
+		}
+		
+		/// <summary>
+		/// Contains the date and time stamp of the last on hold time.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("lastonholdtime")]
+		public System.Nullable<System.DateTime> LastOnHoldTime
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("lastonholdtime");
+			}
+			set
+			{
+				this.OnPropertyChanging("LastOnHoldTime");
+				this.SetAttributeValue("lastonholdtime", value);
+				this.OnPropertyChanged("LastOnHoldTime");
+			}
+		}
+		
+		/// <summary>
+		/// Select whether a voice mail was left for the person.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("leftvoicemail")]
+		public System.Nullable<bool> LeftVoiceMail
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("leftvoicemail");
+			}
+			set
+			{
+				this.OnPropertyChanging("LeftVoiceMail");
+				this.SetAttributeValue("leftvoicemail", value);
+				this.OnPropertyChanged("LeftVoiceMail");
+			}
+		}
+		
+		/// <summary>
+		/// Shows who last updated the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		public Microsoft.Xrm.Sdk.EntityReference ModifiedBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedby");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the date and time when the record was last updated. The date and time are displayed in the time zone selected in Microsoft Dynamics 365 options.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedon")]
+		public System.Nullable<System.DateTime> ModifiedOn
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("modifiedon");
+			}
+		}
+		
+		/// <summary>
+		/// Shows who last updated the record on behalf of another user.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		public Microsoft.Xrm.Sdk.EntityReference ModifiedOnBehalfBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// Shows how long, in minutes, that the record was on hold.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("onholdtime")]
+		public System.Nullable<int> OnHoldTime
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("onholdtime");
+			}
+		}
+		
+		/// <summary>
+		/// Date and time that the record was migrated.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("overriddencreatedon")]
+		public System.Nullable<System.DateTime> OverriddenCreatedOn
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("overriddencreatedon");
+			}
+			set
+			{
+				this.OnPropertyChanging("OverriddenCreatedOn");
+				this.SetAttributeValue("overriddencreatedon", value);
+				this.OnPropertyChanged("OverriddenCreatedOn");
+			}
+		}
+		
+		/// <summary>
+		/// Enter the user or team who is assigned to manage the record. This field is updated every time the record is assigned to a different user.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("ownerid")]
+		public Microsoft.Xrm.Sdk.EntityReference OwnerId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("ownerid");
+			}
+			set
+			{
+				this.OnPropertyChanging("OwnerId");
+				this.SetAttributeValue("ownerid", value);
+				this.OnPropertyChanged("OwnerId");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the business unit that owns the phone call activity.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningbusinessunit")]
+		public Microsoft.Xrm.Sdk.EntityReference OwningBusinessUnit
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owningbusinessunit");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the team that owns the phone call activity.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		public Microsoft.Xrm.Sdk.EntityReference OwningTeam
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owningteam");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the user that owns the phone call activity.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		public Microsoft.Xrm.Sdk.EntityReference OwningUser
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owninguser");
+			}
+		}
+		
+		/// <summary>
+		/// Type the phone number.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("phonenumber")]
+		public string PhoneNumber
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("phonenumber");
+			}
+			set
+			{
+				this.OnPropertyChanging("PhoneNumber");
+				this.SetAttributeValue("phonenumber", value);
+				this.OnPropertyChanged("PhoneNumber");
+			}
+		}
+		
+		/// <summary>
+		/// Select the priority so that preferred customers or critical issues are handled quickly.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("prioritycode")]
+		public System.Nullable<ConfigurableEntityCloner.Test.ProxyClasses.phonecall_prioritycode> PriorityCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("prioritycode");
+				if ((optionSet != null))
+				{
+					return ((ConfigurableEntityCloner.Test.ProxyClasses.phonecall_prioritycode)(System.Enum.ToObject(typeof(ConfigurableEntityCloner.Test.ProxyClasses.phonecall_prioritycode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("PriorityCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("prioritycode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("prioritycode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("PriorityCode");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the ID of the process.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("processid")]
+		public System.Nullable<System.Guid> ProcessId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("processid");
+			}
+			set
+			{
+				this.OnPropertyChanging("ProcessId");
+				this.SetAttributeValue("processid", value);
+				this.OnPropertyChanged("ProcessId");
+			}
+		}
+		
+		/// <summary>
+		/// Choose the record that the phone call relates to.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
+		public Microsoft.Xrm.Sdk.EntityReference RegardingObjectId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("regardingobjectid");
+			}
+			set
+			{
+				this.OnPropertyChanging("RegardingObjectId");
+				this.SetAttributeValue("regardingobjectid", value);
+				this.OnPropertyChanged("RegardingObjectId");
+			}
+		}
+		
+		/// <summary>
+		/// Scheduled duration of the phone call activity, specified in minutes.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("scheduleddurationminutes")]
+		public System.Nullable<int> ScheduledDurationMinutes
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("scheduleddurationminutes");
+			}
+		}
+		
+		/// <summary>
+		/// Enter the expected due date and time.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("scheduledend")]
+		public System.Nullable<System.DateTime> ScheduledEnd
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("scheduledend");
+			}
+			set
+			{
+				this.OnPropertyChanging("ScheduledEnd");
+				this.SetAttributeValue("scheduledend", value);
+				this.OnPropertyChanged("ScheduledEnd");
+			}
+		}
+		
+		/// <summary>
+		/// Enter the expected due date and time.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("scheduledstart")]
+		public System.Nullable<System.DateTime> ScheduledStart
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("scheduledstart");
+			}
+			set
+			{
+				this.OnPropertyChanging("ScheduledStart");
+				this.SetAttributeValue("scheduledstart", value);
+				this.OnPropertyChanged("ScheduledStart");
+			}
+		}
+		
+		/// <summary>
+		/// Choose the service level agreement (SLA) that you want to apply to the Phone Call record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("slaid")]
+		public Microsoft.Xrm.Sdk.EntityReference SLAId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("slaid");
+			}
+			set
+			{
+				this.OnPropertyChanging("SLAId");
+				this.SetAttributeValue("slaid", value);
+				this.OnPropertyChanged("SLAId");
+			}
+		}
+		
+		/// <summary>
+		/// Last SLA that was applied to this Phone Call. This field is for internal use only.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("slainvokedid")]
+		public Microsoft.Xrm.Sdk.EntityReference SLAInvokedId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("slainvokedid");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the date and time by which the activities are sorted.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("sortdate")]
+		public System.Nullable<System.DateTime> SortDate
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("sortdate");
+			}
+			set
+			{
+				this.OnPropertyChanging("SortDate");
+				this.SetAttributeValue("sortdate", value);
+				this.OnPropertyChanged("SortDate");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the ID of the stage.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("stageid")]
+		public System.Nullable<System.Guid> StageId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("stageid");
+			}
+			set
+			{
+				this.OnPropertyChanging("StageId");
+				this.SetAttributeValue("stageid", value);
+				this.OnPropertyChanged("StageId");
+			}
+		}
+		
+		/// <summary>
+		/// Shows whether the phone call is open, completed, or canceled. Completed and canceled phone calls are read-only and can't be edited.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statecode")]
+		public System.Nullable<ConfigurableEntityCloner.Test.ProxyClasses.PhoneCallState> StateCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("statecode");
+				if ((optionSet != null))
+				{
+					return ((ConfigurableEntityCloner.Test.ProxyClasses.PhoneCallState)(System.Enum.ToObject(typeof(ConfigurableEntityCloner.Test.ProxyClasses.PhoneCallState), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("StateCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("statecode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("statecode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("StateCode");
+			}
+		}
+		
+		/// <summary>
+		/// Select the phone call's status.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statuscode")]
+		public System.Nullable<ConfigurableEntityCloner.Test.ProxyClasses.phonecall_statuscode> StatusCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("statuscode");
+				if ((optionSet != null))
+				{
+					return ((ConfigurableEntityCloner.Test.ProxyClasses.phonecall_statuscode)(System.Enum.ToObject(typeof(ConfigurableEntityCloner.Test.ProxyClasses.phonecall_statuscode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("StatusCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("statuscode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("statuscode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("StatusCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type a subcategory to identify the phone call type and relate the activity to a specific product, sales region, business group, or other function.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("subcategory")]
+		public string Subcategory
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("subcategory");
+			}
+			set
+			{
+				this.OnPropertyChanging("Subcategory");
+				this.SetAttributeValue("subcategory", value);
+				this.OnPropertyChanged("Subcategory");
+			}
+		}
+		
+		/// <summary>
+		/// Type a short description about the objective or primary topic of the phone call.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("subject")]
+		public string Subject
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("subject");
+			}
+			set
+			{
+				this.OnPropertyChanging("Subject");
+				this.SetAttributeValue("subject", value);
+				this.OnPropertyChanged("Subject");
+			}
+		}
+		
+		/// <summary>
+		/// For internal use only.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("subscriptionid")]
+		public System.Nullable<System.Guid> SubscriptionId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("subscriptionid");
+			}
+			set
+			{
+				this.OnPropertyChanging("SubscriptionId");
+				this.SetAttributeValue("subscriptionid", value);
+				this.OnPropertyChanged("SubscriptionId");
+			}
+		}
+		
+		/// <summary>
+		/// For internal use only.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("timezoneruleversionnumber")]
+		public System.Nullable<int> TimeZoneRuleVersionNumber
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("timezoneruleversionnumber");
+			}
+			set
+			{
+				this.OnPropertyChanging("TimeZoneRuleVersionNumber");
+				this.SetAttributeValue("timezoneruleversionnumber", value);
+				this.OnPropertyChanged("TimeZoneRuleVersionNumber");
+			}
+		}
+		
+		/// <summary>
+		/// Enter the account, contact, lead, or user recipients of the phone call.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("to")]
+		public System.Collections.Generic.IEnumerable<Microsoft.Xrm.Sdk.Entity> To
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.EntityCollection collection = this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityCollection>("to");
+				if (((collection != null) 
+							&& (collection.Entities != null)))
+				{
+					return System.Linq.Enumerable.Cast<Microsoft.Xrm.Sdk.Entity>(collection.Entities);
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("To");
+				if ((value == null))
+				{
+					this.SetAttributeValue("to", value);
+				}
+				else
+				{
+					this.SetAttributeValue("to", new Microsoft.Xrm.Sdk.EntityCollection(new System.Collections.Generic.List<Microsoft.Xrm.Sdk.Entity>(value)));
+				}
+				this.OnPropertyChanged("To");
+			}
+		}
+		
+		/// <summary>
+		/// Choose the local currency for the record to make sure budgets are reported in the correct currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("transactioncurrencyid")]
+		public Microsoft.Xrm.Sdk.EntityReference TransactionCurrencyId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("transactioncurrencyid");
+			}
+			set
+			{
+				this.OnPropertyChanging("TransactionCurrencyId");
+				this.SetAttributeValue("transactioncurrencyid", value);
+				this.OnPropertyChanged("TransactionCurrencyId");
+			}
+		}
+		
+		/// <summary>
+		/// For internal use only.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("traversedpath")]
+		public string TraversedPath
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("traversedpath");
+			}
+			set
+			{
+				this.OnPropertyChanging("TraversedPath");
+				this.SetAttributeValue("traversedpath", value);
+				this.OnPropertyChanged("TraversedPath");
+			}
+		}
+		
+		/// <summary>
+		/// Time zone code that was in use when the record was created.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("utcconversiontimezonecode")]
+		public System.Nullable<int> UTCConversionTimeZoneCode
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("utcconversiontimezonecode");
+			}
+			set
+			{
+				this.OnPropertyChanging("UTCConversionTimeZoneCode");
+				this.SetAttributeValue("utcconversiontimezonecode", value);
+				this.OnPropertyChanged("UTCConversionTimeZoneCode");
+			}
+		}
+		
+		/// <summary>
+		/// Version number of the phone call activity.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("versionnumber")]
+		public System.Nullable<long> VersionNumber
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N PhoneCall_Annotation
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("PhoneCall_Annotation")]
+		public System.Collections.Generic.IEnumerable<ConfigurableEntityCloner.Test.ProxyClasses.Annotation> PhoneCall_Annotation
+		{
+			get
+			{
+				return this.GetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Annotation>("PhoneCall_Annotation", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("PhoneCall_Annotation");
+				this.SetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Annotation>("PhoneCall_Annotation", null, value);
+				this.OnPropertyChanged("PhoneCall_Annotation");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N phonecall_connections1
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("phonecall_connections1")]
+		public System.Collections.Generic.IEnumerable<ConfigurableEntityCloner.Test.ProxyClasses.Connection> phonecall_connections1
+		{
+			get
+			{
+				return this.GetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Connection>("phonecall_connections1", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("phonecall_connections1");
+				this.SetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Connection>("phonecall_connections1", null, value);
+				this.OnPropertyChanged("phonecall_connections1");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N phonecall_connections2
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("phonecall_connections2")]
+		public System.Collections.Generic.IEnumerable<ConfigurableEntityCloner.Test.ProxyClasses.Connection> phonecall_connections2
+		{
+			get
+			{
+				return this.GetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Connection>("phonecall_connections2", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("phonecall_connections2");
+				this.SetRelatedEntities<ConfigurableEntityCloner.Test.ProxyClasses.Connection>("phonecall_connections2", null, value);
+				this.OnPropertyChanged("phonecall_connections2");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 Account_Phonecalls
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("Account_Phonecalls")]
+		public ConfigurableEntityCloner.Test.ProxyClasses.Account Account_Phonecalls
+		{
+			get
+			{
+				return this.GetRelatedEntity<ConfigurableEntityCloner.Test.ProxyClasses.Account>("Account_Phonecalls", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("Account_Phonecalls");
+				this.SetRelatedEntity<ConfigurableEntityCloner.Test.ProxyClasses.Account>("Account_Phonecalls", null, value);
+				this.OnPropertyChanged("Account_Phonecalls");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 Contact_Phonecalls
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("Contact_Phonecalls")]
+		public ConfigurableEntityCloner.Test.ProxyClasses.Contact Contact_Phonecalls
+		{
+			get
+			{
+				return this.GetRelatedEntity<ConfigurableEntityCloner.Test.ProxyClasses.Contact>("Contact_Phonecalls", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("Contact_Phonecalls");
+				this.SetRelatedEntity<ConfigurableEntityCloner.Test.ProxyClasses.Contact>("Contact_Phonecalls", null, value);
+				this.OnPropertyChanged("Contact_Phonecalls");
+			}
+		}
+	}
+	
 	/// <summary>
 	/// Represents a source of entities bound to a CRM service. It tracks and manages changes made to the retrieved entities.
 	/// </summary>
@@ -4343,6 +11800,50 @@ namespace ConfigurableEntityCloner.Test.ProxyClasses
 			get
 			{
 				return this.CreateQuery<ConfigurableEntityCloner.Test.ProxyClasses.Account>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="ConfigurableEntityCloner.Test.ProxyClasses.Annotation"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<ConfigurableEntityCloner.Test.ProxyClasses.Annotation> AnnotationSet
+		{
+			get
+			{
+				return this.CreateQuery<ConfigurableEntityCloner.Test.ProxyClasses.Annotation>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="ConfigurableEntityCloner.Test.ProxyClasses.Connection"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<ConfigurableEntityCloner.Test.ProxyClasses.Connection> ConnectionSet
+		{
+			get
+			{
+				return this.CreateQuery<ConfigurableEntityCloner.Test.ProxyClasses.Connection>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="ConfigurableEntityCloner.Test.ProxyClasses.ConnectionRole"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<ConfigurableEntityCloner.Test.ProxyClasses.ConnectionRole> ConnectionRoleSet
+		{
+			get
+			{
+				return this.CreateQuery<ConfigurableEntityCloner.Test.ProxyClasses.ConnectionRole>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="ConfigurableEntityCloner.Test.ProxyClasses.Contact"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<ConfigurableEntityCloner.Test.ProxyClasses.Contact> ContactSet
+		{
+			get
+			{
+				return this.CreateQuery<ConfigurableEntityCloner.Test.ProxyClasses.Contact>();
 			}
 		}
 		
@@ -4376,6 +11877,17 @@ namespace ConfigurableEntityCloner.Test.ProxyClasses
 			get
 			{
 				return this.CreateQuery<ConfigurableEntityCloner.Test.ProxyClasses.new_new_ddentity_account>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="ConfigurableEntityCloner.Test.ProxyClasses.PhoneCall"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<ConfigurableEntityCloner.Test.ProxyClasses.PhoneCall> PhoneCallSet
+		{
+			get
+			{
+				return this.CreateQuery<ConfigurableEntityCloner.Test.ProxyClasses.PhoneCall>();
 			}
 		}
 	}

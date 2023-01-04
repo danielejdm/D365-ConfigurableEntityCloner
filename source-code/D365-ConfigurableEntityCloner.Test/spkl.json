@@ -60,7 +60,7 @@
             Comma seperate list of entity logical names.
             I've not provided support for -all- entities because this results in unneccessarily large plugins!
             */
-        "entities": "account,new_new_ddentity_account,new_ddentity,jdm_configuration",
+        "entities": "account,new_new_ddentity_account,new_ddentity,jdm_configuration,contact,annotation,phonecall,connection,connectionrole",
         /*
             Comma seperated list of actions request/responses to generate - leave emtpty or ommit for none
             */

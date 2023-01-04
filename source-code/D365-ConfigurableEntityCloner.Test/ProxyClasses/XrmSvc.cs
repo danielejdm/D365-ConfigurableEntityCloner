@@ -25,6 +25,50 @@ namespace ConfigurableEntityCloner.Test.ProxyClasses
 		}
 		
 		/// <summary>
+		/// Gets a binding to the set of all <see cref="ConfigurableEntityCloner.Test.ProxyClasses.Annotation"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<ConfigurableEntityCloner.Test.ProxyClasses.Annotation> AnnotationSet
+		{
+			get
+			{
+				return this.CreateQuery<ConfigurableEntityCloner.Test.ProxyClasses.Annotation>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="ConfigurableEntityCloner.Test.ProxyClasses.Connection"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<ConfigurableEntityCloner.Test.ProxyClasses.Connection> ConnectionSet
+		{
+			get
+			{
+				return this.CreateQuery<ConfigurableEntityCloner.Test.ProxyClasses.Connection>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="ConfigurableEntityCloner.Test.ProxyClasses.ConnectionRole"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<ConfigurableEntityCloner.Test.ProxyClasses.ConnectionRole> ConnectionRoleSet
+		{
+			get
+			{
+				return this.CreateQuery<ConfigurableEntityCloner.Test.ProxyClasses.ConnectionRole>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="ConfigurableEntityCloner.Test.ProxyClasses.Contact"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<ConfigurableEntityCloner.Test.ProxyClasses.Contact> ContactSet
+		{
+			get
+			{
+				return this.CreateQuery<ConfigurableEntityCloner.Test.ProxyClasses.Contact>();
+			}
+		}
+		
+		/// <summary>
 		/// Gets a binding to the set of all <see cref="ConfigurableEntityCloner.Test.ProxyClasses.jdm_configuration"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<ConfigurableEntityCloner.Test.ProxyClasses.jdm_configuration> jdm_configurationSet
@@ -54,6 +98,17 @@ namespace ConfigurableEntityCloner.Test.ProxyClasses
 			get
 			{
 				return this.CreateQuery<ConfigurableEntityCloner.Test.ProxyClasses.new_new_ddentity_account>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="ConfigurableEntityCloner.Test.ProxyClasses.PhoneCall"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<ConfigurableEntityCloner.Test.ProxyClasses.PhoneCall> PhoneCallSet
+		{
+			get
+			{
+				return this.CreateQuery<ConfigurableEntityCloner.Test.ProxyClasses.PhoneCall>();
 			}
 		}
 	}

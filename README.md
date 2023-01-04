@@ -46,66 +46,53 @@ Download the managed or unmanaged solution and import it in your environment.
 - The <i>cloner module</i> skips all the system fields not valid for creation (i.e.: <i>createdon</i>, <i>createdby</i>, <i>statecode</i>, etc.).
  
 ### Sample Config Xml
-~~~ xml
-<fetch>
-  <entity name='account' exclude-attributes='false' >
-    <attribute name='name' />
-    <attribute name='accountnumber' />
-    <attribute name='statecode' />
-    <attribute name='statuscode' />
-    <filter>
-      <condition attribute='accountid' operator='eq' value='@id' />
-    </filter>
-    <link-entity name='jdm_jdm_myentity_account' from='accountid' to='accountid' intersect='true'>
-      <attribute name='accountid' />
-      <attribute name='jdm_myentityid' />
-      <associate-entity exclude-attributes='false' name='jdm_myentity'>
-        <attribute name='jdm_name'/>
-        ...
-      </associate-entity>
-    </link-entity>
-    <link-entity exclude-attributes='false' name='contact' from='parentcustomerid' to='accountid' link-type='outer' >
-      <attribute name='address1_composite' />
-      <attribute name='fullname' />
-      <attribute name='firstname' />
-      <attribute name='lastname' />
-      <attribute name='statecode' />
-      <attribute name='statuscode' />
-      <link-entity exclude-attributes='false' name='annotation' from='objectid' to='contactid' link-type='outer' >
-        <attribute name='filename' />
-        <attribute name='filesize' />
-        <attribute name='mimetype' />
-        <attribute name='documentbody' />
-        <attribute name='notetext' />
-        <attribute name='isdocument' />
-      </link-entity>
-    </link-entity>
-    <link-entity exclude-attributes='false' name='phonecall' from='regardingobjectid' to='accountid' link-type='outer' >
-      <attribute name='subject' />
-    </link-entity>
-  </entity>
-</fetch>
+~~~ xml 
+    <fetch>
+      <entity name="account" exclude-attributes="false">
+        <attribute name="statuscode" />
+        <attribute name="name" />
+        <attribute name="accountnumber" />
+        <attribute name="statecode" />
+        <filter>
+          <condition attribute="accountid" operator="eq" value="@id" />
+        </filter>
+        <link-entity name="new_new_ddentity_account" from="accountid" to="accountid" intersect="true">
+          <attribute name="new_ddentityid" />
+          <attribute name="accountid" />
+          <link-entity name="new_ddentity" from="new_ddentityid" to="new_ddentityid" intersect="true" exclude-attributes="false" reassociate="false">
+          </link-entity>
+        </link-entity>
+        <link-entity name="contact" from="parentcustomerid" to="accountid" exclude-attributes="true">
+          <attribute name="address1_city" />
+          <attribute name="address1_country" />
+          <attribute name="address1_line1" />
+          <attribute name="address1_line3" />
+          <attribute name="address1_line2" />
+          <link-entity name="annotation" from="objectid" to="contactid" exclude-attributes="false">
+            <attribute name="filename" />
+            <attribute name="filesize" />
+            <attribute name="mimetype" />
+            <attribute name="documentbody" />
+            <attribute name="notetext" />
+            <attribute name="isdocument" />
+          </link-entity>
+        </link-entity>
+        <link-entity name="phonecall" from="regardingobjectid" to="accountid" exclude-attributes="false">
+        </link-entity>
+      </entity>
+    </fetch>
 ~~~
 
-#### Config Xml - Special Configurations
+#### Config Xml - Attributes
 - <i>exclude-attributes</i> (required): true/false
   - false -> only the fields in the list of attributes are copied
   - true -> all the fields of the entity are copied, except the ones listed in the Xml
-- the associations (n:m relationships) are represented with the following xml-block:
-~~~ xml
-    <link-entity name='jdm_jdm_myentity_account' from='accountid' to='accountid' intersect='true'>
-      <attribute name='accountid' />
-      <attribute name='jdm_myentityid' />
-      <associate-entity exclude-attributes='false' name='jdm_myentity'>
-        <attribute name='jdm_name'/>
-        ...
-      </associate-entity>
-    </link-entity>
-~~~
+- <i>reassociate</i> (required only for <i>intersect-entity</i>): true/false
+  - false -> the associated entity is cloned and the clone is associated to the new parent
+  - true -> the associated entity is not cloned: it is associated to the new parent
 
-- <i>associate-entity</i>: represent the associated entity with the list of attributes and <i>exclude-attributes</i> as in the other xml-block.
-
-- the connections (entity <i>connection</i>) are represented with the following xml-block:
+#### Config Xml - Connections
+The connections (entity <i>connection</i>) are represented with the following xml-block:
 ~~~ xml
     <fetch>
       <entity name="connection">
@@ -131,7 +118,7 @@ Download the managed or unmanaged solution and import it in your environment.
       </entity>
     </fetch>
 ~~~
-  - the attributes for the <i>connection</i> entity are all required 
+  - the following attributes for the <i>connection</i> entity are all required: 
     - <i>record1roleid</i>
     - <i>record2roleid</i>
     - <i>record2id</i>
@@ -143,7 +130,7 @@ Download the managed or unmanaged solution and import it in your environment.
   - the associated entities (xml-blocks for <i>record1</i> and <i>record2</i>) do not support filters (for the moment) 
   - connections do not support link-entity (for the moment): a connection is always the leaf of a branch in the xml
 
-##### Config Modularization
+#### Config Xml - Modularization
 
 It is possible to modularize Config-Xml to allow splittig of configurations and reuse the single configuration.
 Below an example of config modularization:
@@ -180,7 +167,7 @@ Below an example of config modularization:
 
    - The <i>Config1</i> can be used <i>stand-alone</i> or can be integrated into another Config-Xml (in the example, <i>Config2</i>).
    - The attribute <i>merge-config-id</i> contains the <i>Guid</i> of the Config-Xml that has to be integrated in the <i>Config2</i> (in the example, <i>Config1</i>).
-   - The output of the <i>Config2</i> executed by the <i>cloner module</i> is:
+   - After merging, the config-xml looks like following:
   ~~~ xml
     <fetch>
       <entity name="account" exclude-attributes="false">
