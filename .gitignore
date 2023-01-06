@@ -1,0 +1,18 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/source-code/packages
+/source-code/obj
+/source-code/bin/Debug
+/source-code/.vs
+/source-code/.editorconfig
+/.vs
+/source-code/D365-ConfigurableEntityCloner.Test/Properties
+/source-code/D365-ConfigurableEntityCloner.Test/obj/Debug
+/source-code/D365-ConfigurableEntityCloner.Test/bin/Debug
+/source-code/Properties
+/source-code/D365-ConfigurableEntityCloner.Test/obj/Release
+/source-code/D365-ConfigurableEntityCloner.csproj.user
+/source-code/D365-ConfigurableEntityCloner.Test/spkl
+/source-code/D365-ConfigurableEntityCloner.Test/bin/coretools
