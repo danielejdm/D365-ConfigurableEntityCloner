@@ -75,9 +75,9 @@ Download the managed or unmanaged solution and import it in your environment.
     </link-entity>
     <link-entity name="phonecall" from="regardingobjectid" to="accountid" >
       <attribute name="subject" />
-       <filter> 
-         <condition attribute='statecode' operator='eq' value='0' /> 
-       </filter> 
+      <filter> 
+        <condition attribute='statecode' operator='eq' value='0' /> 
+      </filter> 
     </link-entity>
   </entity>
 </fetch>
