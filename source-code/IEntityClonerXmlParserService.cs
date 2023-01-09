@@ -10,5 +10,7 @@ namespace ConfigurableEntityCloner
         XDocument MergeConfigurations(XDocument configXml);
         EntityLinkType? GetFirstLevelLinkType(XElement element);
         IEnumerable<string> GetAttributeList(XElement element);
+        IEnumerable<string> GetAttributeListForConnections(XElement element, string entityName);
+
     }
 }

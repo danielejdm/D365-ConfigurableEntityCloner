@@ -248,8 +248,7 @@ namespace ConfigurableEntityCloner.Test
                                             "<attribute name='fullname' />" +
                                             "<attribute name='parentcustomerid' />" +
                                             "<filter>" +
-                                              "<condition attribute='statuscode' operator='eq' value='1' />" +
-                                              "<condition attribute='contactid' operator='eq' value='@id' />" +
+                                              "<condition attribute='statecode' operator='eq' value='0' />" +
                                             "</filter>" +
                                             "<link-entity name='annotation' from='objectid' to='contactid' >" +
                                               "<attribute name='subject' />" +
@@ -292,6 +291,7 @@ namespace ConfigurableEntityCloner.Test
             var contact = new Entity("contact")
             {
                 Id = Guid.NewGuid(),
+                ["statecode"] = new OptionSetValue(0),
                 ["firstname"] = "Mario",
                 ["lastname"] = "Rossi",
                 ["parentcustomerid"] = account.ToEntityReference(),
@@ -401,10 +401,8 @@ namespace ConfigurableEntityCloner.Test
                                       "<entity name='account' >" +
                                         "<attribute name='name' />" +
                                         "<attribute name='accountnumber' />" +
-                                        "<link-entity name='new_new_ddentity_account' from='accountid' to='accountid' intersect='true'>" +
-                                        "<attribute name='accountid' />" +
-                                        "<attribute name='new_ddentityid' />" +
-                                          "<link-entity name='new_ddentity' from='new_ddentityid' to='new_ddentityid' intersect='true' clone-behaviour='clone'>" +
+                                        "<link-entity name='new_new_ddentity_account' from='accountid' to='accountid' intersect='true' clone-behaviour='clone'>" +
+                                          "<link-entity name='new_ddentity' from='new_ddentityid' to='new_ddentityid' intersect='true' >" +
                                           "<attribute name='new_name' />" +
                                           "<filter>" +
                                                 "<condition attribute='statecode' operator='eq' value='0' />" +

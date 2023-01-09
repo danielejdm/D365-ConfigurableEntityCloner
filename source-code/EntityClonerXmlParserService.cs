@@ -114,5 +114,16 @@ namespace ConfigurableEntityCloner
 
             return fieldsList;
         }
+
+        /// Get the attribute list from the connection link-entity element
+        /// </summary>
+        /// <param name="element">fetch-xml element</param>
+        /// <returns></returns>
+        public IEnumerable<string> GetAttributeListForConnections(XElement element, string entityName)
+        {
+            var query = element.Descendants("link-entity").Where(x => x.Attribute("name").Value == entityName).FirstOrDefault();
+
+            return this.GetAttributeList(query);
+        }
     }
 }

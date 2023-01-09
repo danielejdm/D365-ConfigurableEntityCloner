@@ -21,4 +21,10 @@ namespace ConfigurableEntityCloner
             Associate
         };
     }
+    public class CopyEntityInfo
+    {
+       public string EntityName { get; set; }
+       public IEnumerable<string> FieldsToCopy { get; set; }
+       public IEnumerable<string> BlacklistFields { get; set; }
+    }
 }

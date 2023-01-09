@@ -68,34 +68,35 @@ namespace ConfigurableEntityCloner
             }
 
             configEl.Descendants().Where(x => x.Name == "link-entity").Remove();
-            var queryCloneAllAttributes = XElement.Parse(configEl.ToString());
-            queryCloneAllAttributes.Descendants().Where(x => x.Name == "attribute").Remove();
-            queryCloneAllAttributes.Descendants("entity").FirstOrDefault().AddFirst(new XElement("all-attributes"));
 
-            var entityIdField = queryCloneAllAttributes.Descendants("entity").FirstOrDefault().Attribute("name").Value + "id";
+            var entityIdField = configEl.Descendants("entity").FirstOrDefault().Attribute("name").Value + "id";
 
-            if (queryCloneAllAttributes.Descendants().Any(d => d.Name == "filter"))
+            if (configEl.Descendants().Any(d => d.Name == "filter"))
             {
-                queryCloneAllAttributes.Descendants().Where(d => d.Name == "filter").First().Add(XElement.Parse($"<condition attribute = '{entityIdField}' operator= 'eq' value = '{rootRecordId}'/>"));
+                configEl.Descendants().Where(d => d.Name == "filter").First().Add(XElement.Parse($"<condition attribute = '{entityIdField}' operator= 'eq' value = '{rootRecordId}'/>"));
             }
             else
             {
-                queryCloneAllAttributes.Descendants().Where(d => d.Name == "entity").First().Add(XElement.Parse($"<filter><condition attribute = '{entityIdField}' operator= 'eq' value = '{rootRecordId}'/></filter>"));
+                configEl.Descendants().Where(d => d.Name == "entity").First().Add(XElement.Parse($"<filter><condition attribute = '{entityIdField}' operator= 'eq' value = '{rootRecordId}'/></filter>"));
             }
 
-            var record = this.orgService.RetrieveMultiple(new FetchExpression(queryCloneAllAttributes.ToString())).Entities.FirstOrDefault();
-            var fetchFields = this.entityClonerXmlParserService.GetAttributeList(configEl);
-
+            var record = this.orgService.RetrieveMultiple(new FetchExpression(configEl.ToString())).Entities.FirstOrDefault();
+            
             tracingService.Trace($"Start cloning root entity '{record.LogicalName}: {record.Id}'");
 
             var clone = new Entity();
             clone.LogicalName = record.LogicalName;
 
-            var attributeBlackList = this.metaDataService.GetAttributesBlacklist(record.LogicalName);
+            var copyEntityInfo = new CopyEntityInfo
+            {
+                EntityName = record.LogicalName,
+                FieldsToCopy = this.entityClonerXmlParserService.GetAttributeList(configEl),
+                BlacklistFields = this.metaDataService.GetAttributesBlacklist(record.LogicalName)
+            };
 
             foreach (var f in record.Attributes.Where(a => a.Value != null))
             {
-                if (this.CanCopyAttribute(f.Key, attributeBlackList, fetchFields))
+                if (this.CanCopyAttribute(f.Key, copyEntityInfo))
                 {
                     clone.Attributes.Add(f.Key, record[f.Key]);
                 }
@@ -158,11 +159,19 @@ namespace ConfigurableEntityCloner
             var to = queryClone.Attribute("to").Value;
             var name = queryClone.Attribute("name").Value;
 
-            var sfilter = $"<filter><condition attribute='{from}' operator='eq' value='{parentid.Id}'/></filter>";
-            var linkentityQuery = XElement.Parse($"<fetch><entity name='{name}'><all-attributes/>{sfilter}</entity></fetch>");
+            queryClone.Attribute("to").Remove();
+            queryClone.Attribute("from").Remove();
 
-            var fetchFields = this.entityClonerXmlParserService.GetAttributeList(queryClone);
+            if (queryClone.Elements().Any(d => d.Name == "filter"))
+            {
+                queryClone.Elements().Where(d => d.Name == "filter").First().Add(XElement.Parse($"<condition attribute = '{from}' operator= 'eq' value = '{parentid.Id}'/>"));
+            }
+            else
+            {
+                queryClone.Add(XElement.Parse($"<filter><condition attribute = '{from}' operator= 'eq' value = '{parentid.Id}'/></filter>"));
+            }
 
+            var linkentityQuery = "<fetch>" + queryClone.ToString().Replace("link-entity", "entity") + "</fetch>";
             var records = this.orgService.RetrieveMultiple(new FetchExpression(linkentityQuery.ToString())).Entities;
 
             foreach (var record in records)
@@ -171,10 +180,16 @@ namespace ConfigurableEntityCloner
                 var clone = new Entity();
                 clone.LogicalName = record.LogicalName;
 
-                var attributeBlackList = this.metaDataService.GetAttributesBlacklist(record.LogicalName);
+                var copyEntityInfo = new CopyEntityInfo
+                {
+                    EntityName = record.LogicalName,
+                    FieldsToCopy = this.entityClonerXmlParserService.GetAttributeList(queryClone),
+                    BlacklistFields = this.metaDataService.GetAttributesBlacklist(record.LogicalName)
+                };
+
                 foreach (var f in record.Attributes.Where(a => a.Value != null && a.Key != from))
                 {
-                    if (this.CanCopyAttribute(f.Key, attributeBlackList, fetchFields))
+                    if (this.CanCopyAttribute(f.Key, copyEntityInfo))
                     {
                         clone.Attributes.Add(f.Key, record[f.Key]);
                     }
@@ -207,38 +222,37 @@ namespace ConfigurableEntityCloner
             var innerQuery = queryClone.Descendants().Where(x => x.Name == "link-entity").First();
             var innerQueryClone = XElement.Parse(innerQuery.ToString());
 
+            var cloneBehaviour = this.entityClonerXmlParserService.GetCloneBehaviour(queryClone);
+
             queryClone.Descendants().Where(x => x.Name == "link-entity").Remove();
             innerQueryClone.Descendants().Where(x => x.Name == "link-entity").Remove();
 
-            var from = queryClone.Attribute("from").Value;
+            var fromField = queryClone.Attribute("from").Value;
             var relationName = queryClone.Attribute("name").Value;
             var toEntity = innerQueryClone.Attribute("name").Value;
-            var toEntityIdField = toEntity + "id";
+            var toField = innerQueryClone.Attribute("from").Value;
 
-            var associationsQuery = XElement.Parse($"<fetch><entity name='{relationName}'><filter><condition attribute='{from}' operator='eq' value='{parentid.Id}' /></filter></entity></fetch>");
+            var associationsQuery = XElement.Parse($"<fetch><entity name='{relationName}'><all-attributes/><filter><condition attribute='{fromField}' operator='eq' value='{parentid.Id}' /></filter></entity></fetch>");
             associationsQuery.Element("entity").AddFirst(queryClone.Elements());
 
-            var fetchFields = this.entityClonerXmlParserService.GetAttributeList(innerQueryClone);
+            var copyEntityInfo = new CopyEntityInfo
+            {
+                FieldsToCopy = this.entityClonerXmlParserService.GetAttributeList(innerQueryClone)
+            };
 
             var queryAssociated = XElement.Parse(innerQueryClone.ToString().Replace("link-entity", "entity"));
-            var queryCloneAllAttributes = XElement.Parse(queryAssociated.ToString());
 
-            var cloneBehaviour = this.entityClonerXmlParserService.GetCloneBehaviour(queryCloneAllAttributes);
+            queryAssociated.Attributes().Where(x => x.Name == "intersect").Remove();
+            queryAssociated.Attributes().Where(x => x.Name == "from").Remove();
+            queryAssociated.Attributes().Where(x => x.Name == "to").Remove();
 
-            queryCloneAllAttributes.Elements().Where(x => x.Name == "attribute").Remove();
-            queryCloneAllAttributes.Attributes().Where(x => x.Name == "intersect").Remove();
-            queryCloneAllAttributes.Attributes().Where(x => x.Name == "from").Remove();
-            queryCloneAllAttributes.Attributes().Where(x => x.Name == "to").Remove();
-
-            queryCloneAllAttributes.AddFirst(new XElement("all-attributes"));
-
-            if (queryCloneAllAttributes.Descendants().Any(d => d.Name == "filter"))
+            if (queryAssociated.Descendants().Any(d => d.Name == "filter"))
             {
-                queryCloneAllAttributes.Descendants().Where(d => d.Name == "filter").First().Add(XElement.Parse($"<condition attribute = '{toEntityIdField}' operator= 'eq' value = '@id'/>"));
+                queryAssociated.Descendants().Where(d => d.Name == "filter").First().Add(XElement.Parse($"<condition attribute = '{toField}' operator= 'eq' value = '@id'/>"));
             }
             else
             {
-                queryCloneAllAttributes.Add(XElement.Parse($"<filter><condition attribute = '{toEntityIdField}' operator= 'eq' value = '@id'/></filter>"));
+                queryAssociated.Add(XElement.Parse($"<filter><condition attribute = '{toField}' operator= 'eq' value = '@id'/></filter>"));
             }
 
             var associations = this.orgService.RetrieveMultiple(new FetchExpression(associationsQuery.ToString())).Entities;
@@ -247,11 +261,11 @@ namespace ConfigurableEntityCloner
             {
                 tracingService.Trace($"Start cloning association '{association.LogicalName}'");
 
-                Guid associateId = association.GetAttributeValue<Guid>(toEntityIdField);
+                Guid associateId = association.GetAttributeValue<Guid>(toField);
 
                 if (cloneBehaviour == CloneBehaviour.Clone)
                 {
-                    var query = XElement.Parse("<fetch>" + queryCloneAllAttributes.ToString() + "</fetch>")
+                    var query = XElement.Parse("<fetch>" + queryAssociated.ToString() + "</fetch>")
                         .ToString().Replace("@id", associateId.ToString());
 
                     var result = this.orgService.RetrieveMultiple(new FetchExpression(query)).Entities;
@@ -266,10 +280,12 @@ namespace ConfigurableEntityCloner
                     var clone = new Entity();
                     clone.LogicalName = toEntity;
 
-                    var attributeBlackList = this.metaDataService.GetAttributesBlacklist(record.LogicalName);
+                    copyEntityInfo.EntityName = record.LogicalName;
+                    copyEntityInfo.BlacklistFields = this.metaDataService.GetAttributesBlacklist(record.LogicalName);
+
                     foreach (var f in record.Attributes.Where(a => a.Value != null))
                     {
-                        if (this.CanCopyAttribute(f.Key, attributeBlackList, fetchFields))
+                        if (this.CanCopyAttribute(f.Key, copyEntityInfo))
                         {
                             clone.Attributes.Add(f.Key, record[f.Key]);
                         }
@@ -311,12 +327,19 @@ namespace ConfigurableEntityCloner
             var record1entityname = metaDataService.GetEntityLogicalName(record1objecttypecode);
             var record2entityname = metaDataService.GetEntityLogicalName(record2objecttypecode);
 
-            var entityFromQuery = element.Descendants("link-entity").Where(x => x.Attribute("name").Value == record1entityname).FirstOrDefault();
-            var entityToQuery = element.Descendants("link-entity").Where(x => x.Attribute("name").Value == record2entityname).FirstOrDefault();
+            var copyEntityFromInfo = new CopyEntityInfo
+            {
+                EntityName = record1entityname,
+                FieldsToCopy = this.entityClonerXmlParserService.GetAttributeListForConnections(element, record1entityname),
+                BlacklistFields = this.metaDataService.GetAttributesBlacklist(record1entityname)
+            };
 
-            var fetchFieldsEntityFrom = this.entityClonerXmlParserService.GetAttributeList(entityFromQuery);
-
-            var fetchFieldsEntityTo = this.entityClonerXmlParserService.GetAttributeList(entityToQuery);
+            var copyEntityToInfo = new CopyEntityInfo
+            {
+                EntityName = record2entityname,
+                FieldsToCopy = this.entityClonerXmlParserService.GetAttributeListForConnections(element, record2entityname),
+                BlacklistFields = this.metaDataService.GetAttributesBlacklist(record2entityname)
+            };
 
             foreach (var c in connections)
             {
@@ -325,10 +348,10 @@ namespace ConfigurableEntityCloner
 
                 var cloneEntityFrom = new Entity();
                 cloneEntityFrom.LogicalName = record1entityname;
-                var attributeBlackListEfrom = this.metaDataService.GetAttributesBlacklist(entityFrom.LogicalName);
+                
                 foreach (var f in entityFrom.Attributes.Where(a => a.Value != null))
                 {
-                    if (this.CanCopyAttribute(f.Key, attributeBlackListEfrom, fetchFieldsEntityFrom))
+                    if (this.CanCopyAttribute(f.Key, copyEntityFromInfo))
                     {
                         cloneEntityFrom.Attributes.Add(f.Key, entityFrom[f.Key]);
                     }
@@ -339,10 +362,9 @@ namespace ConfigurableEntityCloner
                 var cloneEntityTo = new Entity();
                 cloneEntityTo.LogicalName = record2entityname;
 
-                var attributeBlackListEto = this.metaDataService.GetAttributesBlacklist(entityTo.LogicalName);
                 foreach (var f in entityTo.Attributes.Where(a => a.Value != null))
                 {
-                    if (this.CanCopyAttribute(f.Key, attributeBlackListEto, fetchFieldsEntityTo))
+                    if (this.CanCopyAttribute(f.Key,copyEntityToInfo))
                     {
                         cloneEntityTo.Attributes.Add(f.Key, entityFrom[f.Key]);
                     }
@@ -367,15 +389,15 @@ namespace ConfigurableEntityCloner
         /// </summary>
         /// <param name="attributename">The original record attribute</param>
         /// <returns>true/false</returns>
-        private bool CanCopyAttribute(string attributename, IEnumerable<string> attributeBlackList, IEnumerable<string> fetchFields)
+        private bool CanCopyAttribute(string attributename, CopyEntityInfo copyEntityInfo)
         {
-            var canCopy = true;
-            if (attributeBlackList.Any(a => a == attributename) || !fetchFields.Any(a => a == attributename))
+            if (copyEntityInfo.BlacklistFields.Any(a => a == attributename) ||
+                !copyEntityInfo.FieldsToCopy.Any(a => a == attributename))
             {
                 return false;
             }
 
-            return canCopy;
+            return true;
         }
     }
 }
