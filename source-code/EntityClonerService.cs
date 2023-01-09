@@ -95,7 +95,7 @@ namespace ConfigurableEntityCloner
 
             foreach (var f in record.Attributes.Where(a => a.Value != null))
             {
-                if (this.CanCopyAttribute(f.Key, attributeBlackList))
+                if (this.CanCopyAttribute(f.Key, attributeBlackList, fetchFields))
                 {
                     clone.Attributes.Add(f.Key, record[f.Key]);
                 }
@@ -174,7 +174,7 @@ namespace ConfigurableEntityCloner
                 var attributeBlackList = this.metaDataService.GetAttributesBlacklist(record.LogicalName);
                 foreach (var f in record.Attributes.Where(a => a.Value != null && a.Key != from))
                 {
-                    if (this.CanCopyAttribute(f.Key, attributeBlackList))
+                    if (this.CanCopyAttribute(f.Key, attributeBlackList, fetchFields))
                     {
                         clone.Attributes.Add(f.Key, record[f.Key]);
                     }
@@ -218,7 +218,7 @@ namespace ConfigurableEntityCloner
             var associationsQuery = XElement.Parse($"<fetch><entity name='{relationName}'><filter><condition attribute='{from}' operator='eq' value='{parentid.Id}' /></filter></entity></fetch>");
             associationsQuery.Element("entity").AddFirst(queryClone.Elements());
 
-            var columnsList = this.entityClonerXmlParserService.GetAttributeList(innerQueryClone);
+            var fetchFields = this.entityClonerXmlParserService.GetAttributeList(innerQueryClone);
 
             var queryAssociated = XElement.Parse(innerQueryClone.ToString().Replace("link-entity", "entity"));
             var queryCloneAllAttributes = XElement.Parse(queryAssociated.ToString());
@@ -269,7 +269,7 @@ namespace ConfigurableEntityCloner
                     var attributeBlackList = this.metaDataService.GetAttributesBlacklist(record.LogicalName);
                     foreach (var f in record.Attributes.Where(a => a.Value != null))
                     {
-                        if (this.CanCopyAttribute(f.Key, attributeBlackList))
+                        if (this.CanCopyAttribute(f.Key, attributeBlackList, fetchFields))
                         {
                             clone.Attributes.Add(f.Key, record[f.Key]);
                         }
@@ -314,9 +314,9 @@ namespace ConfigurableEntityCloner
             var entityFromQuery = element.Descendants("link-entity").Where(x => x.Attribute("name").Value == record1entityname).FirstOrDefault();
             var entityToQuery = element.Descendants("link-entity").Where(x => x.Attribute("name").Value == record2entityname).FirstOrDefault();
 
-            var fieldsEntityFrom = this.entityClonerXmlParserService.GetAttributeList(entityFromQuery);
+            var fetchFieldsEntityFrom = this.entityClonerXmlParserService.GetAttributeList(entityFromQuery);
 
-            var fieldsEntityTo = this.entityClonerXmlParserService.GetAttributeList(entityToQuery);
+            var fetchFieldsEntityTo = this.entityClonerXmlParserService.GetAttributeList(entityToQuery);
 
             foreach (var c in connections)
             {
@@ -328,7 +328,7 @@ namespace ConfigurableEntityCloner
                 var attributeBlackListEfrom = this.metaDataService.GetAttributesBlacklist(entityFrom.LogicalName);
                 foreach (var f in entityFrom.Attributes.Where(a => a.Value != null))
                 {
-                    if (this.CanCopyAttribute(f.Key, attributeBlackListEfrom))
+                    if (this.CanCopyAttribute(f.Key, attributeBlackListEfrom, fetchFieldsEntityFrom))
                     {
                         cloneEntityFrom.Attributes.Add(f.Key, entityFrom[f.Key]);
                     }
@@ -342,7 +342,7 @@ namespace ConfigurableEntityCloner
                 var attributeBlackListEto = this.metaDataService.GetAttributesBlacklist(entityTo.LogicalName);
                 foreach (var f in entityTo.Attributes.Where(a => a.Value != null))
                 {
-                    if (this.CanCopyAttribute(f.Key, attributeBlackListEto))
+                    if (this.CanCopyAttribute(f.Key, attributeBlackListEto, fetchFieldsEntityTo))
                     {
                         cloneEntityTo.Attributes.Add(f.Key, entityFrom[f.Key]);
                     }
@@ -365,17 +365,17 @@ namespace ConfigurableEntityCloner
         /// <summary>
         /// Check if the attribute can be copied
         /// </summary>
-        /// <param name="attributename">attribute name</param>
-        /// <param name="attributeBlackList">list of all attributes not valid for being set</param>
+        /// <param name="attributename">The original record attribute</param>
         /// <returns>true/false</returns>
-        private bool CanCopyAttribute(string attributename, IEnumerable<string> attributeBlackList)
+        private bool CanCopyAttribute(string attributename, IEnumerable<string> attributeBlackList, IEnumerable<string> fetchFields)
         {
-            if (attributeBlackList.Any(a => a == attributename))
+            var canCopy = true;
+            if (attributeBlackList.Any(a => a == attributename) || !fetchFields.Any(a => a == attributename))
             {
                 return false;
             }
 
-            return true;
+            return canCopy;
         }
     }
 }

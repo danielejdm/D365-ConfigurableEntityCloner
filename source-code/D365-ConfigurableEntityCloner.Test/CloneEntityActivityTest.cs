@@ -245,6 +245,8 @@ namespace ConfigurableEntityCloner.Test
                                           "<entity name='contact' >" +
                                             "<attribute name='firstname' />" +
                                             "<attribute name='lastname' />" +
+                                            "<attribute name='fullname' />" +
+                                            "<attribute name='parentcustomerid' />" +
                                             "<filter>" +
                                               "<condition attribute='statuscode' operator='eq' value='1' />" +
                                               "<condition attribute='contactid' operator='eq' value='@id' />" +
@@ -261,7 +263,7 @@ namespace ConfigurableEntityCloner.Test
                 Id = Guid.NewGuid(),
                 ["jdm_configvalue"] = "<fetch>" +
                                           "<entity name='account' >" +
-                                            "<attribute name='address1_composite' />" +
+                                            "<attribute name='accountnumber' />" +
                                             "<attribute name='name' />" +
                                             $"<link-entity name='contact' from='parentcustomerid' to='accountid' merge-config-id='{config2.Id}' />" +
                                           "</entity>" +
@@ -336,7 +338,6 @@ namespace ConfigurableEntityCloner.Test
                     e["firstname"].Equals(contact["firstname"]) &&
                     e["lastname"].Equals(contact["lastname"]) &&
                     e["fullname"].Equals(contact["fullname"]) &&
-                    e["address1_composite"].Equals(contact["address1_composite"]) &&
                     e.GetAttributeValue<EntityReference>("parentcustomerid").Id.Equals(cloneId)));
 
             Assert.IsTrue(this.xrmFakedContext.CreateQuery("annotation").Any(e => e.Id != note.Id &&
@@ -398,13 +399,14 @@ namespace ConfigurableEntityCloner.Test
                 Id = Guid.NewGuid(),
                 jdm_configvalue = "<fetch>" +
                                       "<entity name='account' >" +
-                                        "<attribute name='firstname' />" +
-                                        "<attribute name='lastname' />" +
+                                        "<attribute name='name' />" +
+                                        "<attribute name='accountnumber' />" +
                                         "<link-entity name='new_new_ddentity_account' from='accountid' to='accountid' intersect='true'>" +
                                         "<attribute name='accountid' />" +
                                         "<attribute name='new_ddentityid' />" +
                                           "<link-entity name='new_ddentity' from='new_ddentityid' to='new_ddentityid' intersect='true' clone-behaviour='clone'>" +
-                                            "<filter>" +
+                                          "<attribute name='new_name' />" +
+                                          "<filter>" +
                                                 "<condition attribute='statecode' operator='eq' value='0' />" +
                                             "</filter>" +
                                            "</link-entity>" +
