@@ -59,6 +59,9 @@ Download the managed or unmanaged solution and import it in your environment.
       <link-entity name="new_ddentity" from="new_ddentityid" to="new_ddentityid" intersect="true" clone-behaviour="clone">
         <link-entity name="new_ddentity" from="new_ddentityid" to="new_ddentityid" intersect="true">
           <attribute name="new_name" />
+          <filter> 
+            <condition attribute='statecode' operator='eq' value='0' /> 
+          </filter> 
         </link-entity>
       </link-entity>
     </link-entity>
@@ -72,6 +75,9 @@ Download the managed or unmanaged solution and import it in your environment.
     </link-entity>
     <link-entity name="phonecall" from="regardingobjectid" to="accountid" >
       <attribute name="subject" />
+       <filter> 
+         <condition attribute='statecode' operator='eq' value='0' /> 
+       </filter> 
     </link-entity>
   </entity>
 </fetch>
