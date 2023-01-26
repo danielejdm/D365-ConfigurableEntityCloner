@@ -197,8 +197,6 @@ Below an example of config modularization:
       - Guid of the root entity as string
     - Configuration: EntityReference to the configuration record.
 
-![image](https://user-images.githubusercontent.com/34159960/207928348-7b96b22c-001c-4874-b995-5bae46bff558.png)
-
 
 ### Note
 
