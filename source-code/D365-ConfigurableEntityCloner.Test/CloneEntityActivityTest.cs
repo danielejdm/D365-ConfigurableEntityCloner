@@ -36,71 +36,83 @@ namespace ConfigurableEntityCloner.Test
         }
 
         [TestMethod]
-        public void Should_Clone_Account_Contacts_Notes_Phonecalls()
+        public void Should_Clone_Account_PrimaryContact_Contacts_Notes_Phonecalls()
         {
-            var account = new Entity("account")
+            var pcontact = new Contact
             {
                 Id = Guid.NewGuid(),
-                ["name"] = "Account",
-                ["accountnumber"] = "Acc-1234",
+                FirstName = "Primary",
+                LastName = "Contact"
+            };
+
+            var account = new Account
+            {
+                Id = Guid.NewGuid(),
+                Name = "Account",
+                AccountNumber = "Acc-1234",
                 ["statecode"] = new OptionSetValue(0),
                 ["statuscode"] = new OptionSetValue(1),
-                ["ownerid"] = new EntityReference("systemuser", Guid.NewGuid()),
+                OwnerId = new EntityReference("systemuser", Guid.NewGuid()),
                 ["createdby"] = new EntityReference("systemuser", Guid.NewGuid()),
                 ["createdon"] = DateTime.Now,
-                ["address1_city"] = "abc",
-                ["address1_country"] = "abc",
-                ["address1_county"] = "abc",
-                ["address1_fax"] = "abc",
-                ["address1_line1"] = "abc",
-                ["address1_line2"] = "abc",
-                ["address1_line3"] = "abc",
+                Address1_City = "abc",
+                Address1_Country = "abc",
+                Address1_County = "abc",
+                Address1_Fax = "abc",
+                Address1_Line1 = "abc",
+                Address1_Line2 = "abc",
+                Address1_Line3 = "abc",
+                PrimaryContactId = pcontact.ToEntityReference()
             };
 
-            var contact = new Entity("contact")
+            var contact = new Contact
             {
                 Id = Guid.NewGuid(),
-                ["firstname"] = "Mario",
-                ["lastname"] = "Rossi",
-                ["parentcustomerid"] = account.ToEntityReference(),
-                ["fullname"] = "Mario Rossi",
-                ["address1_composite"] = "Musterstr. 1, 11111 Musterstadt"
+                FirstName = "Mario",
+                 LastName = "Rossi",
+                ParentCustomerId = account.ToEntityReference()
             };
 
-            var contact2 = new Entity("contact")
+            var contact2 = new Contact
             {
                 Id = Guid.NewGuid(),
-                ["firstname"] = "Max",
-                ["lastname"] = "Mustermann",
-                ["parentcustomerid"] = account.ToEntityReference(),
-                ["fullname"] = "Max Mustermann",
-                ["address1_composite"] = "Musterstr. 1, 54546 Somestadt",
+                FirstName = "Max",
+                LastName = "Mustermann",
+                ParentCustomerId = account.ToEntityReference()
             };
 
-            var note = new Entity("annotation")
+            var note = new Annotation
             {
                 Id = Guid.NewGuid(),
-                ["filename"] = "Test.txt",
-                ["mimetype"] = "text /plain",
-                ["documentbody"] = "just a test",
-                ["notetext"] = "some text",
-                ["isdocument"] = true,
-                ["objectid"] = contact.ToEntityReference(),
+                FileName = "Test.txt",
+                MimeType = "text /plain",
+                DocumentBody = "just a test",
+                NoteText = "some text",
+                IsDocument = true,
+                ObjectId = contact.ToEntityReference(),
             };
-            var phonecall = new Entity("phonecall")
+            var phonecall = new PhoneCall
             {
                 Id = Guid.NewGuid(),
-                ["regardingobjectid"] = account.ToEntityReference(),
-                ["subject"] = "Test Phonecall"
+                RegardingObjectId = account.ToEntityReference(),
+                Subject = "Test Phonecall"
             };
 
-            var config = new Entity("jdm_configuration")
+            var config = new jdm_configuration
             {
                 Id = Guid.NewGuid(),
-                ["jdm_configvalue"] = "<fetch>" +
+                jdm_configvalue = "<fetch>" +
                                       "<entity name='account' >" +
                                         "<attribute name='accountnumber' />" +
                                         "<attribute name='name' />" +
+                                        "<attribute name='statecode' />" +
+                                        "<filter>" +
+                                          "<condition attribute='statecode' operator='eq' value='0' />" +
+                                        "</filter>" +
+                                        "<link-entity name='contact' from='contactid' to='primarycontactid'>" +
+                                          "<attribute name='firstname' />" +
+                                          "<attribute name='lastname' />" +
+                                        "</link-entity>" +
                                         "<link-entity name='contact' from='parentcustomerid' to='accountid' >" +
                                           "<attribute name='address1_composite' />" +
                                           "<attribute name='fullname' />" +
@@ -124,36 +136,36 @@ namespace ConfigurableEntityCloner.Test
                                     "</fetch>"
             };
 
-            this.xrmFakedContext.Initialize(new List<Entity>() { account, contact, contact2, note, phonecall, config });
+            this.xrmFakedContext.Initialize(new List<Entity>() { account, pcontact, contact, contact2, note, phonecall, config });
 
             //Inputs
             var inputs = new Dictionary<string, object>() {
-                { "RootRecordUrl", "https://myorg.crm.dynamics.com/main.aspx?appid=f8a69fd7-e37a-ed11-81ad-0022486f4310&pagetype=entityrecord&etn=account&id=" + account.Id.ToString() },
+                { "RootRecordInfo", "https://myorg.crm.dynamics.com/main.aspx?appid=f8a69fd7-e37a-ed11-81ad-0022486f4310&pagetype=entityrecord&etn=account&id=" + account.Id.ToString() },
                 { "ConfigurationId", config.ToEntityReference() }
             };
 
             var result = this.xrmFakedContext.ExecuteCodeActivity<CloneEntityActivity>(inputs);
 
-            Assert.IsTrue(this.xrmFakedContext.CreateQuery("account").Any(e => e.Id == new Guid((string)result["RootCloneId"]) && 
-            e["accountnumber"].Equals(account["accountnumber"]) && e["name"].Equals(account["name"])));
+            var clonedAccount = this.xrmFakedContext.CreateQuery("account").Where(e => e.Id == new Guid((string)result["RootCloneId"])).First();
+            Assert.IsTrue(clonedAccount["name"].Equals(account["name"]) && clonedAccount["accountnumber"].Equals(account["accountnumber"]));
+
+            var clonedPrimaryContact = this.xrmFakedContext.CreateQuery("contact").Where(e => e.Id.Equals(contact.Id) == false && e.Id.Equals(contact2.Id) == false && e.Id.Equals(pcontact.Id) == false).First();
+            Assert.IsTrue(clonedAccount.GetAttributeValue<EntityReference>("primarycontactid").Id == clonedPrimaryContact.Id);
+
+            Assert.IsTrue(clonedPrimaryContact["firstname"].Equals(pcontact["firstname"]) &&
+                    clonedPrimaryContact["lastname"].Equals(pcontact["lastname"]));
 
             Assert.IsTrue(this.xrmFakedContext.CreateQuery("contact").Any(e => e.Id != contact.Id &&
                     e["firstname"].Equals(contact["firstname"]) &&
-                    e["lastname"].Equals(contact["lastname"]) &&
-                    e["fullname"].Equals(contact["fullname"]) &&
-                    e["address1_composite"].Equals(contact["address1_composite"])));
+                    e["lastname"].Equals(contact["lastname"])));
 
-            Assert.IsTrue(this.xrmFakedContext.CreateQuery("contact").Any(e => e.Id != contact.Id &&
+            Assert.IsTrue(this.xrmFakedContext.CreateQuery("contact").Any(e => e.Id != pcontact.Id &&
                     e["firstname"].Equals(contact["firstname"]) &&
-                    e["lastname"].Equals(contact["lastname"]) &&
-                    e["fullname"].Equals(contact["fullname"]) &&
-                    e["address1_composite"].Equals(contact["address1_composite"])));
+                    e["lastname"].Equals(contact["lastname"])));
 
             Assert.IsTrue(this.xrmFakedContext.CreateQuery("contact").Any(e => e.Id != contact2.Id &&
                     e["firstname"].Equals(contact2["firstname"]) &&
-                    e["lastname"].Equals(contact2["lastname"]) &&
-                    e["fullname"].Equals(contact2["fullname"]) &&
-                    e["address1_composite"].Equals(contact2["address1_composite"])));
+                    e["lastname"].Equals(contact2["lastname"])));
 
             Assert.IsTrue(this.xrmFakedContext.CreateQuery("annotation").Any(e => e.Id != note.Id &&
                     e["filename"].Equals(note["filename"]) &&
@@ -163,8 +175,6 @@ namespace ConfigurableEntityCloner.Test
 
             Assert.IsTrue(this.xrmFakedContext.CreateQuery("phonecall").Any(e => e.Id != phonecall.Id &&
                     e["subject"].Equals(phonecall["subject"])));
-
-            //Assert.IsTrue(this.xrmFakedContext.CreateQuery("jdm_jdm_myentity_account").Any(e => e.Id != jdm_jdm_myentity_account.Id));
         }
 
         [TestMethod]
@@ -227,7 +237,7 @@ namespace ConfigurableEntityCloner.Test
 
             //Inputs
             var inputs = new Dictionary<string, object>() {
-                { "RootRecordUrl", "https://myorg.crm.dynamics.com/main.aspx?appid=f8a69fd7-e37a-ed11-81ad-0022486f4310&pagetype=entityrecord&etn=account&id=" + account.Id.ToString() },
+                { "RootRecordInfo", "https://myorg.crm.dynamics.com/main.aspx?appid=f8a69fd7-e37a-ed11-81ad-0022486f4310&pagetype=entityrecord&etn=account&id=" + account.Id.ToString() },
                 { "ConfigurationId", config.ToEntityReference() }
             };
 
@@ -319,7 +329,7 @@ namespace ConfigurableEntityCloner.Test
 
             //Inputs
             var inputs = new Dictionary<string, object>() {
-                { "RootRecordUrl", "https://myorg.crm.dynamics.com/main.aspx?appid=f8a69fd7-e37a-ed11-81ad-0022486f4310&pagetype=entityrecord&etn=account&id=" + account.Id.ToString() },
+                { "RootRecordInfo", "https://myorg.crm.dynamics.com/main.aspx?appid=f8a69fd7-e37a-ed11-81ad-0022486f4310&pagetype=entityrecord&etn=account&id=" + account.Id.ToString() },
                 { "ConfigurationId", config1.ToEntityReference() }
             };
 
@@ -426,7 +436,7 @@ namespace ConfigurableEntityCloner.Test
 
             //Inputs
             var inputs = new Dictionary<string, object>() {
-                { "RootRecordUrl", "https://myorg.crm.dynamics.com/main.aspx?appid=f8a69fd7-e37a-ed11-81ad-0022486f4310&pagetype=entityrecord&etn=account&id=" + account.Id.ToString() },
+                { "RootRecordInfo", "https://myorg.crm.dynamics.com/main.aspx?appid=f8a69fd7-e37a-ed11-81ad-0022486f4310&pagetype=entityrecord&etn=account&id=" + account.Id.ToString() },
                 { "ConfigurationId", config.ToEntityReference() }
             };
 

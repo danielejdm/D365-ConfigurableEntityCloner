@@ -27,7 +27,7 @@ Dynamics 365 v9.2+
 
 ### Install
 
-Download the managed or unmanaged solution and import it in your environment.
+Download the managed or unmanaged solution and import it in your environment (solutions come again soon...).
 
 ### Configure
 

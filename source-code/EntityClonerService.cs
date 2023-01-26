@@ -61,12 +61,6 @@ namespace ConfigurableEntityCloner
 
             var configEl = XElement.Parse(configDoc.ToString());
 
-            var linkType = this.entityClonerXmlParserService.GetFirstLevelLinkType(configEl.Descendants().FirstOrDefault());
-            if (linkType == EntityLinkType.Connection)
-            {
-                CloneEntityConnections(configEl);
-            }
-
             configEl.Descendants().Where(x => x.Name == "link-entity").Remove();
 
             var entityIdField = configEl.Descendants("entity").FirstOrDefault().Attribute("name").Value + "id";
@@ -130,7 +124,7 @@ namespace ConfigurableEntityCloner
 
             var linkType = this.entityClonerXmlParserService.GetFirstLevelLinkType(element);
 
-            if (linkType == EntityLinkType.Relation)
+            if (linkType == EntityLinkType.Relation_1N)
             {
                 CloneLinkEntity(element, parentid, parentclonedid);
             }
@@ -141,6 +135,10 @@ namespace ConfigurableEntityCloner
             else if (linkType == EntityLinkType.Connection)
             {
                 CloneEntityConnections(element);
+            }
+            else if (linkType == EntityLinkType.Relation_N1)
+            {
+                CloneLookup(element, parentid, parentclonedid);
             }
         }
 
@@ -208,6 +206,69 @@ namespace ConfigurableEntityCloner
                     CloneChildren(le, record.ToEntityReference(), new EntityReference(record.LogicalName, cloneId));
                 }
             }
+        }
+
+        /// <summary>
+        /// Clone a lookup
+        /// </summary>
+        /// <param name="element">Current lookup</param>
+        /// <param name="parentid">Id of the parent</param>
+        /// <param name="parentclonedid">Id of the cloned parent</param>
+        private void CloneLookup(XElement element, EntityReference parentid, EntityReference parentclonedid)
+        {
+            var queryClone = XElement.Parse(element.ToString());
+            queryClone.Descendants().Where(x => x.Name == "link-entity").Remove();
+
+            var from = queryClone.Attribute("from").Value;
+            var to = queryClone.Attribute("to").Value;
+            var lookupEntityType = queryClone.Attribute("name").Value;
+
+            queryClone.Attribute("to").Remove();
+            queryClone.Attribute("from").Remove();
+
+            var parentRecord = this.orgService.Retrieve(parentid.LogicalName, parentid.Id, new ColumnSet(new string[] { to }));
+            if (!parentRecord.Contains(to) || parentRecord[to] == null)
+            {
+                return;
+            }
+
+            var lookupRecord = this.orgService.Retrieve(lookupEntityType, parentRecord.GetAttributeValue<EntityReference>(to).Id, new ColumnSet(true));
+
+            tracingService.Trace($"Start cloning lookup '{to}'");
+            var clone = new Entity();
+            clone.LogicalName = lookupEntityType;
+
+            var copyEntityInfo = new CopyEntityInfo
+            {
+                EntityName = lookupEntityType,
+                FieldsToCopy = this.entityClonerXmlParserService.GetAttributeList(queryClone),
+                BlacklistFields = this.metaDataService.GetAttributesBlacklist(lookupEntityType)
+            };
+            foreach (var f in lookupRecord.Attributes.Where(a => a.Value != null && a.Key != from))
+            {
+                if (this.CanCopyAttribute(f.Key, copyEntityInfo))
+                {
+                    clone.Attributes.Add(f.Key, lookupRecord[f.Key]);
+                }
+            }
+
+            var cloneId = this.orgService.Create(clone);
+
+            this.orgService.Update(new Entity(parentid.LogicalName)
+            {
+                Id = parentclonedid.Id,
+                [to] = new EntityReference(lookupEntityType, cloneId)
+            });
+
+            tracingService.Trace($"Successfully cloned lookup '{to}'");
+
+            var linkentities = element.Elements().Where(d => d.Name == "link-entity");
+
+            foreach (var le in linkentities)
+            {
+                CloneChildren(le, parentRecord.ToEntityReference(), new EntityReference(parentRecord.LogicalName, cloneId));
+            }
+
         }
 
         /// <summary>

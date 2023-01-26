@@ -88,7 +88,14 @@ namespace ConfigurableEntityCloner
 
             if (element.Attribute("intersect") == null || element.Attribute("intersect").Value != "true")
             {
-                linkType = EntityLinkType.Relation;
+                if (element.Attribute("from").Value.Equals(element.Attribute("name").Value + "id"))
+                {
+                    linkType = EntityLinkType.Relation_N1;
+                }
+                else
+                {
+                    linkType = EntityLinkType.Relation_1N;
+                }
             }
             else if (element.Attribute("intersect") != null || element.Attribute("intersect").Value == "true")
             {

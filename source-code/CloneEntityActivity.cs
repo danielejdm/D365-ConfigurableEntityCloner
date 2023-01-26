@@ -8,9 +8,12 @@ namespace ConfigurableEntityCloner
 {
     public sealed class CloneEntityActivity : CodeActivity
     {
-        [Input(nameof(RootRecordUrl))]
+        [Input(nameof(RootRecordInfo))]
         [RequiredArgument]
-        public InArgument<string> RootRecordUrl { get; set; }
+        public InArgument<string> RootRecordInfo { get; set; }
+
+        [Input(nameof(EntityName))]
+        public InArgument<string> EntityName { get; set; }
 
         [Input(nameof(ConfigurationId))]
         [RequiredArgument]
@@ -30,13 +33,26 @@ namespace ConfigurableEntityCloner
 
             try
             {
-                var rootRecordId = DynamicsUrlService.GetRecordIdFromUrl(this.RootRecordUrl.Get(activityContext));
+                var entityName = this.EntityName.Get(activityContext);
+                string recordInfo = this.RootRecordInfo.Get(activityContext);
+
+                Guid rootRecordId;
+                if (!Guid.TryParse(recordInfo, out rootRecordId))
+                {
+                    rootRecordId = Guid.Parse(DynamicsUrlService.GetRecordIdFromUrl(recordInfo));
+                    entityName = DynamicsUrlService.GetEntityNameFromUrl(recordInfo, orgService);
+                }
+                else if (entityName == null)
+                {
+                    throw new InvalidPluginExecutionException($"Parameter {nameof(EntityName)} cannot be null if the parameter {nameof(RootRecordInfo)} is not a valid RecordUrl");
+                }
+
                 var configurationId = this.ConfigurationId.Get<EntityReference>(activityContext);
                 var configuration = orgService.Retrieve(configurationId.LogicalName, configurationId.Id, new ColumnSet(true));
                 var entityClonerXmlParserService = new EntityClonerXmlParserService(orgService);
 
                 var entityCloner = new EntityClonerService(orgService, tracingService, metadataService, entityClonerXmlParserService, configuration);
-                var cloneId = entityCloner.Clone(rootRecordId);
+                var cloneId = entityCloner.Clone(rootRecordId.ToString());
 
                 this.RootCloneId.Set(activityContext, cloneId);
 

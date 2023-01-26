@@ -10,7 +10,8 @@ namespace ConfigurableEntityCloner
     {
         public enum EntityLinkType
         {
-            Relation,
+            Relation_1N,
+            Relation_N1,
             Association,
             Connection
         };
