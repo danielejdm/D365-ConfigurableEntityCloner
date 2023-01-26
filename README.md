@@ -195,7 +195,7 @@ Below an example of config modularization:
     - RootRecordInfo: 
       - Url of the root entity (parameter <i>Record Url (Dynamic)</i> in Workflow configuration) or
       - Guid of the root entity as string
-    - EntityName: schema mane of the entity. This parameter is <b>required</b> if the parameter <i>RootRecordInfo</i> is a simple guid (not an url). 
+    - EntityName: schema name of the root entity. This parameter is <b>required</b> if the parameter <i>RootRecordInfo</i> is a simple guid (not an url). 
     - Configuration: EntityReference to the configuration record.
 
 
