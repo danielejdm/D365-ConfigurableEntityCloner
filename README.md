@@ -27,7 +27,7 @@ Dynamics 365 v9.2+
 
 ### Install
 
-Download the managed or unmanaged solution and import it in your environment (<b>solutions come again soon...</b>).
+Download the managed or unmanaged solution and import it in your environment.
 
 ### Configure
 
@@ -192,7 +192,9 @@ Below an example of config modularization:
 
 - Integrate the action <i>CloneEntityFromFetch</i> where you want to trigger it (Workflow, Javascript function, etc.).
 - Configure the parameters:
-    - RootRecordUrl: url of the root entity (parameter <i>Record Url (Dynamic)</i> in Workflow configuration).
+    - RootRecordInfo: 
+      - Url of the root entity (parameter <i>Record Url (Dynamic)</i> in Workflow configuration) or
+      - Guid of the root entity as string
     - Configuration: EntityReference to the configuration record.
 
 ![image](https://user-images.githubusercontent.com/34159960/207928348-7b96b22c-001c-4874-b995-5bae46bff558.png)
