@@ -57,12 +57,10 @@ Download the managed or unmanaged solution and import it in your environment.
       <attribute name="new_ddentityid" />
       <attribute name="accountid" />
       <link-entity name="new_ddentity" from="new_ddentityid" to="new_ddentityid" intersect="true" clone-behaviour="clone">
-        <link-entity name="new_ddentity" from="new_ddentityid" to="new_ddentityid" intersect="true">
           <attribute name="new_name" />
           <filter> 
             <condition attribute='statecode' operator='eq' value='0' /> 
           </filter> 
-        </link-entity>
       </link-entity>
     </link-entity>
     <link-entity name="contact" from="parentcustomerid" to="accountid" >
