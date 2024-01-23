@@ -96,16 +96,10 @@ namespace ConfigurableEntityCloner
                 {
                     linkType = EntityLinkType.Relation_1N;
                 }
-            }
-            else if (element.Attribute("intersect") != null || element.Attribute("intersect").Value == "true")
+            } else if(element.Attribute("intersect") != null || element.Attribute("intersect").Value == "true")
             {
                 linkType = EntityLinkType.Association;
-            }
-            else if (element.Attributes().Where(x => x.Name == "link-entity").First().Value == "connection")
-            {
-                linkType = EntityLinkType.Connection;
-            }
-
+            } 
             return linkType;
         }
         /// <summary>
