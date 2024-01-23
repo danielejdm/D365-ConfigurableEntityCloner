@@ -14,9 +14,8 @@ The idea behind this solution came as a result of some requirements needed for a
 
 - Configurable cloning of entities and sub-entities (child entities).
 - Configurable cloning of associations (n:m relationships).
-- Configurable cloning of connections and connected records.
 - Configurable set of fields to be cloned.
-- Automatically skipping of fields not valid for being set in creation.
+- Automatically skipping of fields not valid for being set in creation (example: createdon).
 - Modularization of configurations (splitting).
 
 ## Getting started
@@ -27,7 +26,7 @@ Dynamics 365 v9.2+
 
 ### Install
 
-Download the managed or unmanaged solution and import it in your environment.
+Compile the code and deploy the CWA to your environment.
 
 ### Configure
 
@@ -86,44 +85,6 @@ Download the managed or unmanaged solution and import it in your environment.
   - clone -> the associated entity is cloned and the clone is associated to the new parent
   - associate (default) -> the associated entity is not cloned: it is associated to the new parent
 
-#### Config Xml - Connections
-The connections (entity <i>connection</i>) are represented with the following xml-block:
-~~~ xml
-    <fetch>
-      <entity name="connection">
-        <attribute name="record1roleid" />
-        <attribute name="record2roleid" />
-        <attribute name="record2id" />
-        <attribute name="record1id" />
-        <attribute name="record2objecttypecode" />
-        <attribute name="record1objecttypecode" />
-        <filter>
-          [<condition attribute="record1roleid" operator="eq" value="<Id of the Role1>" />]
-          [<condition attribute="record2roleid" operator="eq" value="<Id of the Role2>" />]
-        </filter>
-        <link-entity name="contact" from="contactid" to="record2id">
-          <attribute name="address1_composite" />
-          <attribute name="firstname" />
-          <attribute name="fullname" />
-        </link-entity>
-        <link-entity name="account" from="accountid" to="record1id">
-          <attribute name="address1_composite" />
-          <attribute name="name" />
-        </link-entity>
-      </entity>
-    </fetch>
-~~~
-  - the following attributes for the <i>connection</i> entity are all required: 
-    - <i>record1roleid</i>
-    - <i>record2roleid</i>
-    - <i>record2id</i>
-    - <i>record1id</i>
-    - <i>record2objecttypecode</i>
-    - <i>record1objecttypecode</i>
-  - the two linked entities are necessary for providing information of the entities that are connected and will be cloned
-  - in the filter for the <i>connection</i> entity we can insert the id of the role1 and role2 for which we want to look
-  - the associated entities (xml-blocks for <i>record1</i> and <i>record2</i>) do not support filters (for the moment) 
-  - connections do not support link-entity (for the moment): a connection is always the leaf of a branch in the xml
 
 #### Config Xml - Modularization
 
@@ -200,7 +161,6 @@ Below an example of config modularization:
 ### Note
 
 - This solution is <i>work in progress</i>:
-  - it will be update frequently
   - it is not fully tested: if you find any bug, please open an issue or push a fix on a new branch
 - Technically the solution should allow an unlimited number of levels for link-entities, however always consider the 2-minute limit for running Plugins/CWAs. Analyze the amount of data involved in fetching.
 
