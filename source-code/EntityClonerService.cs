@@ -117,24 +117,25 @@ namespace ConfigurableEntityCloner
         /// <param name="parentclonedid">Id of the cloned parent</param>
         private void CloneChildren(XElement element, EntityReference parentid = null, EntityReference parentclonedid = null)
         {
-            EntityLinkType? linkType = null;
+            if (element.Name != "link-entity")
+            {
+                return;
+            }
 
-            if (element.Attribute("intersect") == null || element.Attribute("intersect").Value != "true")
+            var linkType = this.entityClonerXmlParserService.GetFirstLevelLinkType(element);
+
+            if (linkType == EntityLinkType.Relation_1N)
             {
-                if (element.Attribute("from").Value.Equals(element.Attribute("name").Value + "id"))
-                {
-                    linkType = EntityLinkType.Relation_N1;
-                }
-                else
-                {
-                    linkType = EntityLinkType.Relation_1N;
-                }
-            } else if(element.Attribute("intersect") != null || element.Attribute("intersect").Value == "true")
+                CloneLinkEntity(element, parentid, parentclonedid);
+            }
+            else if (linkType == EntityLinkType.Association)
             {
-                linkType = EntityLinkType.Association;
-            } 
-            
-            return linkType;
+                CloneAssociateEntity(element, parentid, parentclonedid);
+            }
+            else if (linkType == EntityLinkType.Relation_N1)
+            {
+                CloneLookup(element, parentid, parentclonedid);
+            }
         }
 
         /// <summary>
