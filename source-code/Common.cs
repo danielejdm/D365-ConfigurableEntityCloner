@@ -12,8 +12,7 @@ namespace ConfigurableEntityCloner
         {
             Relation_1N,
             Relation_N1,
-            Association,
-            Connection
+            Association
         };
 
         public enum CloneBehaviour
