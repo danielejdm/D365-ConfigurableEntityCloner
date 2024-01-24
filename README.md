@@ -149,7 +149,7 @@ Below an example of config modularization:
 
 ### Usage
 
-- Integrate the action <i>CloneEntityFromFetch</i> where you want to trigger it (Workflow, Javascript function, etc.).
+- Create an action which wraps the CWA and integrate it where you want to trigger it (Workflow, Javascript function, etc.).
 - Configure the parameters:
     - RootRecordInfo: 
       - Url of the root entity (parameter <i>Record Url (Dynamic)</i> in Workflow configuration) or
