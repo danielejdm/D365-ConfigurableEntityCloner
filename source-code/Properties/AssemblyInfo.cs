@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("D365-UpdateAnyEntity")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("adesso AG")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("D365-UpdateAnyEntity")]
 [assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
